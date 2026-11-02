@@ -1010,9 +1010,54 @@ NOTIFÍQUESE Y CÚMPLASE.
 // 5. ESPACIO DE AYUDA INTELIGENTE — GEMINI IA (AyudaIA_Manager)
 // ============================================================
 const AyudaIA_Manager = {
+  geminiKeyStorage: 'iurisdosis_gemini_api_key',
+
   init() {
+    this.initApiKey();
     BancoDudasManager.init();
     this.actualizarEstadoDB();
+  },
+
+  initApiKey() {
+    const input = document.getElementById('gemini-api-key-input');
+    const badge = document.getElementById('gemini-key-status');
+    const savedKey = localStorage.getItem(this.geminiKeyStorage);
+    if (savedKey) {
+      if (input) input.value = savedKey;
+      if (badge) {
+        badge.textContent = "Clave guardada ✓";
+        badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold";
+      }
+    }
+  },
+
+  guardarApiKey() {
+    const input = document.getElementById('gemini-api-key-input');
+    const badge = document.getElementById('gemini-key-status');
+    const key = input ? input.value.trim() : '';
+
+    if (!key) {
+      localStorage.removeItem(this.geminiKeyStorage);
+      if (badge) {
+        badge.textContent = "Sin clave guardada";
+        badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-surface-container text-judicial-muted font-medium";
+      }
+      CasoManager.mostrarToast("Clave de Gemini eliminada de este navegador", "info");
+      return;
+    }
+
+    localStorage.setItem(this.geminiKeyStorage, key);
+    if (badge) {
+      badge.textContent = "Clave guardada ✓";
+      badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold";
+    }
+    CasoManager.mostrarToast("API Key de Gemini guardada de forma segura en tu navegador", "lock");
+  },
+
+  toggleKeyVisibility() {
+    const input = document.getElementById('gemini-api-key-input');
+    if (!input) return;
+    input.type = input.type === 'password' ? 'text' : 'password';
   },
 
   actualizarEstadoDB() {
@@ -1123,7 +1168,7 @@ INSTRUCCIONES DE RESPUESTA:
     });
   },
 
-  consultarGemini() {
+  async consultarGemini() {
     const salidaPre = document.getElementById('ayuda-prompt-salida');
     const duda = document.getElementById('ayuda-pregunta-duda')?.value.trim();
     if (!duda) {
@@ -1135,29 +1180,75 @@ INSTRUCCIONES DE RESPUESTA:
     const textoResp = document.getElementById('ayuda-texto-respuesta-ia');
     if (cajaResp) cajaResp.classList.remove('hidden');
 
+    const apiKey = localStorage.getItem(this.geminiKeyStorage) || document.getElementById('gemini-api-key-input')?.value.trim();
+
     if (textoResp) {
       textoResp.innerHTML = `
         <div class="flex items-center gap-2 text-judicial-amber font-mono animate-pulse">
           <span class="material-symbols-outlined text-base">hourglass_top</span>
-          <span>Analizando caso con Gemini IA y normas de la Ley 599 de 2000...</span>
+          <span>${apiKey ? 'Consultando API oficial de Gemini en tiempo real...' : 'Analizando caso con motor jurídico integrado...'}</span>
         </div>
       `;
-
-      setTimeout(() => {
-        textoResp.innerHTML = `
-          <div class="space-y-2">
-            <p><strong>Dictamen del Asistente Gemini:</strong></p>
-            <p>Conforme al Artículo 61 de la Ley 599 de 2000, para resolver tu consulta sobre <em>"${duda}"</em>, debes seguir estos tres pasos rigurosos:</p>
-            <ol class="list-decimal pl-5 space-y-1">
-              <li><strong>Fijar los límites del Art. 60 C.P.:</strong> Aplica primero los modificadores de tentativa (Art. 27) o complicidad (Art. 30). Si concurre tentativa acabada, la pena se reduce de 1/3 a 1/2.</li>
-              <li><strong>Calcular el Ámbito Punitivo:</strong> Resta la pena mínima de la máxima. Divide ese valor exactamente en 4 cuartos iguales.</li>
-              <li><strong>Control de Prohibiciones:</strong> Si el delito involucra menores de edad o está en el catálogo del Art. 199 de la Ley 1098 de 2006, la rebaja de justicia premial es legalmente <strong>0%</strong>.</li>
-            </ol>
-            <p class="text-xs text-emerald-700 font-semibold mt-2">✓ Tu consulta ha quedado guardada en el Banco Comunitario para referencia de todos los usuarios.</p>
-          </div>
-        `;
-      }, 1200);
     }
+
+    // Si tiene API Key de Gemini configurada, llamamos a la API oficial de Google
+    if (apiKey) {
+      try {
+        const promptText = salidaPre ? salidaPre.textContent : duda;
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptText }] }]
+          })
+        });
+
+        const data = await response.json();
+        if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+          const aiResponse = data.candidates[0].content.parts[0].text;
+          const formattedHtml = aiResponse
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n\n/g, '<br/><br/>')
+            .replace(/\n/g, '<br/>');
+
+          textoResp.innerHTML = `
+            <div class="space-y-2">
+              <div class="flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold mb-1">
+                <span class="material-symbols-outlined text-sm">verified</span>
+                <span>Respuesta generada en vivo por Gemini 1.5 Flash</span>
+              </div>
+              <div class="text-xs text-judicial-navy leading-relaxed">${formattedHtml}</div>
+            </div>
+          `;
+          CasoManager.mostrarToast("Respuesta recibida en vivo de Gemini", "auto_awesome");
+          return;
+        } else if (data.error) {
+          console.warn("Error en respuesta de Gemini API:", data.error);
+        }
+      } catch (err) {
+        console.warn("Fallo de red consultando Gemini API, usando respuesta didáctica:", err);
+      }
+    }
+
+    // Fallback didáctico si no hay clave o hubo error
+    setTimeout(() => {
+      textoResp.innerHTML = `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-[11px] font-semibold text-judicial-amber mb-1">
+            <span>Dictamen del Asistente Jurídico Penal:</span>
+            ${!apiKey ? '<span class="text-[10px] text-judicial-muted font-normal">(Guarda tu Gemini API Key arriba para respuestas en vivo)</span>' : ''}
+          </div>
+          <p>Conforme al Artículo 61 de la Ley 599 de 2000, para resolver tu consulta sobre <em>"${duda}"</em>, debes seguir estos tres pasos rigurosos:</p>
+          <ol class="list-decimal pl-5 space-y-1 text-xs">
+            <li><strong>Fijar los límites del Art. 60 C.P.:</strong> Aplica primero los modificadores de tentativa (Art. 27) o complicidad (Art. 30). Si concurre tentativa acabada, la pena se reduce de 1/3 a 1/2.</li>
+            <li><strong>Calcular el Ámbito Punitivo:</strong> Resta la pena mínima de la máxima. Divide ese valor exactamente en 4 cuartos iguales.</li>
+            <li><strong>Control de Prohibiciones:</strong> Si el delito involucra menores de edad o está en el catálogo del Art. 199 de la Ley 1098 de 2006, la rebaja de justicia premial es legalmente <strong>0%</strong>.</li>
+          </ol>
+          <p class="text-xs text-emerald-800 font-semibold mt-2">✓ Tu consulta ha quedado guardada en el Banco Comunitario para referencia de todos los estudiantes.</p>
+        </div>
+      `;
+    }, 700);
   },
 
   limpiarFormulario() {
@@ -1222,8 +1313,51 @@ const BancoDudasManager = {
   ],
 
   init() {
+    this.verificarFirebase();
     this.cargar();
     this.renderizar();
+  },
+
+  verificarFirebase() {
+    const statusText = document.getElementById('ayuda-db-text');
+    try {
+      if (window.firebase && window.ElectivaFirebase && window.ElectivaFirebase.isConfigured) {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(window.ElectivaFirebase.config);
+        }
+        this.db = firebase.firestore();
+        this.isUsingFirebase = true;
+        if (statusText) {
+          statusText.textContent = "Google Firebase Firestore Conectado (Nube)";
+        }
+        this.escucharFirestore();
+        return;
+      }
+    } catch (e) {
+      console.warn("Firebase no conectado, operando en almacenamiento local:", e);
+    }
+
+    if (statusText) {
+      statusText.textContent = "Base de datos local activa (Listo para Firebase)";
+    }
+  },
+
+  escucharFirestore() {
+    if (!this.db) return;
+    this.db.collection("dudas_comunitarias")
+      .orderBy("fechaTimestamp", "desc")
+      .onSnapshot((snapshot) => {
+        const docs = [];
+        snapshot.forEach(doc => {
+          docs.push({ id: doc.id, ...doc.data() });
+        });
+        if (docs.length > 0) {
+          this.dudas = docs;
+          this.renderizar();
+        }
+      }, (error) => {
+        console.warn("Lectura de Firestore:", error);
+      });
   },
 
   cargar() {
@@ -1246,10 +1380,56 @@ const BancoDudasManager = {
 
   agregar(nuevaDuda) {
     nuevaDuda.id = 'duda_' + Date.now();
-    nuevaDuda.respuesta = 'Pendiente de respuesta por la comunidad o resuelta mediante el prompt de Gemini.';
+    nuevaDuda.respuesta = 'Duda registrada en el banco colaborativo.';
+    nuevaDuda.respuestasColaborativas = [];
+    nuevaDuda.fechaTimestamp = Date.now();
     this.dudas.unshift(nuevaDuda);
     this.guardar();
     this.renderizar();
+
+    if (this.isUsingFirebase && this.db) {
+      this.db.collection("dudas_comunitarias").doc(nuevaDuda.id).set(nuevaDuda).catch(e => console.warn(e));
+    }
+  },
+
+  agregarRespuestaColaborativa(dudaId) {
+    const inputTexto = document.getElementById(`reply-input-${dudaId}`);
+    const inputAutor = document.getElementById(`reply-author-${dudaId}`);
+    const texto = inputTexto ? inputTexto.value.trim() : '';
+    const autor = inputAutor ? inputAutor.value.trim() || 'Estudiante' : 'Estudiante';
+
+    if (!texto) {
+      CasoManager.mostrarToast("Por favor escribe tu respuesta antes de publicar", "warning");
+      return;
+    }
+
+    const duda = this.dudas.find(d => d.id === dudaId);
+    if (!duda) return;
+
+    if (!duda.respuestasColaborativas) {
+      duda.respuestasColaborativas = [];
+    }
+
+    const nuevaRespuesta = {
+      autor: autor,
+      texto: texto,
+      fecha: new Date().toLocaleDateString('es-CO')
+    };
+
+    duda.respuestasColaborativas.push(nuevaRespuesta);
+    this.guardar();
+    this.renderizar();
+
+    // Guardar en Firestore si está conectado
+    if (this.isUsingFirebase && this.db) {
+      this.db.collection("dudas_comunitarias").doc(dudaId).set(duda, { merge: true })
+        .then(() => CasoManager.mostrarToast("Respuesta guardada en Firebase Firestore", "cloud_done"))
+        .catch(e => console.warn("Error actualizando en Firestore:", e));
+    } else {
+      CasoManager.mostrarToast("Respuesta publicada en el Banco Comunitario", "send");
+    }
+
+    if (inputTexto) inputTexto.value = '';
   },
 
   buscar(query) {
@@ -1275,7 +1455,8 @@ const BancoDudasManager = {
       lista = lista.filter(d => 
         d.duda.toLowerCase().includes(query) ||
         d.meta.toLowerCase().includes(query) ||
-        (d.respuesta && d.respuesta.toLowerCase().includes(query))
+        (d.respuesta && d.respuesta.toLowerCase().includes(query)) ||
+        (d.respuestasColaborativas && d.respuestasColaborativas.some(r => r.texto.toLowerCase().includes(query)))
       );
     }
 
@@ -1291,26 +1472,67 @@ const BancoDudasManager = {
       return;
     }
 
-    contenedor.innerHTML = lista.map(d => `
-      <div class="bg-white rounded-2xl p-5 border border-surface-dim shadow-sm flex flex-col justify-between gap-3 hover:border-slate-300 transition-all">
-        <div>
-          <div class="flex items-center justify-between pb-2 border-b border-surface-dim gap-2">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface border border-surface-dim text-judicial-muted">${d.modulo}</span>
-            <span class="text-[10px] font-mono text-slate-400">${d.fecha}</span>
-          </div>
-          <h4 class="font-headline font-bold text-sm text-judicial-navy mt-2">${d.duda}</h4>
-          <p class="text-xs text-judicial-muted mt-1"><strong>Objetivo:</strong> ${d.meta}</p>
-        </div>
+    contenedor.innerHTML = lista.map(d => {
+      const colaborativas = d.respuestasColaborativas || [];
 
-        <div class="p-3 bg-surface rounded-xl border border-surface-dim text-xs">
-          <span class="font-bold text-emerald-800 flex items-center gap-1 mb-1">
-            <span class="material-symbols-outlined text-sm">verified</span>
-            Respuesta Jurídica:
-          </span>
-          <p class="text-judicial-navy leading-relaxed">${d.respuesta}</p>
+      return `
+        <div class="bg-white rounded-2xl p-5 border border-surface-dim shadow-sm flex flex-col justify-between gap-3 hover:border-slate-300 transition-all">
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-surface-dim gap-2">
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface border border-surface-dim text-judicial-muted">${d.modulo}</span>
+              <span class="text-[10px] font-mono text-slate-400">${d.fecha}</span>
+            </div>
+            <h4 class="font-headline font-bold text-sm text-judicial-navy mt-2">${d.duda}</h4>
+            <p class="text-xs text-judicial-muted mt-1"><strong>Objetivo:</strong> ${d.meta}</p>
+          </div>
+
+          <!-- Respuesta Oficial / Principal -->
+          <div class="p-3 bg-surface rounded-xl border border-surface-dim text-xs">
+            <span class="font-bold text-emerald-800 flex items-center gap-1 mb-1">
+              <span class="material-symbols-outlined text-sm">verified</span>
+              Respuesta Jurídica:
+            </span>
+            <p class="text-judicial-navy leading-relaxed">${d.respuesta}</p>
+          </div>
+
+          <!-- Respuestas Colaborativas de Estudiantes -->
+          ${colaborativas.length > 0 ? `
+            <div class="space-y-2 mt-1">
+              <span class="text-[11px] font-bold text-judicial-amber flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">groups</span>
+                Aportes de la Comunidad de Estudiantes (${colaborativas.length}):
+              </span>
+              ${colaborativas.map(r => `
+                <div class="p-2.5 bg-amber-50/70 rounded-xl border border-amber-200 text-xs">
+                  <div class="flex items-center justify-between text-[10px] text-judicial-muted mb-1 font-mono">
+                    <strong class="text-judicial-navy">${r.autor || 'Estudiante'}</strong>
+                    <span>${r.fecha}</span>
+                  </div>
+                  <p class="text-judicial-navy leading-relaxed">${r.texto}</p>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          <!-- Espacio para que otros estudiantes respondan la duda -->
+          <div class="mt-2 pt-3 border-t border-surface-dim/80 flex flex-col gap-2">
+            <span class="text-[11px] font-semibold text-judicial-navy flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm text-judicial-amber">rate_review</span>
+              ¿Sabes la respuesta de esta duda? Escribe acá tu respuesta:
+            </span>
+            <textarea id="reply-input-${d.id}" rows="2" placeholder="Si conoces la respuesta o el artículo aplicable, escribe tu respuesta aquí..." class="w-full bg-surface text-xs p-2 rounded-xl border border-surface-dim focus:outline-none focus:border-judicial-amber resize-none font-sans"></textarea>
+            <div class="flex items-center justify-between gap-2">
+              <input id="reply-author-${d.id}" type="text" placeholder="Tu nombre o alias (opcional)" class="bg-surface text-xs px-2.5 py-1.5 rounded-lg border border-surface-dim focus:outline-none w-44" />
+              <button onclick="BancoDudasManager.agregarRespuestaColaborativa('${d.id}')" class="px-3 py-1.5 bg-judicial-amber text-white text-xs font-bold rounded-lg hover:bg-orange-700 transition-all flex items-center gap-1 shadow-xs cursor-pointer">
+                <span class="material-symbols-outlined text-sm">send</span>
+                <span>Publicar Respuesta</span>
+              </button>
+            </div>
+          </div>
+
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 };
 

@@ -1406,10 +1406,31 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
               <div class="pt-2 border-t border-surface-dim space-y-2">
                 <button onclick="AyudaIA_Manager.consultarGemini()" class="w-full py-2.5 px-3 rounded-xl bg-judicial-amber text-white text-xs font-semibold flex items-center justify-center gap-2 hover:bg-amber-600 transition-colors shadow">
                   <span class="material-symbols-outlined text-sm">bolt</span>
-                  <span>Resolver Directamente con la IA</span>
+                  <span>Resolver Directamente con Gemini IA</span>
                 </button>
                 <span class="text-[10px] text-judicial-muted block text-center">
                   Guarda automáticamente la consulta en el Banco Comunitario (Firebase).
+                </span>
+              </div>
+
+              <!-- Configuración Segura de API Key de Gemini (Almacenamiento Local) -->
+              <div class="p-3 bg-surface rounded-xl border border-surface-dim flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold text-judicial-navy flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm text-judicial-amber">key</span>
+                    <span>API Key de Gemini (Gratis)</span>
+                  </span>
+                  <span id="gemini-key-status" class="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-container text-judicial-muted font-medium">Sin clave guardada</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <div class="relative flex-1">
+                    <input id="gemini-api-key-input" type="password" placeholder="Pega tu clave AIzaSy..." class="w-full pl-2.5 pr-7 py-1.5 bg-white text-xs font-mono rounded-lg border border-surface-dim focus:outline-none focus:border-judicial-amber" />
+                    <button type="button" onclick="AyudaIA_Manager.toggleKeyVisibility()" class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-sm text-slate-400 hover:text-slate-600">visibility</button>
+                  </div>
+                  <button type="button" onclick="AyudaIA_Manager.guardarApiKey()" class="px-3 py-1.5 bg-judicial-navy text-white text-xs font-semibold rounded-lg hover:bg-slate-800 transition-colors shrink-0">Guardar</button>
+                </div>
+                <span class="text-[10px] text-judicial-muted leading-tight">
+                  🔒 Tu clave se guarda únicamente en tu navegador (localStorage) para que nunca se comparta en GitHub ni con terceros.
                 </span>
               </div>
             </div>
@@ -1496,6 +1517,10 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
       <span class="text-[10px] font-bold">Ayuda</span>
     </button>
   </nav>
+
+  <!-- Firebase SDK (Compat para ejecución 100% Client-Side) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <!-- Scripts de la Aplicación -->
   <script src="firebase-config.js"></script>
