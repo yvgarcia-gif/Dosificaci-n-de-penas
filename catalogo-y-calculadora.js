@@ -1025,7 +1025,7 @@ const AyudaIA_Manager = {
     if (savedKey) {
       if (input) input.value = savedKey;
       if (badge) {
-        badge.textContent = "Clave guardada ✓";
+        badge.textContent = "Clave activa ✓";
         badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold";
       }
     }
@@ -1345,15 +1345,22 @@ const BancoDudasManager = {
   escucharFirestore() {
     if (!this.db) return;
     this.db.collection("dudas_comunitarias")
-      .orderBy("fechaTimestamp", "desc")
       .onSnapshot((snapshot) => {
         const docs = [];
         snapshot.forEach(doc => {
           docs.push({ id: doc.id, ...doc.data() });
         });
         if (docs.length > 0) {
+          // Ordenar en memoria sin requerir índices compuestos en Firestore
+          docs.sort((a, b) => (b.fechaTimestamp || 0) - (a.fechaTimestamp || 0));
           this.dudas = docs;
           this.renderizar();
+        } else {
+          // Si la colección está vacía en la nube, subimos las preguntas iniciales
+          this.dudasIniciales.forEach(d => {
+            const docData = { ...d, fechaTimestamp: Date.now() };
+            this.db.collection("dudas_comunitarias").doc(d.id).set(docData).catch(e => console.warn(e));
+          });
         }
       }, (error) => {
         console.warn("Lectura de Firestore:", error);

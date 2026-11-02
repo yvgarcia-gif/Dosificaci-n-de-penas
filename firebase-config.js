@@ -1,29 +1,19 @@
 /**
- * ELECTIVA IA - CONFIGURACIÓN DE FIREBASE FIRESTORE
- * 
- * ¿Cómo conectar tu base de datos gratuita de Google Firebase en 3 minutos?
- * -------------------------------------------------------------------------
- * 1. Ve a https://console.firebase.google.com/ e inicia sesión con tu cuenta de Google.
- * 2. Haz clic en "Crear un proyecto" y ponle el nombre "electiva-ia".
- * 3. En el menú de la izquierda, entra a "Compilación" -> "Firestore Database" y dale "Crear base de datos" en "Modo de prueba".
- * 4. Ve a la ruedita de configuración del proyecto (Configuración del proyecto) -> "Tus apps" -> Selecciona el icono Web (</>).
- * 5. Copia los valores de firebaseConfig y pégalos a continuación:
+ * IURISDOSIS COLOMBIA — CONFIGURACIÓN DE GOOGLE FIREBASE FIRESTORE
+ * Base de Datos en Tiempo Real (100% Client-Side sin servidor)
  */
 
 const FIREBASE_CONFIG = {
-  apiKey: "TU_API_KEY_AQUI",
-  authDomain: "electiva-ia.firebaseapp.com",
-  projectId: "electiva-ia",
-  storageBucket: "electiva-ia.appspot.com",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyA3epXJ2N0BJfajdvrO4fp_oDRA3FKiWnQ",
+  authDomain: "dosificacion--penas.firebaseapp.com",
+  projectId: "dosificacion--penas",
+  storageBucket: "dosificacion--penas.firebasestorage.app",
+  messagingSenderId: "517407652751",
+  appId: "1:517407652751:web:9e09fe13acb8110ea9e9fa"
 };
 
-// Variable para verificar si el usuario ya configuró sus credenciales
-const isFirebaseConfigured = FIREBASE_CONFIG.apiKey !== "TU_API_KEY_AQUI";
-
-// Exportar para que la app sepa el estado de la conexión
+// Conexión activa a Firestore
 window.ElectivaFirebase = {
-  isConfigured: isFirebaseConfigured,
+  isConfigured: true,
   config: FIREBASE_CONFIG
 };
