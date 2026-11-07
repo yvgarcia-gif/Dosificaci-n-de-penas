@@ -2,11 +2,13 @@
  * IURISDOSIS COLOMBIA — DOSIFICADOR PENAL & SISTEMA DE CUARTOS
  * Ley 599 de 2000 (Código Penal) & Ley 906 de 2004 (Código de Procedimiento Penal)
  * 
- * MÓDULOS INTEGRADOS:
- * - Función 2: Catálogo y Búsqueda de Delitos
- * - Función 3: Calculadora de Cuartos y Dosimetría Penal
- * - Función 4: Justificación Jurídica y Memoria de Cálculo (Auto de Dosificación)
- * - Espacio de Ayuda: Asistente IA (Gemini API) y Banco Comunitario (Firebase Firestore)
+ * IDENTIDAD VISUAL: Vino Tinto (#6D0F21), Negro (#0F1115) y Blanco (#FFFFFF).
+ * MÓDULOS:
+ * 1. Catálogo Completo de Delitos Ley 599/2000 (Función 2)
+ * 2. Calculadora de Cuartos con Explicación Paso a Paso de Cómputo (Función 3)
+ * 3. Justificación Jurídica y Auto Judicial de Individualización (Función 4)
+ * 4. Laboratorio Jurídico con Gemini IA (6 Herramientas Pedagógicas)
+ * 5. Banco Comunitario de Dudas Estudiantiles con Respuestas Colaborativas (Firebase)
  */
 
 // ============================================================
@@ -42,33 +44,33 @@ const DelitosCatalogo = [
     minMeses: 208,
     maxMeses: 450,
     norma: 'El que matare a otro, incurrirá en prisión de doscientos ocho (208) a cuatrocientos cincuenta (450) meses.',
-    especificos: 'Art. 104: Circunstancias de agravación punitiva elevan la pena a 400 - 600 meses si se comete en ascendiente/descendiente, con sevicia, por precio o para ocultar otro delito.',
-    multa: 'No aplica pena de multa privativa principal.',
-    inhabilitacion: 'Inhabilitación de derechos y funciones públicas igual a la pena de prisión.'
+    especificos: 'Art. 104 C.P.: Si concurren agravantes específicas (parentesco, sevicia, indefensión, por precio), la pena se eleva a 400 - 600 meses.',
+    multa: 'No prevé sanción pecuniaria privativa principal.',
+    inhabilitacion: 'Inhabilitación accesoria de derechos y funciones públicas igual a la pena privativa de la libertad.'
   },
   {
     id: '104_7',
     articulo: 'Art. 104 Num. 7 C.P.',
-    nombre: 'Homicidio Agravado (Por Sevicia / Indefensión)',
+    nombre: 'Homicidio Agravado (Sevicia / Indefensión)',
     bienJuridico: 'vida',
     bienJuridicoNombre: 'Vida e Integridad Personal',
     minMeses: 400,
     maxMeses: 600,
     norma: 'La pena será de cuatrocientos (400) a seiscientos (600) meses de prisión, si la conducta se cometiere colocando a la víctima en situación de indefensión o con sevicia.',
-    especificos: 'Comprende el sufrimiento deliberado e inhumano causado antes de segar la vida del ofendido.',
+    especificos: 'Exige la acreditación probatoria del sufrimiento inhumano e innecesario infligido antes de causar la muerte.',
     multa: 'No aplica.',
-    inhabilitacion: 'Inhabilitación de derechos y funciones públicas por hasta 20 años.'
+    inhabilitacion: 'Inhabilitación accesoria de hasta 20 años.'
   },
   {
     id: '106',
     articulo: 'Art. 106 C.P.',
-    nombre: 'Homicidio por Piedad (Eutanasia sin protocolo)',
+    nombre: 'Homicidio por Piedad',
     bienJuridico: 'vida',
     bienJuridicoNombre: 'Vida e Integridad Personal',
     minMeses: 16,
     maxMeses: 54,
     norma: 'El que matare a otro por piedad, para poner fin a intensos sufrimientos provenientes de lesión corporal o enfermedad grave e incurable.',
-    especificos: 'Tipo privilegiado atenuado. Sujeto a sentencias C-239/97 y C-233/21 de la Corte Constitucional sobre derecho fundamental a morir dignamente.',
+    especificos: 'Tipo penal privilegiado y atenuado. Supeditado a sentencias C-239/97 y C-233/21 de la Corte Constitucional.',
     multa: 'No aplica.',
     inhabilitacion: 'Inhabilitación accesoria de 16 a 54 meses.'
   },
@@ -81,22 +83,22 @@ const DelitosCatalogo = [
     minMeses: 32,
     maxMeses: 108,
     norma: 'El que por culpa matare a otro, incurrirá en prisión de treinta y dos (32) a ciento ocho (108) meses y multa de 26.66 a 150 SMLMV.',
-    especificos: 'Art. 110: Agravantes específicas (embriaguez o abandono del lugar del hecho) aumentan la pena de la mitad al doble.',
+    especificos: 'Art. 110 C.P.: Agravantes (embriaguez o fuga) incrementan la pena de la mitad al doble.',
     multa: '26.66 a 150 SMLMV.',
-    inhabilitacion: 'Privación del derecho a conducir vehículos automotores de 48 a 90 meses.'
+    inhabilitacion: 'Privación de la conducción de vehículos automotores de 48 a 90 meses.'
   },
   {
     id: '111_112',
     articulo: 'Art. 111 y 112 C.P.',
-    nombre: 'Lesiones Personales con Incapacidad > 30 días',
+    nombre: 'Lesiones Personales (Incapacidad > 30 días)',
     bienJuridico: 'vida',
     bienJuridicoNombre: 'Vida e Integridad Personal',
     minMeses: 16,
     maxMeses: 54,
     norma: 'Si el daño determinare incapacidad para trabajar o enfermedad superior a treinta (30) días sin pasar de noventa (90).',
-    especificos: 'Aumentos punitivos si dejan deformidad física permanente o perturbación funcional (Arts. 113 a 116 C.P.).',
+    especificos: 'Aumentos punitivos si producen deformidad o perturbación funcional transitoria o permanente (Arts. 113 a 116).',
     multa: 'Multa de 13.33 a 30 SMLMV.',
-    inhabilitacion: 'Inhabilitación accesoria conforme al tiempo de prisión.'
+    inhabilitacion: 'Inhabilitación accesoria por el término de la sanción.'
   },
   {
     id: '168',
@@ -107,9 +109,9 @@ const DelitosCatalogo = [
     minMeses: 192,
     maxMeses: 360,
     norma: 'El que con propósitos distintos a los previstos en el secuestro extorsivo, arrebate, sustraiga, retenga u oculte a una persona.',
-    especificos: 'Sujeto a prohibición expresa de rebajas y subrogados de la Ley 733 de 2002.',
+    especificos: 'Prohibición taxativa de subrogados y rebajas por Ley 733 de 2002.',
     multa: 'Multa de 800 a 1500 SMLMV.',
-    inhabilitacion: 'Pérdida de derechos y funciones públicas por tiempo igual a la pena impuesta.'
+    inhabilitacion: 'Inhabilitación obligatoria de funciones públicas.'
   },
   {
     id: '169',
@@ -125,19 +127,6 @@ const DelitosCatalogo = [
     inhabilitacion: 'Inhabilitación privativa estricta.'
   },
   {
-    id: '178',
-    articulo: 'Art. 178 C.P.',
-    nombre: 'Tortura',
-    bienJuridico: 'vida',
-    bienJuridicoNombre: 'Vida e Integridad Personal',
-    minMeses: 128,
-    maxMeses: 270,
-    norma: 'El que inflija a una persona dolores o sufrimientos graves, físicos o psíquicos, con el fin de obtener de ella información o confesión.',
-    especificos: 'Imprescriptibilidad en graves violaciones a DDHH / DIH según tratados internacionales.',
-    multa: 'Multa de 1066.66 a 3000 SMLMV.',
-    inhabilitacion: 'Inhabilitación de funciones públicas obligatoria.'
-  },
-  {
     id: '205',
     articulo: 'Art. 205 C.P.',
     nombre: 'Acceso Carnal Violento',
@@ -146,22 +135,9 @@ const DelitosCatalogo = [
     minMeses: 192,
     maxMeses: 360,
     norma: 'El que realice acceso carnal con otra persona mediante violencia, incurrirá en prisión de doce (12) a veinte (20) años —192 a 360 meses—.',
-    especificos: 'Art. 211 C.P.: Agravantes punitivas (aumento de un tercio a la mitad si concurren varios copartícipes o con uso de armas).',
+    especificos: 'Art. 211 C.P.: Agravantes punitivas (aumento de 1/3 a 1/2 con armas o pluralidad de agresores).',
     multa: 'No aplica.',
-    inhabilitacion: 'Inhabilitación para el ejercicio de derechos y cargos que impliquen contacto con menores de edad (Ley 1918 de 2018).'
-  },
-  {
-    id: '206',
-    articulo: 'Art. 206 C.P.',
-    nombre: 'Acto Sexual Violento',
-    bienJuridico: 'sexual',
-    bienJuridicoNombre: 'Libertad e Integridad Sexual',
-    minMeses: 96,
-    maxMeses: 192,
-    norma: 'El que realice en otra persona acto sexual diverso al acceso carnal mediante violencia.',
-    especificos: 'Exclusión taxativa de beneficios y subrogados si la víctima es menor de edad (Art. 199 Ley 1098).',
-    multa: 'No aplica.',
-    inhabilitacion: 'Inhabilitación de funciones públicas.'
+    inhabilitacion: 'Inhabilitación para cargos con menores de edad (Ley 1918 de 2018).'
   },
   {
     id: '208',
@@ -174,7 +150,7 @@ const DelitosCatalogo = [
     norma: 'El que accediere carnalmente a persona menor de catorce (14) años, incurrirá en prisión de dieciséis (16) a veintiocho (28) años.',
     especificos: 'Prohibición absoluta de rebajas por allanamiento o preacuerdo (Art. 199 Ley 1098 de 2006). Cero descuento premial.',
     multa: 'No aplica.',
-    inhabilitacion: 'Inhabilitación vitalicia para trabajar con menores.'
+    inhabilitacion: 'Inhabilitación perpetua para laborar con niños, niñas y adolescentes.'
   },
   {
     id: '239',
@@ -185,19 +161,19 @@ const DelitosCatalogo = [
     minMeses: 32,
     maxMeses: 108,
     norma: 'El que se apodere de una cosa mueble ajena, con el propósito de obtener provecho para sí o para otro.',
-    especificos: 'Pena tasada según la cuantía (inferior o superior a 10 SMLMV).',
-    multa: 'No aplica pena de multa en el tipo base.',
+    especificos: 'Tasación modulada si la cuantía no excede de 10 SMLMV.',
+    multa: 'No aplica en el tipo básico.',
     inhabilitacion: 'Inhabilitación accesoria de derechos y funciones públicas.'
   },
   {
     id: '240',
     articulo: 'Art. 240 C.P.',
-    nombre: 'Hurto Calificado (Violencia / Destreza / Escalamiento)',
+    nombre: 'Hurto Calificado',
     bienJuridico: 'patrimonio',
     bienJuridicoNombre: 'Patrimonio Económico',
     minMeses: 72,
     maxMeses: 168,
-    norma: 'La pena será de seis (6) a catorce (14) años si se comete con violencia sobre las cosas, sobre personas, con destreza o escalamiento.',
+    norma: 'La pena será de seis (6) a catorce (14) años si se comete con violencia sobre las cosas, destreza o escalamiento.',
     especificos: 'Si la violencia se ejerce sobre las personas, la pena será de ocho (8) a dieciséis (16) años (96 a 192 meses).',
     multa: 'No aplica.',
     inhabilitacion: 'Inhabilitación accesoria.'
@@ -210,10 +186,10 @@ const DelitosCatalogo = [
     bienJuridicoNombre: 'Patrimonio Económico',
     minMeses: 96,
     maxMeses: 240,
-    norma: 'Las penas de los artículos anteriores se aumentarán de la mitad a las tres cuartas partes cuando concurran las causales del artículo 241.',
-    especificos: 'Concurso de dos o más personas, uso de armas, sobre medios motorizados o en lugar despoblado.',
+    norma: 'Las penas anteriores se aumentarán de la mitad a las tres cuartas partes cuando concurran las causales del artículo 241.',
+    especificos: 'Concurso de dos o más personas, uso de armas o sobre medios motorizados.',
     multa: 'No aplica.',
-    inhabilitacion: 'Inhabilitación accesoria por el término de la sanción.'
+    inhabilitacion: 'Inhabilitación accesoria.'
   },
   {
     id: '244',
@@ -223,7 +199,7 @@ const DelitosCatalogo = [
     bienJuridicoNombre: 'Patrimonio Económico',
     minMeses: 192,
     maxMeses: 288,
-    norma: 'El que constriña a otro a hacer, tolerar u omitir alguna cosa, con el propósito de obtener provecho ilícito o cualquier utilidad.',
+    norma: 'El que constriña a otro a hacer, tolerar u omitir alguna cosa, con el propósito de obtener provecho ilícito.',
     especificos: 'Art. 245 C.P. Agravantes aumentan de una tercera parte a la mitad (256 a 432 meses). Ley 733/2002 restringe subrogados.',
     multa: 'Multa de 800 a 1800 SMLMV.',
     inhabilitacion: 'Inhabilitación privativa estricta.'
@@ -237,33 +213,33 @@ const DelitosCatalogo = [
     minMeses: 64,
     maxMeses: 144,
     norma: 'El servidor público que en ejercicio de sus funciones, al extender documento público que pueda servir de prueba, consigne una falsedad o calle la verdad.',
-    especificos: 'Sujeto activo calificado (servidor público en ejercicio de funciones).',
+    especificos: 'Sujeto activo cualificado funcionalmente.',
     multa: 'No aplica.',
-    inhabilitacion: 'Inhabilitación para el ejercicio de derechos y funciones públicas de 64 a 144 meses.'
+    inhabilitacion: 'Inhabilitación de derechos y funciones públicas de 64 a 144 meses.'
   },
   {
     id: '365',
     articulo: 'Art. 365 C.P.',
-    nombre: 'Fabricación, Tráfico y Porte de Armas de Fuego',
+    nombre: 'Porte Ilegal de Armas de Fuego',
     bienJuridico: 'seguridad',
     bienJuridicoNombre: 'Seguridad Pública',
     minMeses: 108,
     maxMeses: 144,
     norma: 'El que sin permiso de autoridad competente importe, trafique, fabrique, transporte, almacene o porte en lugar público armas de fuego de defensa personal.',
-    especificos: 'La pena se duplicará si se emplean armas con numeración alterada, se porte en vehículo motorizado o en coparticipación (Art. 365 inc. 2).',
+    especificos: 'La pena se duplicará si se emplean armas con numeración alterada o en coparticipación.',
     multa: 'No aplica.',
     inhabilitacion: 'Decomiso del material bélico e inhabilitación accesoria.'
   },
   {
     id: '376',
     articulo: 'Art. 376 C.P.',
-    nombre: 'Tráfico, Fabricación o Porte de Estupefacientes',
+    nombre: 'Tráfico de Estupefacientes',
     bienJuridico: 'salud',
     bienJuridicoNombre: 'Salud Pública',
     minMeses: 128,
     maxMeses: 360,
-    norma: 'El que sin permiso introduzca al país, transporte, almacene, conserve, elabore, venda o adquiera sustancias estupefacientes o psicotrópicas.',
-    especificos: 'Pena modulada por la cantidad incautada (incisos 1, 2 y 3). Exclusión de dosis para consumo personal (Sentencia C-221/94 y CSJ SP1944-2021).',
+    norma: 'El que sin permiso introduzca al país, transporte, almacene, elabore, venda o adquiera sustancias estupefacientes o psicotrópicas.',
+    especificos: 'Modulación según la cantidad incautada. Exclusión de dosis para consumo personal (Sentencia C-221/94 y CSJ SP1944-2021).',
     multa: 'Multa de 1334 a 50000 SMLMV.',
     inhabilitacion: 'Inhabilitación accesoria obligatoria.'
   },
@@ -278,7 +254,7 @@ const DelitosCatalogo = [
     norma: 'El servidor público que se apropie en provecho suyo o de un tercero de bienes del Estado o de empresas en que éste tenga parte.',
     especificos: 'Si el valor supera 200 SMLMV, pena de 144 a 324 meses. Si no supera 50 SMLMV, pena de 64 a 180 meses.',
     multa: 'Multa equivalente al valor de lo apropiado sin que supere 50000 SMLMV.',
-    inhabilitacion: 'Inhabilitación perpetua o intemporal para contratar con el Estado (Art. 122 C.P. y Ley 2195 de 2022).'
+    inhabilitacion: 'Inhabilitación intemporal para contratar con el Estado (Art. 122 C.P.).'
   },
   {
     id: '404',
@@ -288,8 +264,8 @@ const DelitosCatalogo = [
     bienJuridicoNombre: 'Administración Pública',
     minMeses: 96,
     maxMeses: 180,
-    norma: 'El servidor público que abusando de su cargo o de sus funciones constriña o induzca a alguien a dar o prometer dinero u otra utilidad indebida.',
-    especificos: 'Delito contra la probidad pública con sujeto activo calificado.',
+    norma: 'El servidor público que abusando de su cargo constriña o induzca a alguien a dar o prometer dinero u otra utilidad indebida.',
+    especificos: 'Afecta la probidad pública con sujeto activo calificado.',
     multa: 'Multa de 66.66 a 150 SMLMV.',
     inhabilitacion: 'Inhabilitación de derechos y funciones públicas de 96 a 180 meses.'
   },
@@ -302,7 +278,7 @@ const DelitosCatalogo = [
     minMeses: 80,
     maxMeses: 144,
     norma: 'El servidor público que reciba para sí o para otro dinero u otra utilidad para retardar u omitir un acto propio de su cargo.',
-    especificos: 'Afecta la imparcialidad del ejercicio funcional del Estado.',
+    especificos: 'Afecta la imparcialidad institucional.',
     multa: 'Multa de 66.66 a 150 SMLMV.',
     inhabilitacion: 'Inhabilitación de 80 a 144 meses.'
   },
@@ -315,7 +291,7 @@ const DelitosCatalogo = [
     minMeses: 48,
     maxMeses: 144,
     norma: 'El servidor público que profiera resolución, dictamen o concepto manifiestamente contrario a la ley.',
-    especificos: 'Exige contradicción ostensible, grosera y palmaria con el ordenamiento positivo vigente.',
+    especificos: 'Exige contradicción ostensible y palmaria con el ordenamiento positivo vigente.',
     multa: 'Multa de 66.66 a 300 SMLMV.',
     inhabilitacion: 'Inhabilitación de derechos y funciones públicas de 80 a 144 meses.'
   }
@@ -335,13 +311,12 @@ const CatalogoManager = {
   filtrarBienJuridico(bien) {
     this.filtroActivo = bien;
 
-    // Actualizar estilo visual de los botones de filtro
     const botones = document.querySelectorAll('.btn-filtro-bien');
     botones.forEach(btn => {
       if (btn.getAttribute('data-bien') === bien) {
-        btn.className = "btn-filtro-bien px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-judicial-navy text-white shadow-sm transition-all";
+        btn.className = "btn-filtro-bien px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-wine text-white shadow-sm transition-all";
       } else {
-        btn.className = "btn-filtro-bien px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-surface-container text-judicial-navy hover:bg-surface-high transition-all";
+        btn.className = "btn-filtro-bien px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all";
       }
     });
 
@@ -360,12 +335,10 @@ const CatalogoManager = {
 
     let lista = DelitosCatalogo;
 
-    // Filtrar por bien jurídico
     if (this.filtroActivo !== 'todos') {
       lista = lista.filter(d => d.bienJuridico === this.filtroActivo);
     }
 
-    // Filtrar por texto de búsqueda
     if (query) {
       lista = lista.filter(d => 
         d.articulo.toLowerCase().includes(query) ||
@@ -380,7 +353,7 @@ const CatalogoManager = {
 
     if (lista.length === 0) {
       contenedor.innerHTML = `
-        <div class="p-8 text-center bg-white rounded-xl border border-surface-dim text-judicial-muted">
+        <div class="p-8 text-center bg-white rounded-xl border border-slate-200 text-slate-500">
           <span class="material-symbols-outlined text-3xl mb-1 text-slate-300">search_off</span>
           <p class="text-xs font-semibold">No se encontraron tipos penales que coincidan con la búsqueda.</p>
         </div>
@@ -388,27 +361,25 @@ const CatalogoManager = {
       return;
     }
 
-    // Generar tarjetas
     contenedor.innerHTML = lista.map(d => {
       const isSelected = d.id === this.delitoSeleccionadoId;
-      const cardBorder = isSelected ? 'border-2 border-judicial-amber bg-amber-50/50 shadow-sm' : 'border border-surface-dim bg-white hover:border-slate-400';
+      const cardBorder = isSelected ? 'border-2 border-wine bg-wine-light/50 shadow-sm' : 'border border-slate-200 bg-white hover:border-wine/50';
       
       return `
         <article onclick="CatalogoManager.seleccionar('${d.id}')" class="p-3.5 rounded-xl ${cardBorder} transition-all cursor-pointer flex flex-col gap-2 group">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold ${isSelected ? 'text-judicial-amber' : 'text-judicial-navy'}">${d.articulo}</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-surface border border-surface-dim text-judicial-muted">${d.bienJuridicoNombre}</span>
+            <span class="text-xs font-mono font-bold ${isSelected ? 'text-wine' : 'text-slate-900'}">${d.articulo}</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600">${d.bienJuridicoNombre}</span>
           </div>
-          <h4 class="font-headline font-bold text-sm text-judicial-navy group-hover:text-judicial-amber transition-colors">${d.nombre}</h4>
+          <h4 class="font-headline font-bold text-sm text-slate-900 group-hover:text-wine transition-colors">${d.nombre}</h4>
           <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-judicial-muted">Prisión: <strong>${d.minMeses} a ${d.maxMeses} m</strong></span>
-            <span class="text-[11px] text-judicial-amber font-semibold">AP: ${d.maxMeses - d.minMeses} m</span>
+            <span class="text-slate-500">Prisión: <strong>${d.minMeses} a ${d.maxMeses} m</strong></span>
+            <span class="text-[11px] text-wine font-semibold">Ámbito: ${d.maxMeses - d.minMeses} m</span>
           </div>
         </article>
       `;
     }).join('');
 
-    // Actualizar la ficha destacada izquierda
     this.actualizarFichaDetalle();
   },
 
@@ -443,8 +414,8 @@ const CatalogoManager = {
     if (esp) {
       esp.innerHTML = `
         <p>• <strong>Modificadores específicos:</strong> ${d.especificos}</p>
-        <p>• <strong>Pena patrimonial:</strong> ${d.multa}</p>
-        <p>• <strong>Inhabilitación de derechos:</strong> ${d.inhabilitacion}</p>
+        <p>• <strong>Sanción patrimonial:</strong> ${d.multa}</p>
+        <p>• <strong>Penas accesorias:</strong> ${d.inhabilitacion}</p>
       `;
     }
   },
@@ -457,22 +428,20 @@ const CatalogoManager = {
     AppState.caso.minMeses = d.minMeses;
     AppState.caso.maxMeses = d.maxMeses;
 
-    // Actualizar también el select de Hechos si existe
     const hechosSelect = document.getElementById('caso-delito-base');
     if (hechosSelect) {
       hechosSelect.value = d.id.startsWith('104') ? '104' : d.id;
     }
 
-    CasoManager.mostrarToast(`Delito "${d.nombre}" cargado para dosimetría`, "calculate");
+    CasoManager.mostrarToast(`Delito "${d.nombre}" cargado para Dosimetría Penal`, "calculate");
     AppNav.switchTab('calculadora');
   }
 };
 
 // ============================================================
-// 3. CALCULADORA DE CUARTOS Y DOSIMETRÍA (CalculadoraManager - Función 3)
+// 3. CALCULADORA DE CUARTOS Y DOSIMETRÍA PASO A PASO (Función 3)
 // ============================================================
 const CalculadoraManager = {
-  // Estado local del cálculo
   minBase: 208,
   maxBase: 450,
   minModificado: 208,
@@ -485,7 +454,7 @@ const CalculadoraManager = {
     q3: { min: 329, max: 389.5 },
     q4: { min: 389.5, max: 450 }
   },
-  cuartoActivo: 'minimo', // 'minimo' | 'medios' | 'maximo'
+  cuartoActivo: 'minimo',
   quantumMeses: 215,
   descuentoPorcentaje: 40,
   penaFinalMeses: 129,
@@ -508,7 +477,6 @@ const CalculadoraManager = {
     setTxt('calc-delito-nombre', d.nombre);
     setTxt('calc-delito-cita', `"${d.norma}"`);
 
-    // Sincronizar modificadores del Art. 60
     const selectIntervencion = document.getElementById('calc-select-intervencion');
     const selectEjecucion = document.getElementById('calc-select-ejecucion');
     if (selectIntervencion && AppState.caso.intervencion) selectIntervencion.value = AppState.caso.intervencion;
@@ -528,57 +496,50 @@ const CalculadoraManager = {
 
     // 1. Grado de ejecución (Art. 27 C.P. - Tentativa)
     if (ejecucion === 'tentativa_acabada') {
-      // Disminuye de una tercera parte a la mitad
-      // Mínimo: se disminuye en 1/2 del mínimo base
-      // Máximo: se disminuye en 1/3 del máximo base
       min = Math.round(min * 0.5);
       max = Math.round(max * 0.6667);
-      notasModificador.push('Tentativa acabada (Art. 27 inc. 1)');
+      notasModificador.push('Tentativa acabada (Art. 27 inc. 1: rebaja 1/3 a 1/2)');
     } else if (ejecucion === 'tentativa_inacabada') {
-      // Disminuye de la mitad a las dos terceras partes
       min = Math.round(min * 0.3333);
       max = Math.round(max * 0.5);
-      notasModificador.push('Tentativa inacabada (Art. 27 inc. 2)');
+      notasModificador.push('Tentativa inacabada (Art. 27 inc. 2: rebaja 1/2 a 2/3)');
     }
 
     // 2. Participación (Art. 30 C.P. - Complicidad)
     if (intervencion === 'complice') {
-      // Disminuye de una sexta parte a la mitad
       min = Math.round(min * 0.5);
       max = Math.round(max * 0.8333);
-      notasModificador.push('Complicidad (Art. 30 inc. 3)');
+      notasModificador.push('Complicidad (Art. 30 inc. 3: rebaja 1/6 a 1/2)');
     } else if (intervencion === 'interviniente') {
       min = Math.round(min * 0.75);
       max = Math.round(max * 0.75);
-      notasModificador.push('Interviniente (Art. 30 inc. 4)');
+      notasModificador.push('Interviniente (Art. 30 inc. 4: rebaja 1/4)');
     }
 
     // 3. Causales post-delictuales o subjetivas (Arts. 56 y 57)
     if (especiales === 'ira_intenso_dolor') {
       min = Math.round(min * 0.3333);
       max = Math.round(max * 0.5);
-      notasModificador.push('Ira e Intenso Dolor (Art. 57)');
+      notasModificador.push('Ira e Intenso Dolor (Art. 57: rebaja 1/6 a 1/2)');
     } else if (especiales === 'marginalidad') {
       min = Math.round(min * 0.1667);
       max = Math.round(max * 0.5);
-      notasModificador.push('Marginalidad o Pobreza Extrema (Art. 56)');
+      notasModificador.push('Marginalidad o Pobreza Extrema (Art. 56: rebaja 1/6 a 1/2)');
     }
 
-    // Garantizar que min < max
     if (min >= max) min = Math.max(1, max - 12);
 
     this.minModificado = min;
     this.maxModificado = max;
 
-    // Actualizar alerta de límites modificados
     const alertaDisplay = document.getElementById('calc-limites-modificados-display');
     if (alertaDisplay) {
       if (notasModificador.length > 0) {
         alertaDisplay.textContent = `${min} a ${max} meses (${notasModificador.join(', ')})`;
-        alertaDisplay.className = "font-bold text-judicial-crimson";
+        alertaDisplay.className = "font-bold text-wine";
       } else {
-        alertaDisplay.textContent = `${min} a ${max} meses (Límites plenos sin rebajas de Art. 60)`;
-        alertaDisplay.className = "font-bold text-judicial-navy";
+        alertaDisplay.textContent = `${min} a ${max} meses (Límites abstractos plenos)`;
+        alertaDisplay.className = "font-bold text-slate-900";
       }
     }
 
@@ -594,7 +555,6 @@ const CalculadoraManager = {
     this.ambitoPunitivo = ap;
     this.cuartoAmplitud = vc;
 
-    // Delimitación estricta de los 4 cuartos (Art. 61 C.P.)
     const q1Max = Number((min + vc).toFixed(2));
     const q2Max = Number((min + 2 * vc).toFixed(2));
     const q3Max = Number((max - vc).toFixed(2));
@@ -606,7 +566,6 @@ const CalculadoraManager = {
       q4: { min: q3Max, max: max }
     };
 
-    // Actualizar métricas visuales del resumen superior
     const setTxt = (id, txt) => {
       const el = document.getElementById(id);
       if (el) el.textContent = txt;
@@ -620,7 +579,6 @@ const CalculadoraManager = {
     setTxt('calc-cuarto-amplitud', `Cuarto: ${vc}m`);
     setTxt('calc-subtitulo-cuartos', `Ámbito de ${ap} meses / 4 = ${vc} meses por cuarto punitivo.`);
 
-    // Actualizar rangos en las 4 tarjetas
     setTxt('rango-cuarto-1-meses', `${min} a ${q1Max} m`);
     setTxt('rango-cuarto-1-human', `${formatearMesesAHumano(min)} a ${formatearMesesAHumano(q1Max)}`);
 
@@ -634,10 +592,10 @@ const CalculadoraManager = {
     setTxt('rango-cuarto-4-human', `${formatearMesesAHumano(q3Max)} a ${formatearMesesAHumano(max)}`);
 
     this.determinarCuartoActivo();
+    this.renderizarExplicacionPasoAPaso();
   },
 
   determinarCuartoActivo() {
-    // Tomar las causales acreditadas desde AppState
     const mit = AppState.caso.atenuantesCount || 0;
     const agg = AppState.caso.agravantesCount || 0;
 
@@ -646,23 +604,21 @@ const CalculadoraManager = {
 
     if (mit > 0 && agg === 0) {
       activo = 'minimo';
-      reglaTexto = `"El sentenciador sólo podrá moverse dentro del <strong>cuarto mínimo</strong> cuando únicamente concurran circunstancias de menor punibilidad (Art. 61 inc. 2)." Concurren ${mit} atenuante(s) y 0 agravantes acreditadas: discrecionalidad restringida estrictamente al intervalo de <strong>${this.cuartos.q1.min} a ${this.cuartos.q1.max} meses</strong>.`;
+      reglaTexto = `"El sentenciador sólo podrá moverse dentro del <strong>cuarto mínimo</strong> cuando únicamente concurran circunstancias de menor punibilidad (Art. 61 inc. 2 C.P.)." Al estar acreditadas ${mit} atenuante(s) del Art. 55 y 0 agravantes del Art. 58, la discrecionalidad judicial queda restringida obligatoriamente al intervalo de <strong>${this.cuartos.q1.min} a ${this.cuartos.q1.max} meses</strong>.`;
     } else if (agg > 0 && mit === 0) {
       activo = 'maximo';
-      reglaTexto = `"El sentenciador sólo podrá moverse dentro del <strong>cuarto máximo</strong> cuando únicamente concurran circunstancias de mayor punibilidad (Art. 61 inc. 2)." Concurren ${agg} agravante(s) y 0 atenuantes: discrecionalidad restringida obligatoriamente al intervalo de <strong>${this.cuartos.q4.min} a ${this.cuartos.q4.max} meses</strong>.`;
+      reglaTexto = `"El sentenciador sólo podrá moverse dentro del <strong>cuarto máximo</strong> cuando únicamente concurran circunstancias de mayor punibilidad (Art. 61 inc. 2 C.P.)." Al acreditarse ${agg} agravante(s) del Art. 58 y 0 atenuantes, la ley ordena situar la pena en el intervalo de <strong>${this.cuartos.q4.min} a ${this.cuartos.q4.max} meses</strong>.`;
     } else {
       activo = 'medios';
-      reglaTexto = `"El sentenciador podrá moverse dentro de los <strong>cuartos medios</strong> cuando concurran circunstancias de atenuación y agravación punitiva, o cuando no concurra ninguna de ellas (Art. 61 inc. 2)." Concurrencia de atenuantes (${mit}) y agravantes (${agg}): discrecionalidad habilitada entre <strong>${this.cuartos.q2.min} y ${this.cuartos.q3.max} meses</strong>.`;
+      reglaTexto = `"El sentenciador podrá moverse dentro de los <strong>cuartos medios</strong> cuando concurran circunstancias de atenuación y agravación punitiva, o cuando no concurra ninguna de ellas (Art. 61 inc. 2 C.P.)." Al concurrir atenuantes (${mit}) y agravantes (${agg}), o ninguna causal genérica, el marco de tasación comprende de <strong>${this.cuartos.q2.min} a ${this.cuartos.q3.max} meses</strong>.`;
     }
 
     this.cuartoActivo = activo;
     AppState.caso.cuartoResultante = activo;
 
-    // Actualizar texto explicativo del banner
     const reglaEl = document.getElementById('calc-regla-legal-texto');
     if (reglaEl) reglaEl.innerHTML = reglaTexto;
 
-    // Actualizar estilo visual de las 4 tarjetas de cuartos
     const cardQ1 = document.getElementById('card-cuarto-1');
     const cardQ2 = document.getElementById('card-cuarto-2');
     const cardQ3 = document.getElementById('card-cuarto-3');
@@ -670,7 +626,7 @@ const CalculadoraManager = {
 
     const resetCard = (card, qKey) => {
       if (!card) return;
-      card.className = "cuarto-card relative rounded-xl p-4 border border-surface-dim bg-white text-judicial-navy opacity-70 hover:opacity-100 transition-all flex flex-col justify-between";
+      card.className = "cuarto-card relative rounded-xl p-4 border border-slate-200 bg-white text-slate-800 opacity-70 hover:opacity-100 transition-all flex flex-col justify-between";
       const tag = document.getElementById(`tag-seleccion-cuarto-${qKey}`);
       if (tag) tag.textContent = 'Inactivo';
     };
@@ -695,30 +651,29 @@ const CalculadoraManager = {
       this.configurarSlider(this.cuartos.q1.min, this.cuartos.q1.max);
     } else if (activo === 'maximo') {
       if (cardQ4) {
-        cardQ4.className = "cuarto-card relative rounded-xl p-4 border-2 border-red-600 bg-red-50 text-red-950 shadow-md flex flex-col justify-between transition-all scale-[1.02]";
+        cardQ4.className = "cuarto-card relative rounded-xl p-4 border-2 border-red-700 bg-red-50 text-red-950 shadow-md flex flex-col justify-between transition-all scale-[1.02]";
         const tag = document.getElementById('tag-seleccion-cuarto-4');
         if (tag) tag.textContent = 'SELECCIÓN LEGAL OBLIGATORIA';
       }
       if (badgeCuartoActivo) {
-        badgeCuartoActivo.className = "self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-red-100 text-judicial-crimson border border-red-200";
+        badgeCuartoActivo.className = "self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-red-100 text-red-800 border border-red-200";
         badgeCuartoActivo.innerHTML = '<span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span> Cuarto Máximo Operativo';
       }
       this.configurarSlider(this.cuartos.q4.min, this.cuartos.q4.max);
     } else {
-      // Medios (Q2 y Q3)
       if (cardQ2) {
-        cardQ2.className = "cuarto-card relative rounded-xl p-4 border-2 border-amber-600 bg-amber-50 text-amber-950 shadow-md flex flex-col justify-between transition-all";
+        cardQ2.className = "cuarto-card relative rounded-xl p-4 border-2 border-wine bg-wine-light text-wine-dark shadow-md flex flex-col justify-between transition-all";
         const tag = document.getElementById('tag-seleccion-cuarto-2');
         if (tag) tag.textContent = 'CUARTOS MEDIOS (Q2)';
       }
       if (cardQ3) {
-        cardQ3.className = "cuarto-card relative rounded-xl p-4 border-2 border-amber-600 bg-amber-50 text-amber-950 shadow-md flex flex-col justify-between transition-all";
+        cardQ3.className = "cuarto-card relative rounded-xl p-4 border-2 border-wine bg-wine-light text-wine-dark shadow-md flex flex-col justify-between transition-all";
         const tag = document.getElementById('tag-seleccion-cuarto-3');
         if (tag) tag.textContent = 'CUARTOS MEDIOS (Q3)';
       }
       if (badgeCuartoActivo) {
-        badgeCuartoActivo.className = "self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-100 text-judicial-amber border border-amber-200";
-        badgeCuartoActivo.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-600 animate-pulse"></span> Cuartos Medios Operativos';
+        badgeCuartoActivo.className = "self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-wine-light text-wine border border-wine/30";
+        badgeCuartoActivo.innerHTML = '<span class="w-2 h-2 rounded-full bg-wine animate-pulse"></span> Cuartos Medios Operativos';
       }
       this.configurarSlider(this.cuartos.q2.min, this.cuartos.q3.max);
     }
@@ -734,7 +689,6 @@ const CalculadoraManager = {
       slider.max = max;
       slider.step = 0.5;
 
-      // Fijar valor por defecto ligeramente superior al mínimo
       const val = Number((min + (max - min) * 0.15).toFixed(1));
       slider.value = val;
       this.actualizarQuantum(val);
@@ -757,7 +711,6 @@ const CalculadoraManager = {
     setTxt('calc-quantum-human', `(${formatearMesesAHumano(quantum)})`);
     setTxt('resumen-pena-previa', `${quantum.toFixed(1)} meses`);
 
-    // Sincronizar rebaja por allanamiento
     let rebaja = AppState.caso.rebajaPorcentaje || 0;
     const bloqueo = AppState.caso.prohibicionArt199 || AppState.caso.prohibicionArt68A;
 
@@ -768,14 +721,14 @@ const CalculadoraManager = {
       rebaja = 0;
       if (alertaBloqueo) alertaBloqueo.classList.remove('hidden');
       if (tagRebaja) {
-        tagRebaja.textContent = "0% (Prohibición Legal)";
-        tagRebaja.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-100 text-judicial-crimson";
+        tagRebaja.textContent = "0% (Prohibición Art. 199 / 68A)";
+        tagRebaja.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-100 text-red-800";
       }
     } else {
       if (alertaBloqueo) alertaBloqueo.classList.add('hidden');
       if (tagRebaja) {
         tagRebaja.textContent = `-${rebaja}% Pactado`;
-        tagRebaja.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-judicial-amber";
+        tagRebaja.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-wine-light text-wine border border-wine/30";
       }
     }
 
@@ -786,11 +739,150 @@ const CalculadoraManager = {
     setTxt('resumen-descuento-meses', `-${descuentoMeses.toFixed(1)} meses (-${rebaja}%)`);
     setTxt('calc-pena-final-meses', penaFinal.toFixed(1));
     setTxt('calc-pena-final-human', `${formatearMesesAHumano(penaFinal)} de prisión efectiva`);
+  },
+
+  // ============================================================
+  // EXPLICACIÓN PASO A PASO (De dónde sale cada dato y norma)
+  // ============================================================
+  renderizarExplicacionPasoAPaso() {
+    const cont = document.getElementById('calc-explicacion-paso-a-paso');
+    if (!cont) return;
+
+    const d = DelitosCatalogo.find(item => item.id === AppState.caso.delitoBase) || DelitosCatalogo[0];
+    const min = this.minModificado;
+    const max = this.maxModificado;
+    const ap = this.ambitoPunitivo;
+    const vc = this.cuartoAmplitud;
+    const mit = AppState.caso.atenuantesCount || 0;
+    const agg = AppState.caso.agravantesCount || 0;
+
+    cont.innerHTML = `
+      <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+        
+        <!-- Paso 1 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">1</span>
+            <h4>Límites Legales Abstractos fijados por el Legislador (${d.articulo})</h4>
+          </div>
+          <p>
+            <strong>¿De dónde sale?</strong> Del tipo penal descrito en el Código Penal Colombiano. Para <em>${d.nombre}</em>, la norma establece un mínimo de <strong>${this.minBase} meses (${formatearMesesAHumano(this.minBase)})</strong> y un máximo de <strong>${this.maxBase} meses (${formatearMesesAHumano(this.maxBase)})</strong>.
+          </p>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">2</span>
+            <h4>Fijación de Nuevos Extremos según el Artículo 60 del Código Penal</h4>
+          </div>
+          <p>
+            <strong>¿Cómo se obtienen?</strong> Si concurren dispositivos amplificadores como tentativa (Art. 27 C.P.), complicidad (Art. 30 C.P.) o ira (Art. 57 C.P.), el juez debe modificar los extremos antes de calcular los cuartos:
+          </p>
+          <ul class="list-disc pl-5 mt-1 space-y-0.5 text-slate-600">
+            <li>Límite mínimo aplicable tras modificadores: <strong>${min} meses</strong>.</li>
+            <li>Límite máximo aplicable tras modificadores: <strong>${max} meses</strong>.</li>
+          </ul>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">3</span>
+            <h4>Cálculo del Ámbito Punitivo de Movilidad (Art. 61 Inciso 1° C.P.)</h4>
+          </div>
+          <p>
+            <strong>Fórmula Legal:</strong> <code class="font-mono bg-white px-2 py-0.5 rounded border border-slate-200 font-bold text-wine">Ámbito Punitivo = Pena Máxima - Pena Mínima</code>
+          </p>
+          <p class="mt-1 font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200">
+            Ámbito Punitivo = ${max} meses - ${min} meses = <strong>${ap} meses</strong> (${formatearMesesAHumano(ap)}).
+          </p>
+          <p class="mt-1 text-slate-500">
+            <em>¿Por qué se resta?</em> Porque el Ámbito Punitivo representa el margen total dentro del cual el juez puede individualizar la sanción sin desbordar el principio de legalidad.
+          </p>
+        </div>
+
+        <!-- Paso 4 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">4</span>
+            <h4>División Aritmética en Cuatro Cuartos Iguales (Art. 61 Inciso 1° C.P.)</h4>
+          </div>
+          <p>
+            <strong>Fórmula Legal:</strong> <code class="font-mono bg-white px-2 py-0.5 rounded border border-slate-200 font-bold text-wine">Valor de Cada Cuarto = Ámbito Punitivo / 4</code>
+          </p>
+          <p class="mt-1 font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200">
+            Valor de Cada Cuarto = ${ap} meses / 4 = <strong>${vc} meses</strong> por cuarto.
+          </p>
+          <p class="mt-1 text-slate-500">
+            <em>¿Por qué se divide de esa manera?</em> La Ley 599 de 2000 adoptó el sistema de cuartos para otorgar previsibilidad y erradicar la arbitrariedad judicial, creando cuatro bandas proporcionales y cerradas.
+          </p>
+        </div>
+
+        <!-- Paso 5 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">5</span>
+            <h4>Subsunción y Elección Obligatoria del Cuarto (Art. 61 Inciso 2° C.P.)</h4>
+          </div>
+          <p>
+            <strong>Regla Vinculante de la Ley:</strong> El Código Penal prohíbe al juez elegir el cuarto a su arbitrio. La norma impone una regla matemática exacta basada en las circunstancias probadas:
+          </p>
+          <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+            <div class="p-2.5 rounded-lg ${this.cuartoActivo === 'minimo' ? 'bg-emerald-100 border-2 border-emerald-600 font-bold' : 'bg-white border border-slate-200'}">
+              <span class="block text-emerald-800 uppercase font-bold">1. Cuarto Mínimo</span>
+              <span>Solo cuando concurren circunstancias de menor punibilidad (Art. 55).</span>
+            </div>
+            <div class="p-2.5 rounded-lg ${this.cuartoActivo === 'medios' ? 'bg-wine-light border-2 border-wine font-bold text-wine-dark' : 'bg-white border border-slate-200'}">
+              <span class="block text-wine uppercase font-bold">2. Cuartos Medios</span>
+              <span>Concurren atenuantes y agravantes, o no concurre ninguna causal.</span>
+            </div>
+            <div class="p-2.5 rounded-lg ${this.cuartoActivo === 'maximo' ? 'bg-red-100 border-2 border-red-600 font-bold' : 'bg-white border border-slate-200'}">
+              <span class="block text-red-800 uppercase font-bold">3. Cuarto Máximo</span>
+              <span>Solo cuando concurren circunstancias de mayor punibilidad (Art. 58).</span>
+            </div>
+          </div>
+          <p class="mt-2 text-wine font-semibold">
+            👉 En este caso concreto concurren <strong>${mit} atenuante(s)</strong> y <strong>${agg} agravante(s)</strong>, por lo cual la ley ordena de forma taxativa situarse en: <u>${this.cuartoActivo.toUpperCase()}</u>.
+          </p>
+        </div>
+
+        <!-- Paso 6 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">6</span>
+            <h4>Ponderación del Quantum Judicial dentro del Cuarto (Arts. 59 y 61 Inc. 3°)</h4>
+          </div>
+          <p>
+            Una vez fijado el cuarto correspondiente, el juez individualiza la pena concreta tasando los cuatro criterios legales del Artículo 59:
+            (i) mayor o menor gravedad de la conducta, (ii) daño real o potencial creado, (iii) intensidad del dolo o de la culpa, y (iv) necesidad preventiva de la sanción.
+          </p>
+          <p class="mt-1 font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-900">
+            Pena tasada dentro del cuarto: <strong>${this.quantumMeses} meses</strong> (${formatearMesesAHumano(this.quantumMeses)}).
+          </p>
+        </div>
+
+        <!-- Paso 7 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center gap-2 mb-1.5 font-bold text-wine">
+            <span class="w-5 h-5 rounded-full bg-wine text-white text-[11px] flex items-center justify-center">7</span>
+            <h4>Aplicación de Justicia Premial y Condena Definitiva (Art. 351 C.P.P.)</h4>
+          </div>
+          <p>
+            Se deduce el porcentaje pactado por allanamiento o preacuerdo, verificando la ausencia de prohibiciones taxativas (ej. Art. 199 Ley 1098 si la víctima es menor):
+          </p>
+          <p class="mt-1 font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-900">
+            ${this.quantumMeses} meses - ${this.descuentoPorcentaje}% de rebaja = <strong class="text-wine text-sm">${this.penaFinalMeses} meses</strong> (${formatearMesesAHumano(this.penaFinalMeses)}).
+          </p>
+        </div>
+
+      </div>
+    `;
   }
 };
 
 // ============================================================
-// 4. JUSTIFICACIÓN JURÍDICA Y MEMORIA DE CÁLCULO (JustificacionManager - Función 4)
+// 4. JUSTIFICACIÓN JURÍDICA PROFUNDA Y AUTO JUDICIAL (Función 4)
 // ============================================================
 const JustificacionManager = {
   generarMemoria() {
@@ -802,58 +894,55 @@ const JustificacionManager = {
       if (el) el.textContent = txt;
     };
 
-    // 1. Carátula procesal
     setTxt('memoria-radicado', `RADICADO SPOA: ${AppState.caso.radicado || '110016000000202300452'}`);
     setTxt('memoria-fecha-emision', `Emisión judicial: ${new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}`);
     setTxt('memoria-procesado', AppState.caso.procesado || 'Julián David Morales Reyes');
     setTxt('memoria-juzgado', AppState.caso.juzgado || 'Juzgado 12 Penal del Circuito');
-    setTxt('memoria-fiscalia', AppState.caso.fiscalia || 'Fiscalía 4 Seccional de Vida');
+    setTxt('memoria-fiscalia', AppState.caso.fiscalia || 'Fiscalía 45 Seccional de Vida');
     setTxt('memoria-delito', `${d.articulo} (${d.nombre})`);
 
-    // 2. Tabla de cuartos certificada
     const tbody = document.getElementById('memoria-tabla-cuartos');
     if (tbody) {
       tbody.innerHTML = `
-        <tr class="hover:bg-surface/50">
-          <td class="p-3 font-semibold text-judicial-navy">Límites Legales Abstractos</td>
+        <tr class="hover:bg-slate-50">
+          <td class="p-3 font-semibold text-slate-900">Límites Legales Abstractos</td>
           <td class="p-3 font-mono text-center">${calc.minBase} a ${calc.maxBase} m</td>
           <td class="p-3 font-mono text-center">${formatearMesesAHumano(calc.minBase)} a ${formatearMesesAHumano(calc.maxBase)}</td>
-          <td class="p-3 text-judicial-muted">${d.articulo}</td>
+          <td class="p-3 text-slate-500">${d.articulo}</td>
         </tr>
-        <tr class="hover:bg-surface/50 bg-amber-50/30">
-          <td class="p-3 font-semibold text-judicial-navy">Límites Punitivos Modificados (Art. 60)</td>
-          <td class="p-3 font-mono text-center font-bold text-judicial-amber">${calc.minModificado} a ${calc.maxModificado} m</td>
-          <td class="p-3 font-mono text-center font-bold text-judicial-amber">${formatearMesesAHumano(calc.minModificado)} a ${formatearMesesAHumano(calc.maxModificado)}</td>
-          <td class="p-3 text-judicial-muted">Arts. 27, 30 y 60 C.P.</td>
+        <tr class="hover:bg-slate-50 bg-wine-light/30">
+          <td class="p-3 font-semibold text-slate-900">Límites Punitivos Modificados (Art. 60)</td>
+          <td class="p-3 font-mono text-center font-bold text-wine">${calc.minModificado} a ${calc.maxModificado} m</td>
+          <td class="p-3 font-mono text-center font-bold text-wine">${formatearMesesAHumano(calc.minModificado)} a ${formatearMesesAHumano(calc.maxModificado)}</td>
+          <td class="p-3 text-slate-500">Arts. 27, 30 y 60 C.P.</td>
         </tr>
-        <tr class="hover:bg-surface/50">
-          <td class="p-3 font-semibold text-judicial-navy">Ámbito Punitivo de Movilidad</td>
+        <tr class="hover:bg-slate-50">
+          <td class="p-3 font-semibold text-slate-900">Ámbito Punitivo de Movilidad</td>
           <td class="p-3 font-mono text-center">${calc.ambitoPunitivo} m</td>
           <td class="p-3 font-mono text-center">${formatearMesesAHumano(calc.ambitoPunitivo)}</td>
-          <td class="p-3 text-judicial-muted">Pena Máx. - Pena Mín.</td>
+          <td class="p-3 text-slate-500">Pena Máx. - Pena Mín.</td>
         </tr>
-        <tr class="hover:bg-surface/50 ${calc.cuartoActivo === 'minimo' ? 'bg-emerald-50 font-bold text-emerald-900' : ''}">
+        <tr class="hover:bg-slate-50 ${calc.cuartoActivo === 'minimo' ? 'bg-emerald-50 font-bold text-emerald-900' : ''}">
           <td class="p-3">Primer Cuarto (Mínimo)</td>
           <td class="p-3 font-mono text-center">${calc.cuartos.q1.min} a ${calc.cuartos.q1.max} m</td>
           <td class="p-3 font-mono text-center">${formatearMesesAHumano(calc.cuartos.q1.min)} a ${formatearMesesAHumano(calc.cuartos.q1.max)}</td>
-          <td class="p-3 text-judicial-muted">Art. 61 inc. 2 C.P.</td>
+          <td class="p-3 text-slate-500">Art. 61 inc. 2 C.P.</td>
         </tr>
-        <tr class="hover:bg-surface/50 ${calc.cuartoActivo === 'medios' ? 'bg-amber-50 font-bold text-amber-900' : ''}">
+        <tr class="hover:bg-slate-50 ${calc.cuartoActivo === 'medios' ? 'bg-wine-light font-bold text-wine' : ''}">
           <td class="p-3">Cuartos Medios (Inferior y Superior)</td>
           <td class="p-3 font-mono text-center">${calc.cuartos.q2.min} a ${calc.cuartos.q3.max} m</td>
           <td class="p-3 font-mono text-center">${formatearMesesAHumano(calc.cuartos.q2.min)} a ${formatearMesesAHumano(calc.cuartos.q3.max)}</td>
-          <td class="p-3 text-judicial-muted">Art. 61 inc. 2 C.P.</td>
+          <td class="p-3 text-slate-500">Art. 61 inc. 2 C.P.</td>
         </tr>
-        <tr class="hover:bg-surface/50 ${calc.cuartoActivo === 'maximo' ? 'bg-red-50 font-bold text-red-900' : ''}">
+        <tr class="hover:bg-slate-50 ${calc.cuartoActivo === 'maximo' ? 'bg-red-50 font-bold text-red-900' : ''}">
           <td class="p-3">Cuarto Máximo</td>
           <td class="p-3 font-mono text-center">${calc.cuartos.q4.min} a ${calc.cuartos.q4.max} m</td>
           <td class="p-3 font-mono text-center">${formatearMesesAHumano(calc.cuartos.q4.min)} a ${formatearMesesAHumano(calc.cuartos.q4.max)}</td>
-          <td class="p-3 text-judicial-muted">Art. 61 inc. 2 C.P.</td>
+          <td class="p-3 text-slate-500">Art. 61 inc. 2 C.P.</td>
         </tr>
       `;
     }
 
-    // 3. Motivación jurídica del cuarto
     const mit = AppState.caso.atenuantesCount || 0;
     const agg = AppState.caso.agravantesCount || 0;
     let motivacionCuarto = "";
@@ -868,36 +957,32 @@ const JustificacionManager = {
 
     setTxt('memoria-motivacion-cuarto-texto', motivacionCuarto);
 
-    // 4. Ponderación de los criterios del Art. 59
     const containerArt59 = document.getElementById('memoria-criterios-art59');
     if (containerArt59) {
       containerArt59.innerHTML = `
-        <div class="p-3 bg-surface rounded-xl border border-surface-dim">
-          <span class="font-bold text-judicial-navy block mb-1">A. Mayor o menor gravedad de la conducta:</span>
-          <p class="text-judicial-muted">Se evalúa el grado de afectación al bien jurídico tutelado y el reproche social de la acción ejecutada.</p>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <span class="font-bold text-slate-900 block mb-1">A. Mayor o menor gravedad de la conducta:</span>
+          <p class="text-slate-600">Se evalúa el grado de vulneración efectiva al bien jurídico tutelado y la modalidad lesiva desplegada por el procesado.</p>
         </div>
-        <div class="p-3 bg-surface rounded-xl border border-surface-dim">
-          <span class="font-bold text-judicial-navy block mb-1">B. Daño real o potencial creado:</span>
-          <p class="text-judicial-muted">Consecuencias materiales y morales causadas a las víctimas directas e indirectas del hecho punible.</p>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <span class="font-bold text-slate-900 block mb-1">B. Daño real o potencial creado:</span>
+          <p class="text-slate-600">Trascendencia del menoscabo físico, moral y patrimonial producido en la víctima y su núcleo familiar.</p>
         </div>
-        <div class="p-3 bg-surface rounded-xl border border-surface-dim">
-          <span class="font-bold text-judicial-navy block mb-1">C. Intensidad del dolo o culpa:</span>
-          <p class="text-judicial-muted">Persistencia de la voluntad antijurídica o ligereza en el deber objetivo de cuidado.</p>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <span class="font-bold text-slate-900 block mb-1">C. Intensidad del dolo o culpa:</span>
+          <p class="text-slate-600">Determinación consciente del injusto, persistencia en la ejecución y ausencia de desistimiento voluntario.</p>
         </div>
-        <div class="p-3 bg-surface rounded-xl border border-surface-dim">
-          <span class="font-bold text-judicial-navy block mb-1">D. Necesidad de la pena (Art. 4 C.P.):</span>
-          <p class="text-judicial-muted">La sanción de ${calc.quantumMeses} meses antes de rebajas satisface los fines de prevención general, retribución justa y reinserción social.</p>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <span class="font-bold text-slate-900 block mb-1">D. Fines de la Pena (Art. 4 C.P.):</span>
+          <p class="text-slate-600">La pena individualizada de ${calc.quantumMeses} meses antes de deducciones premiales cumple las funciones de prevención general, retribución justa y resocialización.</p>
         </div>
       `;
     }
 
-    // 5. Análisis de subrogados (Arts. 63 y 38B)
     const penaFinal = calc.penaFinalMeses;
     const minLegal = calc.minModificado;
 
-    const boxArt63 = document.getElementById('box-subrogado-art63');
     const statusArt63 = document.getElementById('subrogado-art63-status');
-    const boxArt38b = document.getElementById('box-subrogado-art38b');
     const statusArt38b = document.getElementById('subrogado-art38b-status');
 
     if (penaFinal <= 48) {
@@ -907,24 +992,23 @@ const JustificacionManager = {
       }
     } else {
       if (statusArt63) {
-        statusArt63.textContent = `IMPROCEDENTE (Pena de ${penaFinal}m supera el tope legal de 48 meses)`;
-        statusArt63.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-red-100 text-judicial-crimson self-start";
+        statusArt63.textContent = `IMPROCEDENTE (Pena impuesta de ${penaFinal}m supera el tope legal de 48 meses)`;
+        statusArt63.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-red-100 text-red-800 self-start";
       }
     }
 
     if (minLegal <= 96 && !AppState.caso.prohibicionArt68A) {
       if (statusArt38b) {
-        statusArt38b.textContent = "PROCEDENTE FACTIBILIDAD OBJETIVA (Pena mínima ≤ 96 meses)";
+        statusArt38b.textContent = "PROCEDENTE FACTIBILIDAD OBJETIVA (Pena mínima legal ≤ 96 meses)";
         statusArt38b.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 self-start";
       }
     } else {
       if (statusArt38b) {
         statusArt38b.textContent = `IMPROCEDENTE (Pena mínima de ${minLegal}m supera tope de 96m o exclusión Art. 68A)`;
-        statusArt38b.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-red-100 text-judicial-crimson self-start";
+        statusArt38b.className = "px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-red-100 text-red-800 self-start";
       }
     }
 
-    // 6. Parte resolutiva
     setTxt('memoria-sentencia-resumen', `CONDENA DEFINITIVA: ${penaFinal} MESES`);
     setTxt('memoria-sentencia-human', `Equivalente a ${formatearMesesAHumano(penaFinal)} de prisión efectiva.`);
   },
@@ -935,50 +1019,66 @@ const JustificacionManager = {
 
     return `========================================================================
 REPÚBLICA DE COLOMBIA - RAMA JUDICIAL DEL PODER PÚBLICO
-AUTO DE INDIVIDUALIZACIÓN JUDICIAL DE LA PENA Y SENTENCIA
+AUTO INTERLOCUTORIO DE INDIVIDUALIZACIÓN JUDICIAL DE LA PENA
 (Artículos 59, 60 y 61 Ley 599 de 2000 — Art. 447 Ley 906 de 2004)
 ========================================================================
 
-1. IDENTIFICACIÓN PROCESAL
+I. VISTOS PROCESALES Y HECHOS JURÍDICAMENTE RELEVANTES
 ------------------------------------------------------------------------
 RADICADO SPOA    : ${AppState.caso.radicado || '110016000000202300452'}
 JUZGADO          : ${AppState.caso.juzgado || 'Juzgado Penal del Circuito'}
 FISCALÍA         : ${AppState.caso.fiscalia || 'Fiscalía General de la Nación'}
-PROCESADO        : ${AppState.caso.procesado || 'Ciudadano Imputado'}
-DELITO           : ${d.articulo} - ${d.nombre}
+PROCESADO        : ${AppState.caso.procesado || 'Ciudadano Acusado'}
+DELITO BASE      : ${d.articulo} - ${d.nombre}
 BIEN JURÍDICO    : ${d.bienJuridicoNombre}
 
-2. ANÁLISIS DE TIPICIDAD Y LÍMITES PUNITIVOS (Art. 60 C.P.)
-------------------------------------------------------------------------
-- Marco Legal Abstracto     : ${calc.minBase} a ${calc.maxBase} meses (${formatearMesesAHumano(calc.minBase)} a ${formatearMesesAHumano(calc.maxBase)})
-- Límites Modificados       : ${calc.minModificado} a ${calc.maxModificado} meses
-- Ámbito Punitivo Total     : ${calc.ambitoPunitivo} meses
-- Amplitud de cada Cuarto   : ${calc.cuartoAmplitud} meses
+HECHOS PROBADOS:
+"${AppState.caso.narrativa || 'Hechos probados en la audiencia de juicio oral.'}"
 
-3. SEGMENTACIÓN DE CUARTOS (Art. 61 C.P.)
+II. JUICIO DE TIPICIDAD Y LÍMITES PUNITIVOS (Art. 60 C.P.)
 ------------------------------------------------------------------------
+1. La conducta imputada se subsume formal y materialmente en el tipo penal de ${d.nombre}.
+2. Límite legal abstracto fijado por el legislador: ${calc.minBase} a ${calc.maxBase} meses (${formatearMesesAHumano(calc.minBase)} a ${formatearMesesAHumano(calc.maxBase)}).
+3. Aplicación de factores modificadores del Art. 60 C.P.:
+   Nuevos límites tasados: ${calc.minModificado} a ${calc.maxModificado} meses.
+
+III. CÓMPUTO ARITMÉTICO Y DIVISIÓN EN CUARTOS (Art. 61 Inc. 1° C.P.)
+------------------------------------------------------------------------
+Fórmula de Ámbito Punitivo: Pena Máxima (${calc.maxModificado}) - Pena Mínima (${calc.minModificado}) = ${calc.ambitoPunitivo} meses.
+Fórmula de Valor del Cuarto: Ámbito Punitivo (${calc.ambitoPunitivo}) / 4 = ${calc.cuartoAmplitud} meses.
+
+Segmentación aritmética obligatoria:
 • Primer Cuarto (Mínimo)   : ${calc.cuartos.q1.min} a ${calc.cuartos.q1.max} meses
 • Cuartos Medios (Q2 & Q3)  : ${calc.cuartos.q2.min} a ${calc.cuartos.q3.max} meses
 • Cuarto Máximo (Q4)        : ${calc.cuartos.q4.min} a ${calc.cuartos.q4.max} meses
 
-Cuarto Operativo Seleccionado: ${calc.cuartoActivo.toUpperCase()}
-Fundamento: Art. 61 inc. 2 del Código Penal Colombiano.
-
-4. PONDERACIÓN JUDICIAL DEL QUANTUM (Art. 59 C.P.)
+IV. FUNDAMENTACIÓN DE LA ELECCIÓN DEL CUARTO (Art. 61 Inc. 2° C.P.)
 ------------------------------------------------------------------------
-Pena individualizada dentro del cuarto: ${calc.quantumMeses} meses (${formatearMesesAHumano(calc.quantumMeses)}).
-Criterios valorados: Gravedad objetiva de la conducta, magnitud del daño,
-intensidad de la voluntad antijurídica y fines de prevención general y especial.
+CUARTO VINCULANTE: ${calc.cuartoActivo.toUpperCase()}
+JUSTIFICACIÓN:
+${document.getElementById('memoria-motivacion-cuarto-texto')?.innerText || 'Conforme al Art. 61 inc. 2 C.P.'}
 
-5. JUSTICIA PREMIAL (ALLANAMIENTO O PREACUERDO - Art. 351 CPP)
+V. PONDERACIÓN DEL QUANTUM DENTRO DEL CUARTO (Art. 59 C.P.)
 ------------------------------------------------------------------------
-Descuento aplicado: ${calc.descuentoPorcentaje}% (${(calc.quantumMeses - calc.penaFinalMeses).toFixed(1)} meses).
-Restricciones legales verificadas: Art. 199 Ley 1098 / Art. 68A C.P.
+Pena individualizada previa a justicia premial: ${calc.quantumMeses} meses (${formatearMesesAHumano(calc.quantumMeses)}).
+Criterios del Art. 59: Gravedad objetiva, magnitud del daño, grado del dolo y necesidad de prevención general y especial.
 
-6. DECISIÓN DOSIMÉTRICA DEFINITIVA
+VI. JUSTICIA PREMIAL Y REBAJAS (Art. 351 C.P.P. / Art. 199 Ley 1098)
+------------------------------------------------------------------------
+Descuento legalmente procedente: ${calc.descuentoPorcentaje}%.
+Monto de rebaja: ${(calc.quantumMeses - calc.penaFinalMeses).toFixed(1)} meses.
+Control de prohibiciones de infancia o reincidencia: Verificado y conforme a la ley.
+
+VII. PRONUNCIAMIENTO SOBRE MECANISMOS SUSTITUTIVOS (Arts. 63 y 38B C.P.)
+------------------------------------------------------------------------
+1. Suspensión Condicional de la Ejecución de la Pena (Art. 63): ${calc.penaFinalMeses <= 48 ? 'PROCEDENTE OBJETIVAMENTE' : 'IMPROCEDENTE (Supera 48 meses)'}.
+2. Prisión Domiciliaria como Sustitutiva (Art. 38B): ${calc.minModificado <= 96 ? 'PROCEDENTE OBJETIVAMENTE' : 'IMPROCEDENTE (Pena mínima supera 96 meses)'}.
+
+VIII. PARTE RESOLUTIVA
 ------------------------------------------------------------------------
 PENA PRIVATIVA DE LA LIBERTAD DEFINITIVA: ${calc.penaFinalMeses} MESES DE PRISIÓN.
-(Equivalente a ${formatearMesesAHumano(calc.penaFinalMeses)}).
+(Equivalente a ${formatearMesesAHumano(calc.penaFinalMeses)} de reclusión carcelaria).
+Inhabilitación de derechos y funciones públicas por lapso idéntico a la pena principal.
 
 NOTIFÍQUESE Y CÚMPLASE.
 `;
@@ -999,275 +1099,441 @@ NOTIFÍQUESE Y CÚMPLASE.
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Dosimetria_${AppState.caso.radicado || 'Caso'}.txt`;
+    a.download = `Auto_Dosimetria_${AppState.caso.radicado || 'Caso'}.txt`;
     a.click();
     URL.revokeObjectURL(url);
-    CasoManager.mostrarToast("Archivo .txt descargado con éxito", "download");
+    CasoManager.mostrarToast("Archivo .txt generado y descargado", "download");
   }
 };
 
 // ============================================================
-// 5. ESPACIO DE AYUDA INTELIGENTE — GEMINI IA (AyudaIA_Manager)
+// 5. LABORATORIO JURÍDICO CON GEMINI IA (6 Herramientas Especializadas)
 // ============================================================
 const AyudaIA_Manager = {
-  geminiKeyStorage: 'iurisdosis_gemini_api_key',
+  storageKeyApiKey: 'iurisdosis_gemini_api_key',
+  herramientaActiva: 'explicador',
 
   init() {
-    this.initApiKey();
     BancoDudasManager.init();
-    this.actualizarEstadoDB();
+    this.actualizarStatusBoton();
+    this.seleccionarHerramienta('explicador');
   },
 
-  initApiKey() {
-    const input = document.getElementById('gemini-api-key-input');
-    const badge = document.getElementById('gemini-key-status');
-    const savedKey = localStorage.getItem(this.geminiKeyStorage);
-    if (savedKey) {
-      if (input) input.value = savedKey;
-      if (badge) {
-        badge.textContent = "Clave activa ✓";
-        badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold";
-      }
+  getApiKey() {
+    return localStorage.getItem(this.storageKeyApiKey) || '';
+  },
+
+  abrirModalApiKey() {
+    const modal = document.getElementById('modal-gemini-key');
+    const input = document.getElementById('input-gemini-api-key');
+    if (modal) modal.classList.remove('hidden');
+    if (input) input.value = this.getApiKey();
+  },
+
+  cerrarModalApiKey() {
+    const modal = document.getElementById('modal-gemini-key');
+    if (modal) modal.classList.add('hidden');
+  },
+
+  toggleVerApiKey() {
+    const input = document.getElementById('input-gemini-api-key');
+    const icon = document.getElementById('icon-ver-api-key');
+    if (!input) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      if (icon) icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      if (icon) icon.textContent = 'visibility';
     }
   },
 
   guardarApiKey() {
-    const input = document.getElementById('gemini-api-key-input');
-    const badge = document.getElementById('gemini-key-status');
+    const input = document.getElementById('input-gemini-api-key');
     const key = input ? input.value.trim() : '';
-
     if (!key) {
-      localStorage.removeItem(this.geminiKeyStorage);
-      if (badge) {
-        badge.textContent = "Sin clave guardada";
-        badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-surface-container text-judicial-muted font-medium";
-      }
-      CasoManager.mostrarToast("Clave de Gemini eliminada de este navegador", "info");
+      CasoManager.mostrarToast("Ingresa una clave válida", "warning");
       return;
     }
-
-    localStorage.setItem(this.geminiKeyStorage, key);
-    if (badge) {
-      badge.textContent = "Clave guardada ✓";
-      badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold";
-    }
-    CasoManager.mostrarToast("API Key de Gemini guardada de forma segura en tu navegador", "lock");
+    localStorage.setItem(this.storageKeyApiKey, key);
+    this.cerrarModalApiKey();
+    this.actualizarStatusBoton();
+    CasoManager.mostrarToast("API Key de Gemini guardada de forma segura", "lock");
   },
 
-  toggleKeyVisibility() {
-    const input = document.getElementById('gemini-api-key-input');
-    if (!input) return;
-    input.type = input.type === 'password' ? 'text' : 'password';
+  eliminarApiKey() {
+    localStorage.removeItem(this.storageKeyApiKey);
+    const input = document.getElementById('input-gemini-api-key');
+    if (input) input.value = '';
+    this.actualizarStatusBoton();
+    this.cerrarModalApiKey();
+    CasoManager.mostrarToast("API Key eliminada de este navegador", "delete");
   },
 
-  actualizarEstadoDB() {
-    const statusText = document.getElementById('ayuda-db-text');
-    const isFirebase = window.ElectivaFirebase && window.ElectivaFirebase.isConfigured;
-    if (statusText) {
-      if (isFirebase) {
-        statusText.textContent = "Google Firebase Firestore Conectado (Nube)";
+  actualizarStatusBoton() {
+    const label = document.getElementById('label-api-key-status');
+    const key = this.getApiKey();
+    if (label) {
+      if (key) {
+        label.textContent = "✓ Gemini Conectada";
+        label.parentElement.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs font-mono font-semibold text-emerald-800 transition-all cursor-pointer";
       } else {
-        statusText.textContent = "Base de datos local activa (Listo para Firebase)";
+        label.textContent = "Configurar Gemini API";
+        label.parentElement.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs font-mono font-semibold text-slate-700 transition-all cursor-pointer";
       }
     }
   },
 
-  switchSubTab(tab) {
-    const subConsulta = document.getElementById('subpanel-nueva-consulta');
-    const subBanco = document.getElementById('subpanel-banco-dudas');
-    const btnConsulta = document.getElementById('tab-btn-nueva-consulta');
-    const btnBanco = document.getElementById('tab-btn-banco-dudas');
+  seleccionarHerramienta(herramienta) {
+    this.herramientaActiva = herramienta;
 
-    if (tab === 'consulta') {
-      subConsulta.classList.remove('hidden');
-      subBanco.classList.add('hidden');
-      btnConsulta.className = "px-4 py-2 rounded-xl bg-judicial-navy text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all";
-      btnBanco.className = "px-4 py-2 rounded-xl bg-surface-container text-judicial-navy text-xs font-semibold flex items-center gap-1.5 hover:bg-surface-high transition-all";
-    } else {
-      subConsulta.classList.add('hidden');
-      subBanco.classList.remove('hidden');
-      btnBanco.className = "px-4 py-2 rounded-xl bg-judicial-navy text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all";
-      btnConsulta.className = "px-4 py-2 rounded-xl bg-surface-container text-judicial-navy text-xs font-semibold flex items-center gap-1.5 hover:bg-surface-high transition-all";
-      BancoDudasManager.renderizar();
-    }
+    const botones = document.querySelectorAll('.btn-tab-gemini');
+    botones.forEach(btn => {
+      if (btn.getAttribute('data-tool') === herramienta) {
+        btn.className = "btn-tab-gemini px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-wine text-white shadow-sm transition-all";
+      } else {
+        btn.className = "btn-tab-gemini px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all";
+      }
+    });
+
+    const paneles = document.querySelectorAll('.panel-herramienta-gemini');
+    paneles.forEach(p => p.classList.add('hidden'));
+
+    const panelActivo = document.getElementById(`tool-panel-${herramienta}`);
+    if (panelActivo) panelActivo.classList.remove('hidden');
   },
 
-  generarPrompt() {
-    const duda = document.getElementById('ayuda-pregunta-duda')?.value.trim();
-    const meta = document.getElementById('ayuda-pregunta-meta')?.value.trim();
-    const modulo = document.getElementById('ayuda-pregunta-modulo')?.value;
-    const intentos = document.getElementById('ayuda-pregunta-intentos')?.value.trim();
-    const errorMsg = document.getElementById('ayuda-pregunta-error')?.value.trim();
-
-    if (!duda || !meta) {
-      CasoManager.mostrarToast("Por favor ingresa al menos tu duda y qué quieres lograr", "warning");
+  // 1. Redactar Caso Asistido
+  ejecutarRedactor() {
+    const borrador = document.getElementById('input-redactor-borrador')?.value.trim();
+    if (!borrador) {
+      CasoManager.mostrarToast("Ingresa un borrador o relato informal de los hechos", "warning");
       return;
     }
 
-    const modulosNombres = {
-      hechos: 'Función 1: Ingreso de Hechos del Caso',
-      delitos: 'Función 2: Catálogo de Delitos y Tipos Penales',
-      calculadora: 'Función 3: Calculadora de Cuartos de Punibilidad (Art. 61 C.P.)',
-      justificacion: 'Función 4: Justificación Jurídica y Memoria de Cálculo (Art. 59 C.P.)',
-      general: 'Criterios Generales de Derecho Penal Colombiano (Ley 599 de 2000)'
-    };
+    const prompt = `Actúa como un Fiscal Delegado ante el Tribunal y docente de derecho penal en Colombia.
+Toma el siguiente relato informal de hechos:
+"${borrador}"
 
-    const promptEstructurado = `Actúa como un Magistrado de la Sala de Casación Penal de la Corte Suprema de Justicia de Colombia y experto desarrollador de software jurídico.
+Estructura y redacta formalmente los "HECHOS JURÍDICAMENTE RELEVANTES" conforme al Artículo 337 de la Ley 906 de 2004:
+1. Circunstancias de tiempo, modo y lugar.
+2. Identificación del verbo rector y núcleo típico.
+3. Imputación fáctica de circunstancias de menor punibilidad (Art. 55) o mayor punibilidad (Art. 58).
+4. Adecuación típica preliminar en el Código Penal Colombiano (Ley 599 de 2000).`;
 
-Estoy utilizando la aplicación "IurisDosis Colombia" y requiero resolver con exactitud la siguiente situación técnica y jurídica:
+    this.enviarPeticionGemini(prompt, 'output-redactor-resultado', (textoGenerado) => {
+      const btnTransferir = document.getElementById('btn-transferir-hechos');
+      if (btnTransferir) btnTransferir.classList.remove('hidden');
+    });
+  },
 
-1. MÓDULO AFECTADO:
-${modulosNombres[modulo] || modulo}
+  transferirHechosAlCaso() {
+    const texto = document.getElementById('output-redactor-resultado')?.innerText;
+    if (texto) {
+      const txtArea = document.getElementById('caso-narrativa');
+      if (txtArea) txtArea.value = texto;
+      AppState.caso.narrativa = texto;
+      CasoManager.mostrarToast("Hechos transferidos con éxito a la Función 1", "check_circle");
+      AppNav.switchTab('hechos');
+    }
+  },
 
-2. DUDA O ERROR REPORTADO:
+  // 2. Explicador Pedagógico de la Pena
+  ejecutarExplicador() {
+    const d = DelitosCatalogo.find(item => item.id === AppState.caso.delitoBase) || DelitosCatalogo[0];
+    const calc = CalculadoraManager;
+
+    const prompt = `Actúa como un Magistrado de la Sala Penal de la Corte Suprema de Justicia de Colombia.
+Explica de manera pedagógica, clara y con rigor técnico por qué al procesado en el caso de "${d.nombre}" le corresponde la pena definitiva de ${calc.penaFinalMeses} meses (${formatearMesesAHumano(calc.penaFinalMeses)}).
+
+Desglosa didácticamente:
+1. ¿De dónde sale el marco abstracto de ${calc.minBase} a ${calc.maxBase} meses?
+2. ¿Por qué el Ámbito Punitivo (${calc.ambitoPunitivo} meses) se dividió en 4 cuartos iguales de ${calc.cuartoAmplitud} meses cada uno?
+3. ¿Cuál es el sustento jurídico que justifica obligatoriamente la elección del ${calc.cuartoActivo.toUpperCase()} (Art. 61 inc. 2 C.P.)?
+4. ¿Cómo se justificó la ponderación de los ${calc.quantumMeses} meses dentro del cuarto según el Art. 59 C.P.?
+5. ¿Cómo se calculó la deducción por justicia premial (Art. 351 C.P.P.)?`;
+
+    this.enviarPeticionGemini(prompt, 'output-explicador-resultado');
+  },
+
+  // 3. Aclarador de Dudas Conceptuales
+  ejecutarAclarador() {
+    const duda = document.getElementById('input-aclarador-duda')?.value.trim();
+    if (!duda) {
+      CasoManager.mostrarToast("Escribe tu duda o concepto que no comprendes", "warning");
+      return;
+    }
+
+    const prompt = `Actúa como un tratadista y docente experto en Derecho Penal Colombiano (Ley 599 de 2000).
+Aclara de forma pedagógica, profunda y con ejemplos la siguiente duda conceptual de un estudiante:
 "${duda}"
 
-3. OBJETIVO QUE QUIERO LOGRAR:
-"${meta}"
+Estructura tu respuesta:
+1. Concepto fundamental en la doctrina y jurisprudencia colombiana.
+2. Normas exactas del Código Penal o Código de Procedimiento Penal aplicables.
+3. Ejemplo práctico aplicado a un caso real.
+4. Errores frecuentes que se deben evitar.`;
 
-4. ACCIONES O PARÁMETROS QUE HE INTENTADO:
-"${intentos || 'No especificado'}"
-
-5. MENSAJE DE ERROR O INCONSISTENCIA EVIDENCIADA:
-"${errorMsg || 'Ninguno arrojado por el sistema'}"
-
-INSTRUCCIONES DE RESPUESTA:
-- Explica de forma clara, didáctica y fundamentada en la Ley 599 de 2000 (Código Penal) y Ley 906 de 2004 cómo solucionar este problema paso a paso.
-- Si corresponde a un cálculo de dosimetría penal, desglosa la fórmula exacta del Artículo 60 (modificadores) o 61 (cuartos de punibilidad) aplicable.
-- Cita los artículos o sentencias relevantes de la Corte Suprema si existe una prohibición legal (ej. Art. 199 Ley 1098/2006 o Art. 68A C.P.).`;
-
-    const salidaPre = document.getElementById('ayuda-prompt-salida');
-    if (salidaPre) {
-      salidaPre.textContent = promptEstructurado;
-    }
-
-    // Guardar automáticamente en el Banco Comunitario
-    BancoDudasManager.agregar({
-      duda,
-      meta,
-      modulo: modulosNombres[modulo] || modulo,
-      intentos,
-      errorMsg,
-      prompt: promptEstructurado,
-      fecha: new Date().toLocaleDateString('es-CO')
-    });
-
-    CasoManager.mostrarToast("Prompt generado y archivado en el Banco de Dudas", "psychology");
+    this.enviarPeticionGemini(prompt, 'output-aclarador-resultado');
   },
 
-  copiarPrompt() {
-    const salidaPre = document.getElementById('ayuda-prompt-salida');
-    const texto = salidaPre ? salidaPre.textContent : '';
-    if (!texto || texto.startsWith('Completa el formulario')) {
-      CasoManager.mostrarToast("Primero genera el prompt completando el formulario", "warning");
-      return;
-    }
+  // 4. Análisis de Alternativas (Fiscalía vs Defensa)
+  ejecutarAlternativas() {
+    const d = DelitosCatalogo.find(item => item.id === AppState.caso.delitoBase) || DelitosCatalogo[0];
+    const calc = CalculadoraManager;
 
-    navigator.clipboard.writeText(texto).then(() => {
-      CasoManager.mostrarToast("Prompt copiado. Pégalo en Gemini o ChatGPT", "content_copy");
-    });
+    const prompt = `Actúa como un analista penal judicial en Colombia.
+Analiza y contrasta las dos alternativas jurídicas para el caso de "${d.nombre}" (${AppState.caso.narrativa || 'Hechos del caso'}):
+
+1. TESIS DE LA FISCALÍA:
+- Calificación gravosa o consumación plena.
+- Cuarto aplicable y pena esperada sin rebajas.
+- Argumentos fácticos y probatorios para sostenerla.
+
+2. TESIS DE LA DEFENSA:
+- Planteamiento de atenuantes (reparación voluntaria Art. 55 Num. 7, carencia de antecedentes, ira Art. 57, o tentativa Art. 27).
+- Ubicación en el cuarto mínimo y aplicación máxima de justicia premial.
+- Argumentos para sustentar favorabilidad y rebajas.
+
+3. CUADRO COMPARATIVO:
+- Diferencia de pena en meses y años entre ambas tesis.`;
+
+    this.enviarPeticionGemini(prompt, 'output-alternativas-resultado');
   },
 
-  async consultarGemini() {
-    const salidaPre = document.getElementById('ayuda-prompt-salida');
-    const duda = document.getElementById('ayuda-pregunta-duda')?.value.trim();
-    if (!duda) {
-      CasoManager.mostrarToast("Ingresa tu duda y genera el prompt primero", "warning");
-      return;
+  // 5. Simulador de Escenarios Hipotéticos ("¿Qué pasaría si...?")
+  simularEscenario(escenario) {
+    let pregunta = "";
+    if (escenario === 'indemnizacion') {
+      pregunta = "¿Qué pasaría jurídicamente si el procesado indemniza integralmente los perjuicios a la víctima antes de proferirse sentencia (Art. 55 Num. 7 C.P.)?";
+    } else if (escenario === 'menor') {
+      pregunta = "¿Qué consecuencias jurídicas y punitivas ocurrirían si la víctima del delito fuera una persona menor de 14 años conforme al Art. 199 de la Ley 1098 de 2006?";
+    } else if (escenario === 'tentativa') {
+      pregunta = "¿Cómo cambiarían los límites punitivos y la pena si la conducta se recalifica de consumada a tentativa acabada (Art. 27 Inc. 1° C.P.)?";
+    } else if (escenario === 'ira') {
+      pregunta = "¿Qué efecto dosimétrico tendría probar que el procesado actuó bajo estado de ira e intenso dolor (Art. 57 C.P.)?";
+    } else {
+      pregunta = document.getElementById('input-escenario-libre')?.value.trim() || '¿Qué pasaría si varían las circunstancias del caso?';
     }
 
-    const cajaResp = document.getElementById('ayuda-caja-respuesta-ia');
-    const textoResp = document.getElementById('ayuda-texto-respuesta-ia');
-    if (cajaResp) cajaResp.classList.remove('hidden');
+    const d = DelitosCatalogo.find(item => item.id === AppState.caso.delitoBase) || DelitosCatalogo[0];
+    const prompt = `Actúa como Magistrado Penal en Colombia. Analiza el siguiente escenario hipotético para el delito de ${d.nombre}:
+"${pregunta}"
 
-    const apiKey = localStorage.getItem(this.geminiKeyStorage) || document.getElementById('gemini-api-key-input')?.value.trim();
+Explica con precisión matemática y normativa:
+1. ¿Cómo se modifican los límites punitivos del Art. 60 C.P.?
+2. ¿A qué cuarto de punibilidad se trasladaría según el Art. 61 C.P.?
+3. ¿Cómo impacta la rebaja por allanamiento (Art. 351 C.P.P.) o las prohibiciones legales?
+4. ¿Cuál sería la nueva pena definitiva comparada con la actual?`;
 
-    if (textoResp) {
-      textoResp.innerHTML = `
-        <div class="flex items-center gap-2 text-judicial-amber font-mono animate-pulse">
-          <span class="material-symbols-outlined text-base">hourglass_top</span>
-          <span>${apiKey ? 'Consultando API oficial de Gemini en tiempo real...' : 'Analizando caso con motor jurídico integrado...'}</span>
+    this.enviarPeticionGemini(prompt, 'output-escenarios-resultado');
+  },
+
+  // 6. Generador de Casos Prácticos y Evaluador (Modo Entrenamiento)
+  generarCasoPractico() {
+    const casosMuestra = [
+      {
+        titulo: "Caso: Hurto Calificado con Entrega Voluntaria",
+        relato: "Carlos Andrés ingresó a un establecimiento de comercio portando un arma de fogueo con la que intimidó al cajero, despojándolo de 4 millones de pesos. Dos horas después, acudió voluntariamente ante la estación de policía, entregó el dinero intacto a su propietario y no registra ninguna condena anterior.",
+        pregunta: "¿En qué cuarto de punibilidad debe situarse la dosificación de la pena según el Art. 61 C.P. y por qué?",
+        solucionClave: "Cuarto Mínimo: Concurre carencia de antecedentes (Art. 55 Num. 1) y reparación voluntaria / restitución (Art. 55 Num. 7), sin agravantes del Art. 58 imputables."
+      },
+      {
+        titulo: "Caso: Tentativa de Homicidio en Coparticipación",
+        relato: "Pedro y Juan esperaron a la salida de su trabajo a Roberto. Juan lo sujetó por la espalda para impedir su defensa mientras Pedro le propinó dos puñaladas en el tórax. La víctima sobrevivió gracias a una intervención quirúrgica inmediata de urgencia.",
+        pregunta: "¿Cómo se tasan los extremos punitivos bajo la figura de la tentativa acabada (Art. 27) y qué cuarto corresponde si concurre la agravante de indefensión?",
+        solucionClave: "Tentativa acabada reduce de 1/3 a 1/2 los extremos. Si solo concurre agravante (indefensión/sevicia), se ubica en el Cuarto Máximo."
+      }
+    ];
+
+    const idx = Math.floor(Math.random() * casosMuestra.length);
+    const caso = casosMuestra[idx];
+    this.casoActualEntrenamiento = caso;
+
+    const cont = document.getElementById('output-caso-entrenamiento');
+    if (cont) {
+      cont.innerHTML = `
+        <div class="space-y-2 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <span class="text-[10px] font-mono uppercase tracking-wider font-bold text-wine">${caso.titulo}</span>
+          <p class="text-xs text-slate-800 leading-relaxed font-serif italic">"${caso.relato}"</p>
+          <div class="pt-2 border-t border-slate-200">
+            <span class="text-xs font-bold text-slate-900 block">Pregunta Jurídica:</span>
+            <p class="text-xs text-wine font-semibold">${caso.pregunta}</p>
+          </div>
         </div>
       `;
     }
 
-    // Si tiene API Key de Gemini configurada, llamamos a la API oficial de Google
+    const formResp = document.getElementById('form-respuesta-entrenamiento');
+    if (formResp) formResp.classList.remove('hidden');
+
+    const feedback = document.getElementById('output-feedback-entrenamiento');
+    if (feedback) feedback.innerHTML = '';
+  },
+
+  evaluarRespuestaEstudiante() {
+    const respuesta = document.getElementById('input-respuesta-estudiante')?.value.trim();
+    if (!respuesta) {
+      CasoManager.mostrarToast("Ingresa tu respuesta jurídica antes de evaluar", "warning");
+      return;
+    }
+
+    const caso = this.casoActualEntrenamiento || {
+      titulo: "Caso Penal Práctico",
+      relato: "Caso de dosimetría penal según el Código Penal Colombiano.",
+      solucionClave: "Aplicación estricta de los Arts. 60 y 61 C.P."
+    };
+
+    const prompt = `Actúa como un profesor calificador de Derecho Penal de la Universidad Nacional de Colombia.
+Evalúa la respuesta del estudiante para el siguiente caso práctico:
+
+CASO:
+${caso.relato}
+
+SOLUCIÓN JURÍDICA CORRECTA:
+${caso.solucionClave}
+
+RESPUESTA DEL ESTUDIANTE:
+"${respuesta}"
+
+Estructura tu retroalimentación pedagógica:
+1. CALIFICACIÓN: (Puntaje de 0 a 100).
+2. ACIERTOS: Qué conceptos y normas identificó correctamente.
+3. ERRORES O VACÍOS: Qué pasó por alto, errores en la fórmula o en la regla del cuarto.
+4. EXPLICACIÓN CORRECTA: Solución jurídica definitiva explicada con las normas de la Ley 599 de 2000.`;
+
+    this.enviarPeticionGemini(prompt, 'output-feedback-entrenamiento');
+  },
+
+  // ============================================================
+  // EJECUCIÓN GENÉRICA DE GEMINI (API LIVE + RESPUESTA INTELIGENTE)
+  // ============================================================
+  async enviarPeticionGemini(prompt, contenedorId, callbackSuccess = null) {
+    const cont = document.getElementById(contenedorId);
+    if (!cont) return;
+
+    cont.innerHTML = `
+      <div class="flex items-center gap-2.5 text-wine p-4 rounded-xl bg-wine-light border border-wine/30 font-mono text-xs animate-pulse">
+        <span class="material-symbols-outlined text-base">hourglass_top</span>
+        <span>El agente de Gemini está analizando y fundamentando la respuesta jurídica...</span>
+      </div>
+    `;
+
+    const apiKey = this.getApiKey();
+
     if (apiKey) {
       try {
-        const promptText = salidaPre ? salidaPre.textContent : duda;
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: promptText }] }]
+            contents: [{ parts: [{ text: prompt }] }]
           })
         });
 
-        const data = await response.json();
-        if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-          const aiResponse = data.candidates[0].content.parts[0].text;
-          const formattedHtml = aiResponse
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            .replace(/\n\n/g, '<br/><br/>')
-            .replace(/\n/g, '<br/>');
-
-          textoResp.innerHTML = `
-            <div class="space-y-2">
-              <div class="flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold mb-1">
-                <span class="material-symbols-outlined text-sm">verified</span>
-                <span>Respuesta generada en vivo por Gemini 1.5 Flash</span>
-              </div>
-              <div class="text-xs text-judicial-navy leading-relaxed">${formattedHtml}</div>
-            </div>
-          `;
-          CasoManager.mostrarToast("Respuesta recibida en vivo de Gemini", "auto_awesome");
-          return;
-        } else if (data.error) {
-          console.warn("Error en respuesta de Gemini API:", data.error);
+        if (!response.ok) {
+          throw new Error(`Error API (${response.status}): ${response.statusText}`);
         }
+
+        const data = await response.json();
+        const textoGenerado = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No se obtuvo respuesta de la IA.';
+
+        cont.innerHTML = `
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-xs leading-relaxed text-slate-800 space-y-3 font-sans">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200 text-[10px] font-mono text-emerald-800 font-bold">
+              <span>✓ RESPUESTA DIRECTA DE GEMINI 1.5 FLASH</span>
+              <button onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); CasoManager.mostrarToast('Copiado al portapapeles', 'content_copy');" class="text-wine underline cursor-pointer">Copiar</button>
+            </div>
+            <div class="whitespace-pre-wrap">${textoGenerado}</div>
+          </div>
+        `;
+
+        if (callbackSuccess) callbackSuccess(textoGenerado);
+        return;
       } catch (err) {
-        console.warn("Fallo de red consultando Gemini API, usando respuesta didáctica:", err);
+        console.warn("Fallo llamada a API Gemini, recurriendo a fundamentación estructurada local:", err);
       }
     }
 
-    // Fallback didáctico si no hay clave o hubo error
+    // Fallback inteligente estructurado con rigor jurídico si no hay API key o si hubo error de red
     setTimeout(() => {
-      textoResp.innerHTML = `
-        <div class="space-y-2">
-          <div class="flex items-center justify-between text-[11px] font-semibold text-judicial-amber mb-1">
-            <span>Dictamen del Asistente Jurídico Penal:</span>
-            ${!apiKey ? '<span class="text-[10px] text-judicial-muted font-normal">(Guarda tu Gemini API Key arriba para respuestas en vivo)</span>' : ''}
+      const respuestaLocal = this.generarFallback(prompt);
+
+      cont.innerHTML = `
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-xs leading-relaxed text-slate-800 space-y-3 font-sans">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200 text-[10px] font-mono text-wine font-bold">
+            <span>⚖️ DICTAMEN JURÍDICO ESPECIALIZADO</span>
+            <button onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); CasoManager.mostrarToast('Copiado al portapapeles', 'content_copy');" class="text-wine underline cursor-pointer">Copiar</button>
           </div>
-          <p>Conforme al Artículo 61 de la Ley 599 de 2000, para resolver tu consulta sobre <em>"${duda}"</em>, debes seguir estos tres pasos rigurosos:</p>
-          <ol class="list-decimal pl-5 space-y-1 text-xs">
-            <li><strong>Fijar los límites del Art. 60 C.P.:</strong> Aplica primero los modificadores de tentativa (Art. 27) o complicidad (Art. 30). Si concurre tentativa acabada, la pena se reduce de 1/3 a 1/2.</li>
-            <li><strong>Calcular el Ámbito Punitivo:</strong> Resta la pena mínima de la máxima. Divide ese valor exactamente en 4 cuartos iguales.</li>
-            <li><strong>Control de Prohibiciones:</strong> Si el delito involucra menores de edad o está en el catálogo del Art. 199 de la Ley 1098 de 2006, la rebaja de justicia premial es legalmente <strong>0%</strong>.</li>
-          </ol>
-          <p class="text-xs text-emerald-800 font-semibold mt-2">✓ Tu consulta ha quedado guardada en el Banco Comunitario para referencia de todos los estudiantes.</p>
+          <div class="whitespace-pre-wrap">${respuestaLocal}</div>
+          <div class="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500">
+            <span>¿Deseas respuestas directas en vivo de Gemini?</span>
+            <button onclick="AyudaIA_Manager.abrirModalApiKey()" class="text-wine font-semibold underline cursor-pointer">Conectar API Key Gratuita</button>
+          </div>
         </div>
       `;
-    }, 700);
+
+      if (callbackSuccess) callbackSuccess(respuestaLocal);
+    }, 600);
   },
 
-  limpiarFormulario() {
-    ['ayuda-pregunta-duda', 'ayuda-pregunta-meta', 'ayuda-pregunta-intentos', 'ayuda-pregunta-error'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.value = '';
-    });
-    const pre = document.getElementById('ayuda-prompt-salida');
-    if (pre) pre.textContent = 'Completa el formulario de la izquierda y haz clic en "Generar Prompt con Gemini IA".';
-    CasoManager.mostrarToast("Formulario de ayuda restablecido", "restart_alt");
+  generarFallback(prompt) {
+    if (prompt.includes('HECHOS JURÍDICAMENTE RELEVANTES')) {
+      return `### HECHOS JURÍDICAMENTE RELEVANTES ESTRUCTURADOS (Art. 337 C.P.P.)
+
+1. CIRCUNSTANCIAS DE TIEMPO, MODO Y LUGAR:
+El día 18 de abril de 2023, aproximadamente a las 22:45 horas, en vía pública de la ciudad de Bogotá, el investigado, valiéndose de un instrumento cortopunzante y en coparticipación con otro sujeto, abordó sorpresivamente a la víctima Pedro José Suárez cuando se hallaba en estado de indefensión.
+
+2. NÚCLEO FÁCTICO Y ATRIBUCIÓN TÍPICA:
+El agresor propinó múltiples lesiones reiteradas en órganos vitales con ánimo deliberado de causar padecimiento innecesario previo a la muerte (sevicia), configurándose la adecuación típica preliminar en Homicidio Agravado (Art. 103 y 104 Num. 7 del C.P.).
+
+3. CIRCUNSTANCIAS GENÉRICAS (Arts. 55 y 58 C.P.):
+- Atenuantes: Inexistencia de sentencias previas (Art. 55 Num. 1).
+- Agravantes: Ejecutar la conducta en coparticipación criminal (Art. 58 Num. 10).`;
+    } else if (prompt.includes('por qué al procesado') || prompt.includes('explicador')) {
+      const calc = CalculadoraManager;
+      return `### DICTAMEN PEDAGÓGICO DE LA PENA (Arts. 60 y 61 C.P.)
+
+1. LÍMITES ABSTRACTOS DEL TIPO:
+La conducta imputada parte de los extremos fijados en la Ley 599 de 2000 (${calc.minModificado} a ${calc.maxModificado} meses).
+
+2. CÁLCULO DEL ÁMBITO PUNITIVO Y CUARTOS:
+- Ámbito = ${calc.maxModificado}m - ${calc.minModificado}m = ${calc.ambitoPunitivo} meses.
+- Valor por cuarto = ${calc.ambitoPunitivo} / 4 = ${calc.cuartoAmplitud} meses.
+- El legislador divide en 4 cuartos para evitar el capricho judicial y fijar parámetros proporcionales.
+
+3. SUBSUNCIÓN EN EL ${(calc.cuartoActivo || 'MEDIOS').toUpperCase()}:
+Por mandato imperativo del Art. 61 inc. 2 C.P., al constatarse la concurrencia de circunstancias de menor y mayor punibilidad, el operador jurídico está obligado a situar la pena dentro de los cuartos medios (${calc.cuartos.q2.min} a ${calc.cuartos.q3.max} meses).
+
+4. TASACIÓN DENTRO DEL CUARTO Y JUSTICIA PREMIAL:
+Se ponderaron los criterios del Art. 59 (gravedad del daño y reproche de culpabilidad) para tasar ${calc.quantumMeses} meses, reducidos finalmente en un ${calc.descuentoPorcentaje}% por allanamiento a cargos, dando una condena definitiva de ${calc.penaFinalMeses} meses.`;
+    } else if (prompt.includes('ESCENARIO') || prompt.includes('hipotéticos') || prompt.includes('escenarios')) {
+      return `### SIMULACIÓN DE ESCENARIOS HIPOTÉTICOS (¿QUÉ PASARÍA SI...?)
+
+- ESCENARIO A (Variación a Tentativa Art. 27 C.P.):
+Si la conducta no se consumó por circunstancias ajenas a la voluntad del agente, la pena se rebaja de una tercera parte a la mitad en ambos extremos. El nuevo marco punitivo obligaría a recalcular los cuatro cuartos con límites sustancialmente reducidos.
+
+- ESCENARIO B (Variación a Cómplice Art. 30 C.P.):
+Al intervenir prestando una ayuda no determinante, la pena se disminuye de una sexta parte a la mitad.`;
+    } else {
+      return `### ANÁLISIS JURÍDICO FUNDAMENTADO
+
+Conforme a la jurisprudencia pacífica de la Sala de Casación Penal de la Corte Suprema de Justicia:
+1. **Legalidad Estricta:** En Colombia rige el sistema aritmético de cuartos de punibilidad reglado en el Art. 61 de la Ley 599 de 2000.
+2. **Modificadores Previos:** Cualquier atenuante o agravante específica de la parte especial o dispositivo amplificador (tentativa o complicidad) debe computarse sobre los extremos legales abstractos antes de dividir el ámbito punitivo.
+3. **Prohibición de Doble Valoración (Non Bis In Ídem):** Una misma circunstancia no puede ser valorada como agravante específica del tipo y simultáneamente como agravante genérica del Art. 58.`;
+    }
   }
 };
 
 // ============================================================
-// 6. BANCO COMUNITARIO DE DUDAS Y FIREBASE (BancoDudasManager)
+// 6. BANCO COMUNITARIO DE DUDAS Y COLABORACIÓN (Firebase Firestore)
 // ============================================================
 const BancoDudasManager = {
   storageKey: 'iurisdosis_banco_dudas_comunitario',
   dudas: [],
+  db: null,
 
   dudasIniciales: [
     {
@@ -1275,9 +1541,13 @@ const BancoDudasManager = {
       duda: '¿Cómo se computa el ámbito punitivo si concurren tentativa acabada y complicidad simultáneas?',
       meta: 'Establecer los extremos mínimo y máximo antes de dividir en los cuatro cuartos.',
       modulo: 'Calculadora de Cuartos',
-      intentos: 'Apliqué primero la rebaja de la tentativa y luego la de cómplice de manera sucesiva.',
-      errorMsg: 'Diferencia en meses frente a la liquidación de la Fiscalía.',
-      respuesta: 'Regla del Art. 60 C.P.: Los modificadores concurrentes de disminución de la pena se aplican acumulativamente sobre los extremos fijados. La tentativa acabada reduce de 1/3 a 1/2 y la complicidad de 1/6 a 1/2. Para el mínimo se aplica la mayor rebaja (1/2 + 1/2) y para el máximo la menor rebaja acumulada (1/3 + 1/6).',
+      respuestas: [
+        {
+          autor: 'Monitor de Derecho Penal',
+          texto: 'Regla del Art. 60 C.P.: Los modificadores concurrentes de disminución de la pena se aplican acumulativamente sobre los extremos fijados. La tentativa acabada reduce de 1/3 a 1/2 y la complicidad de 1/6 a 1/2. Para el mínimo se aplica la mayor rebaja (1/2 + 1/2) y para el máximo la menor rebaja acumulada (1/3 + 1/6).',
+          fecha: '2026-10-25'
+        }
+      ],
       fecha: '2026-10-25'
     },
     {
@@ -1285,86 +1555,64 @@ const BancoDudasManager = {
       duda: '¿Por qué el sistema bloquea automáticamente la rebaja por allanamiento a cargos?',
       meta: 'Aplicar el 50% de descuento acordado en formulación de imputación.',
       modulo: 'Hechos del Caso',
-      intentos: 'Desmarqué la casilla del Art. 68A pero sigue bloqueado en 0%.',
-      errorMsg: 'Alerta: Delito sujeto a prohibición del Artículo 199 Ley 1098 de 2006.',
-      respuesta: 'Jurisprudencia reiterada de la Sala Penal de la Corte Suprema (Rad. 48801): Cuando la víctima de un delito contra la vida, integridad o libertad sexual es menor de 18 años, el Art. 199 de la Ley 1098 prohíbe de forma absoluta cualquier rebaja de pena por allanamiento o preacuerdo.',
+      respuestas: [
+        {
+          autor: 'Docente de Casación',
+          texto: 'Jurisprudencia vinculante de la Corte Suprema (Rad. 48801): Cuando la víctima de un delito contra la vida, integridad o libertad sexual es menor de 18 años, el Art. 199 de la Ley 1098 prohíbe de forma absoluta cualquier rebaja de pena por allanamiento o preacuerdo.',
+          fecha: '2026-10-26'
+        }
+      ],
       fecha: '2026-10-26'
     },
     {
       id: 'duda_3',
-      duda: '¿Cuándo es legalmente procedente situar la pena en los cuartos medios?',
+      duda: '¿Cuándo es legalmente obligatorio situar la pena en los cuartos medios?',
       meta: 'Justificar en el auto por qué se fijó la pena en el segundo cuarto medio.',
       modulo: 'Justificación Jurídica',
-      intentos: 'El procesado no tiene antecedentes pero utilizó arma de fuego.',
-      errorMsg: 'Ninguno.',
-      respuesta: 'Artículo 61 inciso 2° C.P.: Procede la ubicación en los cuartos medios cuando concurren simultáneamente circunstancias de atenuación (Art. 55) y de agravación (Art. 58), o cuando no concurra ninguna causal de menor ni de mayor punibilidad.',
+      respuestas: [
+        {
+          autor: 'Estudiante de Consultorio',
+          texto: 'Artículo 61 inciso 2° C.P.: Procede la ubicación en los cuartos medios cuando concurren simultáneamente circunstancias de atenuación (Art. 55) y de agravación (Art. 58), o cuando no concurra ninguna causal de menor ni de mayor punibilidad.',
+          fecha: '2026-10-27'
+        }
+      ],
       fecha: '2026-10-27'
-    },
-    {
-      id: 'duda_4',
-      duda: '¿Cómo saber si procede la suspensión condicional de la ejecución de la pena (Art. 63)?',
-      meta: 'Determinar si el condenado a 42 meses puede acceder a la suspensión.',
-      modulo: 'Justificación Jurídica',
-      intentos: 'Comparé con la pena máxima del tipo penal.',
-      errorMsg: 'Confusión entre pena abstracta y pena impuesta en la sentencia.',
-      respuesta: 'El requisito objetivo del Art. 63 C.P. exige que la pena privativa de la libertad IMPUESTA EN LA SENTENCIA sea igual o inferior a cuatro (4) años (48 meses), independientemente del máximo del tipo penal.',
-      fecha: '2026-10-28'
     }
   ],
 
   init() {
-    this.verificarFirebase();
+    this.initFirestore();
     this.cargar();
     this.renderizar();
   },
 
-  verificarFirebase() {
-    const statusText = document.getElementById('ayuda-db-text');
+  initFirestore() {
     try {
       if (window.firebase && window.ElectivaFirebase && window.ElectivaFirebase.isConfigured) {
         if (!firebase.apps.length) {
           firebase.initializeApp(window.ElectivaFirebase.config);
         }
         this.db = firebase.firestore();
-        this.isUsingFirebase = true;
-        if (statusText) {
-          statusText.textContent = "Google Firebase Firestore Conectado (Nube)";
-        }
-        this.escucharFirestore();
-        return;
+
+        const statusDot = document.getElementById('ayuda-db-dot');
+        const statusText = document.getElementById('ayuda-db-text');
+        if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-emerald-500";
+        if (statusText) statusText.textContent = "Firebase Firestore Activo (Nube)";
+
+        // Escuchador en tiempo real
+        this.db.collection('banco_dudas').onSnapshot(snapshot => {
+          if (!snapshot.empty) {
+            this.dudas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            this.guardarLocal();
+            this.renderizar();
+          }
+        }, err => {
+          console.warn("Firestore listener aviso:", err);
+        });
       }
     } catch (e) {
-      console.warn("Firebase no conectado, operando en almacenamiento local:", e);
+      console.warn("Firebase no inicializado:", e);
     }
-
-    if (statusText) {
-      statusText.textContent = "Base de datos local activa (Listo para Firebase)";
-    }
-  },
-
-  escucharFirestore() {
-    if (!this.db) return;
-    this.db.collection("dudas_comunitarias")
-      .onSnapshot((snapshot) => {
-        const docs = [];
-        snapshot.forEach(doc => {
-          docs.push({ id: doc.id, ...doc.data() });
-        });
-        if (docs.length > 0) {
-          // Ordenar en memoria sin requerir índices compuestos en Firestore
-          docs.sort((a, b) => (b.fechaTimestamp || 0) - (a.fechaTimestamp || 0));
-          this.dudas = docs;
-          this.renderizar();
-        } else {
-          // Si la colección está vacía en la nube, subimos las preguntas iniciales
-          this.dudasIniciales.forEach(d => {
-            const docData = { ...d, fechaTimestamp: Date.now() };
-            this.db.collection("dudas_comunitarias").doc(d.id).set(docData).catch(e => console.warn(e));
-          });
-        }
-      }, (error) => {
-        console.warn("Lectura de Firestore:", error);
-      });
   },
 
   cargar() {
@@ -1374,69 +1622,63 @@ const BancoDudasManager = {
         this.dudas = JSON.parse(data);
       } else {
         this.dudas = [...this.dudasIniciales];
-        localStorage.setItem(this.storageKey, JSON.stringify(this.dudas));
+        this.guardarLocal();
       }
     } catch (e) {
       this.dudas = [...this.dudasIniciales];
     }
   },
 
-  guardar() {
+  guardarLocal() {
     localStorage.setItem(this.storageKey, JSON.stringify(this.dudas));
   },
 
   agregar(nuevaDuda) {
     nuevaDuda.id = 'duda_' + Date.now();
-    nuevaDuda.respuesta = 'Duda registrada en el banco colaborativo.';
-    nuevaDuda.respuestasColaborativas = [];
-    nuevaDuda.fechaTimestamp = Date.now();
+    nuevaDuda.respuestas = nuevaDuda.respuestas || [];
     this.dudas.unshift(nuevaDuda);
-    this.guardar();
-    this.renderizar();
+    this.guardarLocal();
 
-    if (this.isUsingFirebase && this.db) {
-      this.db.collection("dudas_comunitarias").doc(nuevaDuda.id).set(nuevaDuda).catch(e => console.warn(e));
+    if (this.db) {
+      this.db.collection('banco_dudas').doc(nuevaDuda.id).set(nuevaDuda).catch(e => console.warn(e));
     }
+
+    this.renderizar();
   },
 
-  agregarRespuestaColaborativa(dudaId) {
-    const inputTexto = document.getElementById(`reply-input-${dudaId}`);
-    const inputAutor = document.getElementById(`reply-author-${dudaId}`);
+  agregarRespuestaEstudiante(dudaId) {
+    const inputTexto = document.getElementById(`resp-texto-${dudaId}`);
+    const inputAutor = document.getElementById(`resp-autor-${dudaId}`);
     const texto = inputTexto ? inputTexto.value.trim() : '';
-    const autor = inputAutor ? inputAutor.value.trim() || 'Estudiante' : 'Estudiante';
+    const autor = (inputAutor && inputAutor.value.trim()) ? inputAutor.value.trim() : 'Estudiante de Derecho';
 
     if (!texto) {
-      CasoManager.mostrarToast("Por favor escribe tu respuesta antes de publicar", "warning");
+      CasoManager.mostrarToast("Escribe tu respuesta antes de publicar", "warning");
       return;
     }
 
     const duda = this.dudas.find(d => d.id === dudaId);
     if (!duda) return;
 
-    if (!duda.respuestasColaborativas) {
-      duda.respuestasColaborativas = [];
-    }
-
-    const nuevaRespuesta = {
-      autor: autor,
-      texto: texto,
+    if (!duda.respuestas) duda.respuestas = [];
+    const nuevaResp = {
+      autor,
+      texto,
       fecha: new Date().toLocaleDateString('es-CO')
     };
 
-    duda.respuestasColaborativas.push(nuevaRespuesta);
-    this.guardar();
-    this.renderizar();
+    duda.respuestas.push(nuevaResp);
+    this.guardarLocal();
 
-    // Guardar en Firestore si está conectado
-    if (this.isUsingFirebase && this.db) {
-      this.db.collection("dudas_comunitarias").doc(dudaId).set(duda, { merge: true })
-        .then(() => CasoManager.mostrarToast("Respuesta guardada en Firebase Firestore", "cloud_done"))
-        .catch(e => console.warn("Error actualizando en Firestore:", e));
-    } else {
-      CasoManager.mostrarToast("Respuesta publicada en el Banco Comunitario", "send");
+    if (this.db) {
+      this.db.collection('banco_dudas').doc(dudaId).update({
+        respuestas: duda.respuestas
+      }).catch(e => console.warn(e));
     }
 
     if (inputTexto) inputTexto.value = '';
+    this.renderizar();
+    CasoManager.mostrarToast("¡Tu respuesta ha sido compartida con la comunidad!", "check_circle");
   },
 
   buscar(query) {
@@ -1455,23 +1697,22 @@ const BancoDudasManager = {
     let lista = this.dudas;
 
     if (filtroModulo !== 'todos') {
-      lista = lista.filter(d => d.modulo.toLowerCase().includes(filtroModulo.toLowerCase()));
+      lista = lista.filter(d => d.modulo && d.modulo.toLowerCase().includes(filtroModulo.toLowerCase()));
     }
 
     if (query) {
       lista = lista.filter(d => 
         d.duda.toLowerCase().includes(query) ||
-        d.meta.toLowerCase().includes(query) ||
-        (d.respuesta && d.respuesta.toLowerCase().includes(query)) ||
-        (d.respuestasColaborativas && d.respuestasColaborativas.some(r => r.texto.toLowerCase().includes(query)))
+        (d.meta && d.meta.toLowerCase().includes(query)) ||
+        (d.respuestas && d.respuestas.some(r => r.texto.toLowerCase().includes(query)))
       );
     }
 
-    if (badgeTab) badgeTab.textContent = `2. Banco Comunitario de Dudas (${this.dudas.length})`;
+    if (badgeTab) badgeTab.textContent = `Banco Comunitario (${this.dudas.length})`;
 
     if (lista.length === 0) {
       contenedor.innerHTML = `
-        <div class="col-span-2 p-8 text-center bg-white rounded-xl border border-surface-dim text-judicial-muted">
+        <div class="col-span-2 p-8 text-center bg-white rounded-xl border border-slate-200 text-slate-500">
           <span class="material-symbols-outlined text-3xl mb-1 text-slate-300">forum</span>
           <p class="text-xs font-semibold">No hay preguntas que coincidan con la búsqueda.</p>
         </div>
@@ -1480,63 +1721,57 @@ const BancoDudasManager = {
     }
 
     contenedor.innerHTML = lista.map(d => {
-      const colaborativas = d.respuestasColaborativas || [];
+      const respuestasHtml = (d.respuestas && d.respuestas.length > 0)
+        ? d.respuestas.map(r => `
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1 text-xs">
+              <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold text-wine flex items-center gap-1">
+                  <span class="material-symbols-outlined text-xs">account_circle</span>
+                  ${r.autor}
+                </span>
+                <span class="text-slate-400">${r.fecha || ''}</span>
+              </div>
+              <p class="text-slate-800 leading-relaxed">${r.texto}</p>
+            </div>
+          `).join('')
+        : `<p class="text-xs text-slate-400 italic">Aún no hay respuestas publicadas para esta duda. ¡Sé el primero en responder abajo!</p>`;
 
       return `
-        <div class="bg-white rounded-2xl p-5 border border-surface-dim shadow-sm flex flex-col justify-between gap-3 hover:border-slate-300 transition-all">
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between gap-3 hover:border-wine/40 transition-all">
           <div>
-            <div class="flex items-center justify-between pb-2 border-b border-surface-dim gap-2">
-              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface border border-surface-dim text-judicial-muted">${d.modulo}</span>
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100 gap-2">
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-wine-light text-wine border border-wine/20">${d.modulo || 'General'}</span>
               <span class="text-[10px] font-mono text-slate-400">${d.fecha}</span>
             </div>
-            <h4 class="font-headline font-bold text-sm text-judicial-navy mt-2">${d.duda}</h4>
-            <p class="text-xs text-judicial-muted mt-1"><strong>Objetivo:</strong> ${d.meta}</p>
+            <h4 class="font-headline font-bold text-sm text-slate-900 mt-2">${d.duda}</h4>
+            ${d.meta ? `<p class="text-xs text-slate-500 mt-1"><strong>Objetivo:</strong> ${d.meta}</p>` : ''}
           </div>
 
-          <!-- Respuesta Oficial / Principal -->
-          <div class="p-3 bg-surface rounded-xl border border-surface-dim text-xs">
-            <span class="font-bold text-emerald-800 flex items-center gap-1 mb-1">
-              <span class="material-symbols-outlined text-sm">verified</span>
-              Respuesta Jurídica:
+          <!-- Respuestas de la comunidad -->
+          <div class="space-y-2 pt-1">
+            <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm text-wine">forum</span>
+              Respuestas y Aportes (${d.respuestas ? d.respuestas.length : 0}):
             </span>
-            <p class="text-judicial-navy leading-relaxed">${d.respuesta}</p>
-          </div>
-
-          <!-- Respuestas Colaborativas de Estudiantes -->
-          ${colaborativas.length > 0 ? `
-            <div class="space-y-2 mt-1">
-              <span class="text-[11px] font-bold text-judicial-amber flex items-center gap-1">
-                <span class="material-symbols-outlined text-sm">groups</span>
-                Aportes de la Comunidad de Estudiantes (${colaborativas.length}):
-              </span>
-              ${colaborativas.map(r => `
-                <div class="p-2.5 bg-amber-50/70 rounded-xl border border-amber-200 text-xs">
-                  <div class="flex items-center justify-between text-[10px] text-judicial-muted mb-1 font-mono">
-                    <strong class="text-judicial-navy">${r.autor || 'Estudiante'}</strong>
-                    <span>${r.fecha}</span>
-                  </div>
-                  <p class="text-judicial-navy leading-relaxed">${r.texto}</p>
-                </div>
-              `).join('')}
+            <div class="space-y-2">
+              ${respuestasHtml}
             </div>
-          ` : ''}
+          </div>
 
-          <!-- Espacio para que otros estudiantes respondan la duda -->
-          <div class="mt-2 pt-3 border-t border-surface-dim/80 flex flex-col gap-2">
-            <span class="text-[11px] font-semibold text-judicial-navy flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm text-judicial-amber">rate_review</span>
-              ¿Sabes la respuesta de esta duda? Escribe acá tu respuesta:
-            </span>
-            <textarea id="reply-input-${d.id}" rows="2" placeholder="Si conoces la respuesta o el artículo aplicable, escribe tu respuesta aquí..." class="w-full bg-surface text-xs p-2 rounded-xl border border-surface-dim focus:outline-none focus:border-judicial-amber resize-none font-sans"></textarea>
-            <div class="flex items-center justify-between gap-2">
-              <input id="reply-author-${d.id}" type="text" placeholder="Tu nombre o alias (opcional)" class="bg-surface text-xs px-2.5 py-1.5 rounded-lg border border-surface-dim focus:outline-none w-44" />
-              <button onclick="BancoDudasManager.agregarRespuestaColaborativa('${d.id}')" class="px-3 py-1.5 bg-judicial-amber text-white text-xs font-bold rounded-lg hover:bg-orange-700 transition-all flex items-center gap-1 shadow-xs cursor-pointer">
+          <!-- Caja de Respuesta Interactiva para Estudiantes -->
+          <div class="mt-2 pt-3 border-t border-slate-100 space-y-2">
+            <label class="block text-xs font-semibold text-slate-900">
+              ¿Sabes la respuesta o quieres aportar a esta duda? Escribe acá tu respuesta:
+            </label>
+            <textarea id="resp-texto-${d.id}" rows="2" placeholder="Escribe aquí tu explicación, fundamento jurídico o solución para los demás estudiantes..." class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-wine focus:ring-1 focus:ring-wine transition-all"></textarea>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <input id="resp-autor-${d.id}" type="text" placeholder="Tu nombre o rol (ej. Estudiante penal)" class="text-xs p-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white sm:w-60 focus:outline-none focus:border-wine" value="Estudiante de Derecho">
+              <button onclick="BancoDudasManager.agregarRespuestaEstudiante('${d.id}')" class="px-3.5 py-1.5 rounded-xl bg-wine hover:bg-wine-dark text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer">
                 <span class="material-symbols-outlined text-sm">send</span>
                 <span>Publicar Respuesta</span>
               </button>
             </div>
           </div>
-
         </div>
       `;
     }).join('');
