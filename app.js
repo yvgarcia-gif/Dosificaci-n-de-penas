@@ -132,6 +132,12 @@ const HechosAnalizador = {
     const textarea = document.getElementById('caso-narrativa');
     if (textarea) {
       textarea.addEventListener('input', () => this.actualizarConteo());
+      textarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          this.iniciarAnalisis();
+        }
+      });
       this.actualizarConteo();
     }
   },
@@ -148,6 +154,243 @@ const HechosAnalizador = {
       label.textContent = `${palabras} palabras • ${caracteres} caracteres`;
     }
     AppState.caso.narrativa = textarea.value;
+  },
+
+  /**
+   * INICIAR ANÁLISIS DEL CASO HIPOTÉTICO (START de la aplicación)
+   * Analiza dogmáticamente los hechos descritos en el relato, extrae
+   * conductas, posible tipicidad, sujetos, víctimas y EMP a investigar.
+   */
+  iniciarAnalisis() {
+    const textarea = document.getElementById('caso-narrativa');
+    if (!textarea) return;
+
+    const relato = textarea.value.trim();
+    if (!relato || relato.length < 15) {
+      CasoManager.mostrarToast("Por favor escribe primero los hechos de tu caso hipotético para iniciar el análisis.", "edit_note");
+      textarea.focus();
+      return;
+    }
+
+    const btnTexto = document.getElementById('btn-iniciar-analisis-texto');
+    if (btnTexto) btnTexto.textContent = "⏳ Analizando hechos y tipicidad...";
+
+    // Ejecutar análisis dogmático del relato
+    const resultado = this.analizarRelato(relato);
+
+    // Poblar campos guiados
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    };
+
+    setVal('analisis-conductas', resultado.conductas);
+    setVal('analisis-delitos', resultado.delito);
+    setVal('analisis-responsables', resultado.responsables);
+    setVal('analisis-victimas', resultado.victimas);
+    setVal('analisis-investigacion', resultado.investigacion);
+
+    // Sincronizar estado global
+    AppState.caso.analisisConductas = resultado.conductas;
+    AppState.caso.analisisDelitos = resultado.delito;
+    AppState.caso.analisisResponsables = resultado.responsables;
+    AppState.caso.analisisVictimas = resultado.victimas;
+    AppState.caso.analisisInvestigacion = resultado.investigacion;
+
+    // Sincronizar procesado si aún no está asignado
+    if (resultado.imputadoNombre) {
+      const elProc = document.getElementById('caso-procesado');
+      if (elProc && (!elProc.value || elProc.value.trim() === '')) {
+        elProc.value = resultado.imputadoNombre;
+        AppState.caso.procesado = resultado.imputadoNombre;
+      }
+    }
+
+    // Sincronizar delito base con la calculadora
+    if (resultado.delitoBaseId) {
+      AppState.caso.delitoBase = resultado.delitoBaseId;
+      const selectBase = document.getElementById('caso-delito-base');
+      if (selectBase) selectBase.value = resultado.delitoBaseId;
+
+      if (typeof CalculadoraManager !== 'undefined' && typeof CalculadoraManager.sincronizarDesdeCaso === 'function') {
+        CalculadoraManager.sincronizarDesdeCaso();
+      }
+    }
+
+    // Actualizar indicador visual de estado
+    const badge = document.getElementById('badge-analisis-status');
+    if (badge) badge.classList.remove('hidden');
+
+    if (btnTexto) {
+      btnTexto.textContent = "✓ Re-analizar Hechos [Enter]";
+    }
+
+    // Scroll suave hacia la guía didáctica y resaltado
+    const seccion = document.getElementById('seccion-analisis-dogmatico');
+    if (seccion) {
+      seccion.classList.add('ring-2', 'ring-wine', 'ring-offset-2');
+      setTimeout(() => seccion.classList.remove('ring-2', 'ring-wine', 'ring-offset-2'), 1800);
+      if (typeof seccion.scrollIntoView === 'function') {
+        seccion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    CasoManager.mostrarToast("¡Caso analizado con éxito! Revisa la Guía Dogmática a continuación.", "verified");
+  },
+
+  /**
+   * MOTOR HEURÍSTICO DE ANÁLISIS DOGMÁTICO PENAL (Ley 599/2000 y Ley 906/2004)
+   */
+  analizarRelato(relato) {
+    const texto = relato.trim();
+    const minus = texto.toLowerCase();
+
+    // 1. Detección de Tipicidad y Bien Jurídico
+    let posibleDelito = '';
+    let bienJuridico = '';
+    let delitoBaseId = '103';
+    let empSugeridos = '';
+
+    const tieneMuerte = minus.includes('mató') || minus.includes('asesin') || minus.includes('deceso') || minus.includes('muerte') || minus.includes('occiso') || minus.includes('cadáver') || minus.includes('segar su vida') || (minus.includes('dispar') && (minus.includes('mortal') || minus.includes('tórax')));
+    const esHurto = minus.includes('hurt') || minus.includes('rob') || minus.includes('sustraj') || minus.includes('despoj') || minus.includes('apoder') || minus.includes('celular') || minus.includes('billetera') || minus.includes('vehículo') || minus.includes('moto');
+
+    if (esHurto && !tieneMuerte) {
+      if (minus.includes('arma') || minus.includes('violencia') || minus.includes('intimid') || minus.includes('amenaz') || minus.includes('dos o más') || minus.includes('nocturn') || minus.includes('cortopunzante')) {
+        posibleDelito = 'Hurto calificado y agravado por violencia o porte de armas (Artículos 239, 240 y 241 C.P.)';
+        bienJuridico = 'El Patrimonio Económico (Título VII del Código Penal).';
+        delitoBaseId = '240';
+        empSugeridos = '1. Denuncia formal y acreditación de preexistencia/valor de los bienes sustraídos. 2. Grabaciones de circuitos cerrados de televisión (CCTV). 3. Acta de incautación y embalaje del arma. 4. Reconocimiento en fila de personas (Art. 256 C.P.P.).';
+      } else {
+        posibleDelito = 'Hurto simple (Artículo 239 del Código Penal)';
+        bienJuridico = 'El Patrimonio Económico (Título VII del Código Penal).';
+        delitoBaseId = '239';
+        empSugeridos = '1. Declaración jurada de la víctima. 2. Facturas o documentos de preexistencia. 3. Registro de cámaras perimetrales. 4. Informe pericial de avalúo comercial.';
+      }
+    } else if (tieneMuerte || minus.includes('heridas') || minus.includes('cortopunzante') || minus.includes('dispar')) {
+      if (minus.includes('mujer') && (minus.includes('género') || minus.includes('pareja') || minus.includes('feminicid'))) {
+        posibleDelito = 'Feminicidio (Artículo 104A del Código Penal)';
+        bienJuridico = 'La Vida y la Integridad Personal (Título I C.P.) con agravación por razones de género.';
+        delitoBaseId = '104a';
+        empSugeridos = '1. Protocolo de necropsia forense. 2. Dictamen de contexto de violencia de género. 3. Denuncias o medidas de protección previas. 4. Fijación fotográfica de la escena del crimen. 5. Entrevistas a familiares y allegados.';
+      } else if (minus.includes('sevicia') || minus.includes('indefens') || minus.includes('desprevenido') || minus.includes('padecimiento') || minus.includes('precio') || minus.includes('promesa') || minus.includes('emboscada')) {
+        posibleDelito = 'Homicidio agravado por sevicia y/o colocación de la víctima en indefensión (Artículos 103 y 104 Num. 7 C.P.)';
+        bienJuridico = 'La Vida e Integridad Personal (Título I del Código Penal).';
+        delitoBaseId = '103';
+        empSugeridos = '1. Dictamen de necropsia de Medicina Legal (con trayectoria y multiplicidad de heridas). 2. Inspección técnica a cadáver y lugar de los hechos (Arts. 213 y 214 C.P.P.). 3. Fijación fotográfica y planimétrica. 4. Registro de cámaras de seguridad del cuadrante. 5. Testimonios presenciales.';
+      } else {
+        posibleDelito = 'Homicidio simple (Artículo 103 del Código Penal)';
+        bienJuridico = 'La Vida e Integridad Personal (Título I del Código Penal).';
+        delitoBaseId = '103';
+        empSugeridos = '1. Protocolo de necropsia médico-legal. 2. Acta de inspección técnica al cadáver. 3. Dictamen balístico o dactiloscópico del arma empleada. 4. Cadena de custodia de evidencia física (Art. 254 C.P.P.).';
+      }
+    } else if (minus.includes('estaf') || minus.includes('engaño') || minus.includes('artificio') || minus.includes('indujo en error') || minus.includes('consignación')) {
+      posibleDelito = 'Estafa (Artículo 246 del Código Penal)';
+      bienJuridico = 'El Patrimonio Económico (Título VII del Código Penal) y la buena fe en los negocios.';
+      delitoBaseId = '246';
+      empSugeridos = '1. Trazabilidad financiera y extractos bancarios. 2. Documentos, contratos o mensajes soporte del engaño. 3. Dictamen pericial contable forense. 4. Informes de policía judicial sobre cuentas receptoras.';
+    } else if (minus.includes('extorsi') || minus.includes('vacuna') || minus.includes('exigió dinero') || minus.includes('llamada extorsiva')) {
+      posibleDelito = 'Extorsión (Artículo 244 del Código Penal)';
+      bienJuridico = 'La Libertad Individual y el Patrimonio Económico (Títulos III y VII C.P.).';
+      delitoBaseId = '244';
+      empSugeridos = '1. Grabaciones de audio de llamadas extorsivas. 2. Trazabilidad de números abonados e interceptaciones telefónicas judiciales. 3. Acta de entrega controlada o paquete señuelo. 4. Declaración de la víctima.';
+    } else if (minus.includes('secuestr') || minus.includes('retuv') || minus.includes('privó de la libertad') || minus.includes('cautiverio')) {
+      posibleDelito = 'Secuestro (Artículos 168 / 169 del Código Penal)';
+      bienJuridico = 'La Libertad Individual y otras garantías (Título III C.P.).';
+      delitoBaseId = '168';
+      empSugeridos = '1. Registro de exigencias de rescate. 2. Inspección al lugar de cautiverio o liberación. 3. Dictamen médico y psicológico de la persona retenida. 4. Informes de geolocalización de antenas.';
+    } else if (minus.includes('estupefaciente') || minus.includes('droga') || minus.includes('cocaína') || minus.includes('marihuana') || minus.includes('sustancia')) {
+      posibleDelito = 'Tráfico, fabricación o porte de estupefacientes (Artículo 376 del Código Penal)';
+      bienJuridico = 'La Salud Pública (Título XIII del Código Penal).';
+      delitoBaseId = '376';
+      empSugeridos = '1. Prueba de Identificación Preliminar Homologada (PIPH). 2. Dictamen pericial químico de pesaje y pureza. 3. Acta de incautación y registro de cadena de custodia. 4. Informe de captura en flagrancia.';
+    } else if (minus.includes('arma de fuego') || minus.includes('pistola') || minus.includes('revólver') || minus.includes('porte ilegal') || minus.includes('salvoconducto')) {
+      posibleDelito = 'Fabricación, tráfico y porte de armas de fuego o municiones (Artículo 365 C.P.)';
+      bienJuridico = 'La Seguridad Pública (Título XII del Código Penal).';
+      delitoBaseId = '365';
+      empSugeridos = '1. Dictamen pericial balístico de aptitud de disparo. 2. Certificación del DCCA sobre carencia de salvoconducto. 3. Fijación fotográfica y rotulado del elemento incautado.';
+    } else if (minus.includes('intrafamiliar') || minus.includes('cónyuge') || minus.includes('esposa') || minus.includes('esposo') || minus.includes('hijo') || minus.includes('maltrato')) {
+      posibleDelito = 'Violencia Intrafamiliar agravada (Artículo 229 del Código Penal)';
+      bienJuridico = 'La Armonía y Unidad de la Familia (Título VI del Código Penal).';
+      delitoBaseId = '229';
+      empSugeridos = '1. Dictamen pericial médico de lesiones no fatales (Medicina Legal). 2. Valoración de riesgo y peritaje psicológico forense. 3. Historia clínica de urgencias. 4. Medidas de protección previas.';
+    } else if (minus.includes('peculado') || minus.includes('cohecho') || minus.includes('servidor público') || minus.includes('soborno')) {
+      posibleDelito = 'Delitos contra la Administración Pública (Artículos 397 o 405 C.P.)';
+      bienJuridico = 'La Administración Pública (Título XV del Código Penal).';
+      delitoBaseId = '397';
+      empSugeridos = '1. Actas de posesión del cargo y manual de funciones. 2. Resoluciones de ordenación del gasto. 3. Peritaje contable y financiero. 4. Copia auténtica de contratos y desembolsos.';
+    } else {
+      posibleDelito = 'Adecuación típica sujeta a subsunción dogmática según los elementos del tipo penal específico';
+      bienJuridico = 'El interés jurídico penalmente tutelado en la norma aplicable.';
+      delitoBaseId = '103';
+      empSugeridos = '1. Fijación fotográfica y documental del lugar de los hechos. 2. Declaraciones juradas a testigos presenciales. 3. Cadena de custodia estricta de elementos materiales probatorios (Art. 254 C.P.P.).';
+    }
+
+    // 2. Detección de Sujetos y Grado de Participación
+    const regexMayusculas = /\b[A-ZÁÉÍÓÚÑ]{2,}(?:\s+[A-ZÁÉÍÓÚÑ]{2,})+\b/g;
+    const nombresMayusc = texto.match(regexMayusculas) || [];
+
+    const regexCapitalizados = /\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3}\b/g;
+    const nombresCap = texto.match(regexCapitalizados) || [];
+
+    let imputadoDetectado = '';
+    let victimaDetectada = '';
+
+    if (nombresMayusc.length > 0) {
+      imputadoDetectado = nombresMayusc[0];
+    } else if (nombresCap.length > 0) {
+      imputadoDetectado = nombresCap[0];
+    }
+
+    const matchVictima = texto.match(/(?:víctima|ciudadano|contra|afectado|a)\s+([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,2})/i);
+    if (matchVictima && matchVictima[1] && matchVictima[1].toLowerCase() !== (imputadoDetectado || '').toLowerCase()) {
+      victimaDetectada = matchVictima[1];
+    } else if (nombresCap.length > 1) {
+      victimaDetectada = nombresCap[1];
+    }
+
+    let gradoIntervencion = 'autor material directo (Art. 29 inc. 1 C.P.)';
+    if (minus.includes('coparticipación') || minus.includes('en compañía') || minus.includes('con otro') || minus.includes('dos sujetos') || minus.includes('coautor')) {
+      gradoIntervencion = 'coautor material impropio con división del trabajo criminal (Art. 29 inc. 2 C.P.)';
+    } else if (minus.includes('determinó') || minus.includes('instigó') || minus.includes('pagó para')) {
+      gradoIntervencion = 'determinador / instigador intelectual (Art. 30 inc. 1 C.P.)';
+    } else if (minus.includes('cómplice') || minus.includes('ayudó') || minus.includes('facilitó') || minus.includes('campana')) {
+      gradoIntervencion = 'cómplice con auxilio concomitante (Art. 30 inc. 2 C.P.)';
+    }
+
+    let responsablesTxt = '';
+    if (imputadoDetectado) {
+      responsablesTxt = `${imputadoDetectado} en calidad de ${gradoIntervencion}${minus.includes('no individualizado') ? ' y partícipe no individualizado por identificar.' : '.'}`;
+    } else {
+      responsablesTxt = `Sujeto investigado en calidad de ${gradoIntervencion}.`;
+    }
+
+    let victimasTxt = '';
+    if (victimaDetectada) {
+      victimasTxt = `${victimaDetectada}. Bien jurídico tutelado: ${bienJuridico}`;
+    } else {
+      victimasTxt = `Sujeto pasivo o comunidad afectada. Bien jurídico protegido: ${bienJuridico}`;
+    }
+
+    // 3. Conductas Ejecutadas
+    const oraciones = texto.split(/(?<=[.?!])\s+/).filter(Boolean);
+    let conductasTxt = '';
+    if (oraciones.length > 1) {
+      conductasTxt = oraciones[0] + ' ' + oraciones[1];
+    } else if (oraciones.length === 1) {
+      conductasTxt = oraciones[0];
+    } else {
+      conductasTxt = 'Conducta fáctica consistente en el despliegue de actos materiales lesivos descritos en la narración del caso.';
+    }
+
+    return {
+      conductas: conductasTxt,
+      delito: posibleDelito,
+      responsables: responsablesTxt,
+      victimas: victimasTxt,
+      investigacion: empSugeridos,
+      delitoBaseId: delitoBaseId,
+      imputadoNombre: imputadoDetectado
+    };
   }
 };
 
@@ -554,6 +797,11 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
     CuartosPredictor.evaluar();
     HechosAnalizador.actualizarConteo();
 
+    const badge = document.getElementById('badge-analisis-status');
+    if (badge) badge.classList.remove('hidden');
+    const btnTexto = document.getElementById('btn-iniciar-analisis-texto');
+    if (btnTexto) btnTexto.textContent = "✓ Re-analizar Hechos [Enter]";
+
     this.mostrarToast("Caso penal de prueba cargado correctamente", "dataset");
   },
 
@@ -619,6 +867,11 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
     AppState.caso.etapa = 'imputacion';
 
     // 7. Sincronizar UI y volver al Paso 1
+    const badge = document.getElementById('badge-analisis-status');
+    if (badge) badge.classList.add('hidden');
+    const btnTexto = document.getElementById('btn-iniciar-analisis-texto');
+    if (btnTexto) btnTexto.textContent = "START: Analizar Caso Hipotético [Enter]";
+
     CalificacionManager.actualizarExtremos();
     AllanamientoManager.actualizarSlider();
     CuartosPredictor.evaluar();

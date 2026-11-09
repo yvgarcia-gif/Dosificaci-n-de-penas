@@ -112,6 +112,18 @@
     <div id="caso-conteo-texto"></div>
     <div id="badge-quarter-indicator"></div>
 
+    <!-- Elements for HechosAnalizador and START button -->
+    <textarea id="analisis-conductas"></textarea>
+    <textarea id="analisis-delitos"></textarea>
+    <textarea id="analisis-responsables"></textarea>
+    <textarea id="analisis-victimas"></textarea>
+    <textarea id="analisis-investigacion"></textarea>
+    <span id="btn-iniciar-analisis-texto"></span>
+    <span id="badge-analisis-status" class="hidden"></span>
+    <div id="seccion-analisis-dogmatico"></div>
+    <select id="caso-delito-base"><option value="103">Homicidio</option></select>
+    <input id="caso-procesado" value="" />
+
     <div id="banco-dudas-lista"></div>
     <div id="badge-conteo-dudas-tab"></div>
     <div id="toast-notif"></div>
@@ -214,7 +226,24 @@
       const fallbackConsecuencias = AyudaIA_Manager.generarFallback('3 posibles caminos procesales');
       assert("Fallback consecuencias contiene los 3 caminos procesales", fallbackConsecuencias.includes('JUICIO ORAL') && fallbackConsecuencias.includes('ALLANAMIENTO'));
 
-    } catch (e) {
+      // Test 11: HechosAnalizador y Botón START de Análisis
+      assert("HechosAnalizador existe y tiene método iniciarAnalisis", typeof HechosAnalizador.iniciarAnalisis === 'function');
+      document.getElementById('caso-narrativa').value = "El ciudadano Carlos Mendoza abordó a la víctima Juan Ramos con arma de fuego y le disparó en el tórax causándole la muerte instantánea.";
+      HechosAnalizador.iniciarAnalisis();
+      assert("Análisis dogmático detecta delito de Homicidio", AppState.caso.analisisDelitos.includes('Homicidio'));
+      assert("Análisis dogmático detecta sujeto investigado", AppState.caso.analisisResponsables.includes('Carlos Mendoza'));
+      assert("Análisis dogmático propone elementos materiales probatorios", AppState.caso.analisisInvestigacion.length > 20);
+
+      // Test 12: ProcedimientoManager y CasoManager.reiniciarCaso
+      assert("ProcedimientoManager existe", typeof ProcedimientoManager !== 'undefined');
+      ProcedimientoManager.seleccionarEtapa('acusacion');
+      assert("ProcedimientoManager etapa acusacion", ProcedimientoManager.etapaActual === 'acusacion');
+      assert("Descuento sugerido en acusacion es 33.3%", ProcedimientoManager.etapas.acusacion.descuentoSugerido === 33.3);
+
+      assert("CasoManager.reiniciarCaso existe", typeof CasoManager.reiniciarCaso === 'function');
+      AppState.caso.radicado = '110016000000202600001';
+      CasoManager.reiniciarCaso();
+      assert("CasoManager.reiniciarCaso resetea radicado", AppState.caso.radicado === '');
       results.push(`[ERROR EXCEPTION] ${e.message} at ${e.stack}`);
     }
 
