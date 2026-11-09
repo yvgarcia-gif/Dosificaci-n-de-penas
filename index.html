@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>IurisDosis Colombia — Dosificación Penal y Sistema de Cuartos</title>
+  <title>IurisDosis Colombia — Simulador Académico de Procedimiento Penal y Dosificación</title>
   
   <!-- Tipografías Institucionales: Source Serif 4 (Títulos Jurídicos y Autos), Inter (Interfaz), JetBrains Mono (Métricas y Artículos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN con Paleta Institucional: Vino Tinto (#58111A / #721B28), Negro (#0E1015) y Blanco (#FFFFFF) -->
+  <!-- Tailwind CSS CDN con Paleta Institucional: Vino Tinto (#721B28 / #4C0D17), Negro (#0E1015) y Blanco (#FFFFFF) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -85,40 +85,40 @@
           <div class="flex items-center gap-2">
             <h1 class="font-headline font-bold text-lg md:text-xl text-slate-900 leading-tight">IurisDosis Colombia</h1>
             <span class="text-[10px] uppercase tracking-wider font-bold bg-wine-light text-wine px-2 py-0.5 rounded-full border border-wine/20">
-              Ley 599/2000
+              Simulador Académico
             </span>
           </div>
-          <p class="text-xs text-slate-500 font-medium hidden sm:block">Dosificación Penal y Sistema de Cuartos (Arts. 60 y 61 C.P.)</p>
+          <p class="text-xs text-slate-500 font-medium hidden sm:block">Procedimiento Penal Acusatorio (Ley 906/2004) & Dosificación de Penas (Ley 599/2000)</p>
         </div>
       </div>
 
-      <!-- Menú de Pestañas Desktop -->
+      <!-- Menú de Pasos Secuenciales Desktop -->
       <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
         <button id="nav-btn-hechos" onclick="AppNav.switchTab('hechos')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 bg-dark text-white shadow-sm">
           <span class="material-symbols-outlined text-sm">history_edu</span>
-          <span>1. Hechos</span>
+          <span>1. Hechos & Análisis</span>
         </button>
-        <button id="nav-btn-delitos" onclick="AppNav.switchTab('delitos')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-sm">menu_book</span>
-          <span>2. Catálogo</span>
+        <button id="nav-btn-procedimiento" onclick="AppNav.switchTab('procedimiento')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-sm">timeline</span>
+          <span>2. Procedimiento Penal</span>
         </button>
         <button id="nav-btn-calculadora" onclick="AppNav.switchTab('calculadora')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
           <span class="material-symbols-outlined text-sm">calculate</span>
-          <span>3. Cuartos</span>
+          <span>3. Dosificación & Cuartos</span>
         </button>
         <button id="nav-btn-justificacion" onclick="AppNav.switchTab('justificacion')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
           <span class="material-symbols-outlined text-sm">gavel</span>
-          <span>4. Dictamen</span>
+          <span>4. Sentencia Fundamentada</span>
         </button>
         <button id="nav-btn-ayuda" onclick="AppNav.switchTab('ayuda')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-wine hover:bg-wine-light transition-all flex items-center gap-1.5 border-l border-slate-200 pl-3 ml-1">
           <span class="material-symbols-outlined text-sm">smart_toy</span>
-          <span>Gemini IA (7 Herramientas)</span>
+          <span>Gemini IA & Casos</span>
         </button>
       </nav>
 
       <!-- Indicador del Cuarto Actual y Cargar Ejemplo -->
       <div class="flex items-center gap-2">
-        <button onclick="CasoManager.cargarEjemplo()" class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 text-xs font-medium text-slate-700 hover:bg-slate-200 border border-slate-200 transition-colors" title="Cargar caso penal de prueba">
+        <button onclick="CasoManager.cargarEjemplo()" class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 text-xs font-medium text-slate-700 hover:bg-slate-200 border border-slate-200 transition-colors" title="Cargar un caso penal de prueba">
           <span class="material-symbols-outlined text-sm text-wine">dataset</span>
           <span>Cargar Ejemplo</span>
         </button>
@@ -131,294 +131,295 @@
   </header>
 
   <!-- ============================================================ -->
-  <!-- CONTENEDOR PRINCIPAL                                         -->
+  <!-- CONTENEDOR PRINCIPAL DEL SIMULADOR                           -->
   <!-- ============================================================ -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1">
 
     <!-- ========================================================== -->
-    <!-- FUNCIÓN 1: INGRESO CONCRETO DE LOS HECHOS DEL CASO         -->
+    <!-- PASO 1: HECHOS Y ANÁLISIS FÁCTICO-JURÍDICO                  -->
     <!-- ========================================================== -->
     <section id="panel-hechos" class="flex flex-col gap-5">
       
-      <!-- Fila Superior: Resumen Procesal Esencial (Limpio y Relevante) -->
+      <!-- Banner Didáctico: Datos Procesales Explicados Paso a Paso -->
       <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col gap-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-wine text-xl">folder_shared</span>
-            <h2 class="font-headline font-bold text-base text-slate-900">Datos Procesales del Caso Concreto</h2>
+          <div>
+            <h2 class="font-headline font-bold text-base text-slate-900">Datos Procesales del Caso Hipotético</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Estos datos identifican la causa judicial ante las autoridades penales en Colombia.</p>
           </div>
-          <div class="flex items-center gap-2">
-            <label for="caso-etapa" class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Etapa Procesal:</label>
-            <select id="caso-etapa" class="bg-slate-50 text-xs font-semibold text-slate-900 py-1.5 px-3 rounded-lg border border-slate-200 focus:outline-none focus:border-wine cursor-pointer">
-              <option value="imputacion">Imputación (Art. 286 C.P.P.)</option>
-              <option value="acusacion" selected>Acusación (Art. 336 C.P.P.)</option>
-              <option value="juicio">Juicio Oral (Art. 443 C.P.P.)</option>
-              <option value="sentencia">Individualización de Pena (Art. 447 C.P.P.)</option>
-            </select>
-          </div>
+          <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200">
+            Paso 1 de 4 en el Simulador
+          </span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Radicado SPOA (21 dígitos):</label>
-            <input id="caso-radicado" type="text" value="110016000000202300452" class="w-full bg-slate-50 font-mono text-xs p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none" />
+          <!-- Campo 1: Radicado SPOA -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label class="block font-bold text-slate-900">Radicado SPOA (21 dígitos):</label>
+            <input id="caso-radicado" type="text" value="110016000000202300452" class="w-full bg-white font-mono text-xs p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none" />
+            <p class="text-[11px] text-slate-500 leading-tight">
+              <strong>¿Qué es?</strong> Código único nacional del Sistema Penal Oral Acusatorio que identifica la noticia criminal (5 dígitos dpto/mpio + 2 entidad + 4 año + 5 consecutivo).
+            </p>
           </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Imputado / Acusado:</label>
-            <input id="caso-procesado" type="text" value="Julián David Morales Reyes" class="w-full bg-slate-50 text-xs p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none" />
+
+          <!-- Campo 2: Imputado / Procesado -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label class="block font-bold text-slate-900">Imputado / Procesado:</label>
+            <input id="caso-procesado" type="text" value="Julián David Morales Reyes" class="w-full bg-white text-xs p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none" />
+            <p class="text-[11px] text-slate-500 leading-tight">
+              <strong>¿Quién es?</strong> La persona natural investigada contra quien el Estado dirige la acción penal por la presunta comisión de la conducta.
+            </p>
           </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Fiscalía Seccional:</label>
-            <input id="caso-fiscalia" type="text" value="Fiscalía 45 Seccional de Vida de Bogotá" class="w-full bg-slate-50 text-xs p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none" />
+
+          <!-- Campo 3: Fiscalía Seccional -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label class="block font-bold text-slate-900">Fiscalía Seccional:</label>
+            <input id="caso-fiscalia" type="text" value="Fiscalía 45 Seccional de Vida de Bogotá" class="w-full bg-white text-xs p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none" />
+            <p class="text-[11px] text-slate-500 leading-tight">
+              <strong>¿Cuál es su función?</strong> Órgano constitucional titular de la acción penal encargado de investigar, formular imputación y acusar formalmente.
+            </p>
           </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Juzgado de Conocimiento:</label>
-            <input id="caso-juzgado" type="text" value="Juzgado 12 Penal del Circuito con Funciones de Conocimiento" class="w-full bg-slate-50 text-xs p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none" />
+
+          <!-- Campo 4: Juzgado de Conocimiento -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <label class="block font-bold text-slate-900">Juzgado de Conocimiento:</label>
+            <input id="caso-juzgado" type="text" value="Juzgado 12 Penal del Circuito con Funciones de Conocimiento" class="w-full bg-white text-xs p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none" />
+            <p class="text-[11px] text-slate-500 leading-tight">
+              <strong>¿Cuál es su función?</strong> Juez penal imparcial de la República encargado de dirigir el juzgamiento y proferir la sentencia condenatoria o absolutoria.
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Fila Central: Narrativa del Caso y Calificación -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        
-        <!-- Narrativa Fáctica (lg:col-span-6) -->
-        <div class="lg:col-span-6 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between gap-4">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-              <div class="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                <span class="material-symbols-outlined text-wine text-lg">history_edu</span>
-                <h3>Hechos Jurídicamente Relevantes (Art. 337 C.P.P.)</h3>
-              </div>
-              <input id="caso-fecha" type="date" value="2023-04-18" class="bg-slate-50 text-xs font-mono p-1.5 rounded-lg border border-slate-200 focus:outline-none" />
-            </div>
+      <!-- Fila Central: Narrativa del Caso Hipotético -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div>
+            <h3 class="font-headline font-bold text-sm text-slate-900">Transcripción de los Hechos del Caso Hipotético</h3>
+            <p class="text-xs text-slate-500">Escriba o pegue la narración fáctica de la conducta que el estudiante va a analizar y dosificar.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-500">Fecha del hecho:</span>
+            <input id="caso-fecha" type="date" value="2023-04-18" class="bg-slate-50 text-xs font-mono p-1.5 rounded-lg border border-slate-200 focus:outline-none" />
+          </div>
+        </div>
 
-            <textarea id="caso-narrativa" rows="8" placeholder="Escriba o pegue aquí los hechos fácticos probados del caso concreto..." class="w-full bg-slate-50 p-3 rounded-xl text-xs sm:text-sm text-slate-800 leading-relaxed border border-slate-200 focus:bg-white focus:border-wine focus:outline-none transition-all resize-none font-sans">El día 18 de abril de 2023, aproximadamente a las 22:45 horas, en vía pública del barrio Kennedy Central de la ciudad de Bogotá, el imputado JULIÁN DAVID MORALES REYES, valiéndose de un arma cortopunzante y en coparticipación criminal con otro sujeto no individualizado, abordó intempestivamente a la víctima Pedro José Suárez cuando éste se encontraba en total estado de indefensión. 
+        <textarea id="caso-narrativa" rows="6" placeholder="Escriba aquí los hechos del caso hipotético: quién hizo qué, cuándo, dónde, cómo y contra quién..." class="w-full bg-slate-50 p-3.5 rounded-xl text-xs sm:text-sm text-slate-800 leading-relaxed border border-slate-200 focus:bg-white focus:border-wine focus:outline-none transition-all resize-none font-sans">El día 18 de abril de 2023, aproximadamente a las 22:45 horas, en vía pública del barrio Kennedy Central de Bogotá, el ciudadano JULIÁN DAVID MORALES REYES, valiéndose de un arma cortopunzante y en coparticipación con otro sujeto no individualizado, abordó intempestivamente a la víctima Pedro José Suárez cuando éste se encontraba en total estado de indefensión. 
 
 El agresor propinó más de doce heridas reiteradas y profundas en tórax y extremidades con el propósito inequívoco de causar un padecimiento deliberado e inhumano antes de segar su vida (sevicia probada), ocasionando el deceso en el lugar de los hechos sin posibilidad de auxilio oportuno.</textarea>
 
-            <div class="flex items-center justify-between text-xs text-slate-500">
-              <span id="caso-conteo-texto" class="font-mono text-[11px] text-slate-500">Conteo en vivo</span>
-              <button onclick="AppNav.switchTab('ayuda'); AyudaIA_Manager.seleccionarHerramienta('redactor');" class="text-wine font-semibold hover:underline flex items-center gap-1">
-                <span class="material-symbols-outlined text-xs">auto_fix_high</span>
-                <span>Pulir con Gemini IA</span>
-              </button>
-            </div>
-          </div>
-
-          <button onclick="AppNav.switchTab('delitos')" class="w-full py-2.5 px-4 rounded-xl bg-dark hover:bg-slate-800 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all">
-            <span class="material-symbols-outlined text-sm text-white">menu_book</span>
-            <span>Consultar Catálogo de Delitos y Penas (Función 2)</span>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs text-slate-500">
+          <span id="caso-conteo-texto" class="font-mono text-[11px]">Conteo en vivo de palabras</span>
+          <button onclick="AppNav.switchTab('ayuda'); AyudaIA_Manager.seleccionarHerramienta('redactor');" class="text-wine font-semibold hover:underline flex items-center gap-1 self-start sm:self-auto">
+            <span class="material-symbols-outlined text-xs">auto_fix_high</span>
+            <span>¿Necesitas redactar o estructurar mejor este relato? Usar Asistente Gemini IA</span>
           </button>
         </div>
-
-        <!-- Calificación Típica y Parámetros Modificadores (lg:col-span-6) -->
-        <div class="lg:col-span-6 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between gap-4">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-              <div class="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                <span class="material-symbols-outlined text-wine text-lg">gavel</span>
-                <h3>Calificación Típica y Circunstancias de Punibilidad</h3>
-              </div>
-              <span class="text-xs font-mono font-bold text-wine">Arts. 55 y 58 C.P.</span>
-            </div>
-
-            <!-- Delito Base y Agravante -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Delito Base Imputado:</label>
-                <select id="caso-delito-base" onchange="CalificacionManager.actualizarExtremos()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none">
-                  <option value="103" selected>Art. 103 — Homicidio Simple</option>
-                  <option value="104">Art. 104 — Homicidio Agravado</option>
-                  <option value="239">Art. 239 — Hurto Simple</option>
-                  <option value="240">Art. 240 — Hurto Calificado</option>
-                  <option value="244">Art. 244 — Extorsión</option>
-                  <option value="365">Art. 365 — Porte de Armas</option>
-                </select>
-                <span id="caso-extremos-legales" class="block font-mono text-[11px] text-wine font-bold mt-1">Pena Base: 208 a 450 Meses</span>
-              </div>
-              <div>
-                <label class="block font-bold text-slate-700 mb-1">Agravante Específico:</label>
-                <select id="caso-agravante-especifico" onchange="CalificacionManager.actualizarExtremos()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none">
-                  <option value="ninguno">Ninguno (Límites abstractos básicos)</option>
-                  <option value="104_7" selected>Art. 104 Num. 7 (Sevicia / Indefensión)</option>
-                </select>
-                <span id="caso-extremos-definitivos" class="block font-mono text-[11px] text-wine-dark font-bold mt-1">400 a 600 Meses</span>
-              </div>
-            </div>
-
-            <!-- Circunstancias Atenuantes y Agravantes -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-2 border-t border-slate-100">
-              <div class="space-y-1.5">
-                <span class="font-bold text-slate-800 flex items-center justify-between">
-                  <span>Atenuantes (Art. 55):</span>
-                  <span id="badge-count-atenuantes" class="text-[10px] font-mono text-emerald-800 font-bold">1 seleccionada</span>
-                </span>
-                <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <input type="checkbox" checked onchange="CuartosPredictor.evaluar()" class="check-atenuante mt-0.5 rounded text-wine">
-                  <span>Num. 1: Carencia de antecedentes penales ejecutoriados.</span>
-                </label>
-                <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <input type="checkbox" onchange="CuartosPredictor.evaluar()" class="check-atenuante mt-0.5 rounded text-wine">
-                  <span>Num. 7: Indemnización o reparación voluntaria del daño.</span>
-                </label>
-              </div>
-
-              <div class="space-y-1.5">
-                <span class="font-bold text-slate-800 flex items-center justify-between">
-                  <span>Agravantes (Art. 58):</span>
-                  <span id="badge-count-agravantes" class="text-[10px] font-mono text-wine font-bold">1 seleccionada</span>
-                </span>
-                <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <input type="checkbox" checked onchange="CuartosPredictor.evaluar()" class="check-agravante mt-0.5 rounded text-wine">
-                  <span>Num. 10: Obrar en coparticipación criminal.</span>
-                </label>
-                <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <input type="checkbox" onchange="CuartosPredictor.evaluar()" class="check-agravante mt-0.5 rounded text-wine">
-                  <span>Num. 1: Ejecutar la conducta sobre persona indefensa.</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Allanamiento y Preacuerdo -->
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-slate-900">Justicia Premial (Art. 351 C.P.P.):</span>
-                <span id="label-rebaja-porcentaje" class="font-mono font-bold text-wine">40% Rebaja</span>
-              </div>
-              <input id="slider-rebaja-pactada" oninput="AllanamientoManager.actualizarSlider()" type="range" min="0" max="50" value="40" class="w-full">
-              <div class="flex items-center gap-3 pt-1">
-                <label class="flex items-center gap-1.5 cursor-pointer">
-                  <input id="check-art199" onchange="AllanamientoManager.verificarProhibiciones()" type="checkbox" class="rounded text-wine">
-                  <span>Prohibición Art. 199 (Víctima menor de edad - Cero rebaja)</span>
-                </label>
-              </div>
-              <div id="alerta-prohibicion-bloqueo" class="hidden p-2 rounded bg-wine-light text-wine-dark text-[11px] font-semibold border border-wine/20">
-                ⚠️ Prohibición legal activa: Descuento 0% por mandato del Art. 199 de la Ley 1098 de 2006.
-              </div>
-            </div>
-          </div>
-
-          <button onclick="AppNav.switchTab('calculadora')" class="w-full py-2.5 px-4 rounded-xl bg-wine hover:bg-wine-hover text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
-            <span class="material-symbols-outlined text-sm">calculate</span>
-            <span>Proceder a la Calculadora de Cuartos y Dosimetría →</span>
-          </button>
-        </div>
-
       </div>
+
+      <!-- GUÍA PEDAGÓGICA DE ANÁLISIS DE LOS HECHOS (Requisito Explícito) -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+        <div class="pb-2 border-b border-slate-100">
+          <span class="text-[10px] font-bold uppercase tracking-wider bg-wine-light text-wine px-2 py-0.5 rounded border border-wine/20">
+            Guía Didáctica para el Estudiante
+          </span>
+          <h3 class="font-headline font-bold text-base text-slate-900 mt-1">Análisis Dogmático de los Hechos</h3>
+          <p class="text-xs text-slate-600 mt-0.5">
+            Antes de calcular la pena, todo penalista debe responder rigurosamente estas 5 preguntas fundamentales sobre el caso concreto:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+          <!-- 1. Conductas -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">1. Conductas Ejecutadas (Acción / Omisión):</span>
+              <p class="text-slate-500 text-[11px] mb-1">¿Qué actos materiales desplegó el investigado en el mundo exterior?</p>
+              <textarea id="analisis-conductas" rows="2" placeholder="Ej. Ataque violento con arma cortopunzante propinando múltiples heridas mortales..." class="w-full p-2 bg-white rounded-lg border border-slate-200 text-xs focus:border-wine focus:outline-none">Ataque intempestivo con arma cortopunzante infligiendo más de doce heridas en órganos vitales.</textarea>
+            </div>
+          </div>
+
+          <!-- 2. Posibles Delitos -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">2. Posibles Delitos (Tipicidad):</span>
+              <p class="text-slate-500 text-[11px] mb-1">¿En qué artículos del Código Penal (Ley 599/2000) encuadra la conducta?</p>
+              <textarea id="analisis-delitos" rows="2" placeholder="Ej. Homicidio agravado por sevicia e indefensión (Arts. 103 y 104 Num. 7 C.P.)..." class="w-full p-2 bg-white rounded-lg border border-slate-200 text-xs focus:border-wine focus:outline-none">Homicidio agravado por sevicia y situación de indefensión de la víctima (Arts. 103 y 104 Num. 7 C.P.).</textarea>
+            </div>
+          </div>
+
+          <!-- 3. Sujetos y Responsables -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">3. Sujetos Responsables (Art. 28 a 30 C.P.):</span>
+              <p class="text-slate-500 text-[11px] mb-1">¿Quién intervino como autor material, coautor, determinador o cómplice?</p>
+              <textarea id="analisis-responsables" rows="2" placeholder="Ej. Imputado como autor material directo y segundo sujeto en coparticipación criminal..." class="w-full p-2 bg-white rounded-lg border border-slate-200 text-xs focus:border-wine focus:outline-none">Julián David Morales Reyes en calidad de coautor material (Art. 29 C.P.).</textarea>
+            </div>
+          </div>
+
+          <!-- 4. Víctimas y Bien Jurídico -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5 flex flex-col justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">4. Víctimas y Bien Jurídico Afectado:</span>
+              <p class="text-slate-500 text-[11px] mb-1">¿Quién sufrió el menoscabo y qué interés protege la norma penal?</p>
+              <textarea id="analisis-victimas" rows="2" placeholder="Ej. Pedro José Suárez. Bien jurídico: La Vida e Integridad Personal..." class="w-full p-2 bg-white rounded-lg border border-slate-200 text-xs focus:border-wine focus:outline-none">Pedro José Suárez (Bien jurídico protegido: Vida e Integridad Personal).</textarea>
+            </div>
+          </div>
+
+          <!-- 5. Aspectos Relevantes para Investigar -->
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5 flex flex-col justify-between md:col-span-2 lg:col-span-2">
+            <div>
+              <span class="font-bold text-slate-900 block">5. Aspectos Relevantes y Elementos Materiales Probatorios (EMP):</span>
+              <p class="text-slate-500 text-[11px] mb-1">¿Qué pruebas son indispensables para sustentar la acusación en juicio?</p>
+              <textarea id="analisis-investigacion" rows="2" placeholder="Ej. Dictamen pericial de necropsia de Medicina Legal, fijación fotográfica de la escena, cámaras de seguridad..." class="w-full p-2 bg-white rounded-lg border border-slate-200 text-xs focus:border-wine focus:outline-none">Dictamen de necropsia de Medicina Legal, inspección técnica a cadáver y fijación fotográfica de la escena.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTÓN REQUERIDO: «Reiniciar y comenzar un nuevo caso» -->
+        <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <button id="btn-reiniciar-caso" onclick="CasoManager.reiniciarCaso()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 border border-slate-300 transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-sm text-wine">restart_alt</span>
+            <span>«Reiniciar y comenzar un nuevo caso»</span>
+          </button>
+
+          <button onclick="AppNav.switchTab('procedimiento')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer">
+            <span>Avanzar al Procedimiento Penal (Etapa 1: Imputación)</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
     </section>
 
     <!-- ========================================================== -->
-    <!-- FUNCIÓN 2: CATÁLOGO DE DELITOS Y CONSULTA DE PENAS         -->
+    <!-- PASO 2: PROCEDIMIENTO PENAL SECUENCIAL                      -->
+    <!-- (Imputación -> Acusación -> Juicio Oral)                   -->
     <!-- ========================================================== -->
-    <section id="panel-delitos" class="hidden flex-col gap-5">
+    <section id="panel-procedimiento" class="hidden flex-col gap-5">
+      
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 pb-2 border-b border-slate-200">
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider bg-wine-light text-wine px-2 py-0.5 rounded border border-wine/20">
-            Función 2 • Catálogo Penal
+            Paso 2 de 4 • Proceso Penal Ordinario
           </span>
-          <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Catálogo de Delitos de la Ley 599 de 2000</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Consulte los límites legales abstractos vigentes y transfiéralos a la calculadora con un clic.</p>
+          <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Desarrollo Secuencial del Procedimiento Penal (Ley 906/2004)</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Comprenda cada etapa, quiénes intervienen, qué actuaciones se realizan y qué decisiones deben tomarse.</p>
         </div>
-        <span id="badge-total-delitos" class="text-xs font-mono font-semibold px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700">
-          22 delitos registrados
-        </span>
+
+        <!-- Selector de Etapa Secuencial -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+          <button id="btn-proc-imputacion" onclick="ProcedimientoManager.seleccionarEtapa('imputacion')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-wine text-white shadow-sm flex items-center gap-1.5">
+            <span>1. Imputación</span>
+          </button>
+          <button id="btn-proc-acusacion" onclick="ProcedimientoManager.seleccionarEtapa('acusacion')" class="px-4 py-2 rounded-xl text-xs font-medium transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center gap-1.5">
+            <span>2. Acusación</span>
+          </button>
+          <button id="btn-proc-juicio" onclick="ProcedimientoManager.seleccionarEtapa('juicio')" class="px-4 py-2 rounded-xl text-xs font-medium transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center gap-1.5">
+            <span>3. Juicio Oral</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Buscador y Filtros -->
-      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col gap-3">
-        <div class="relative w-full">
-          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
-          <input id="catalogo-search-input" oninput="CatalogoManager.buscar(this.value)" type="search" placeholder="Buscar por artículo (ej. 103), nombre del delito o bien jurídico..." class="w-full pl-9 pr-24 py-2.5 bg-slate-50 text-xs sm:text-sm text-slate-900 rounded-xl border border-slate-200 focus:bg-white focus:outline-none focus:border-wine transition-all">
-          <button onclick="document.getElementById('catalogo-search-input').value=''; CatalogoManager.buscar('');" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-500 px-2 py-1 rounded bg-white border border-slate-200">
-            Limpiar
+      <!-- Ficha de la Etapa Seleccionada -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+        
+        <!-- Encabezado y Fundamento Legal -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+          <div>
+            <span id="proc-etapa-articulo" class="text-xs font-mono font-bold text-wine">Artículos 286 a 294 de la Ley 906 de 2004</span>
+            <h3 id="proc-etapa-titulo" class="font-headline font-bold text-xl text-slate-900 mt-0.5">1. Audiencia de Formulación de Imputación</h3>
+          </div>
+          <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded bg-slate-100 text-slate-700 self-start sm:self-auto">
+            Etapa de Comunicación Formal
+          </span>
+        </div>
+
+        <!-- Concepto -->
+        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <span class="font-bold text-slate-900 block mb-1">¿Qué es esta etapa procesal?</span>
+          <p id="proc-etapa-concepto" class="text-slate-700 leading-relaxed">
+            Acto de comunicación procesal formal mediante el cual la Fiscalía General de la Nación vincula formalmente al investigado a una causa penal.
+          </p>
+        </div>
+
+        <!-- Quiénes intervienen -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">¿Quiénes intervienen y cuál es su rol?</span>
+          <div id="proc-etapa-intervinientes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <!-- Cargado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Qué actuaciones se realizan -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">¿Qué actuaciones procesales se realizan en la audiencia?</span>
+          <ul id="proc-etapa-actuaciones" class="space-y-1.5 pl-1">
+            <!-- Cargado dinámicamente -->
+          </ul>
+        </div>
+
+        <!-- Qué decisiones deben tomarse y Control de Justicia Premial -->
+        <div class="p-4 bg-wine-light/50 rounded-xl border border-wine/20 space-y-3">
+          <div>
+            <span class="text-xs font-bold text-wine-dark uppercase tracking-wider block">¿Qué decisiones deben tomarse en esta etapa?</span>
+            <p id="proc-etapa-decisiones" class="text-xs text-slate-800 mt-1 leading-relaxed">
+              El estudiante debe decidir si el imputado se allana a los cargos con beneficio premial o si el proceso continúa a juicio oral.
+            </p>
+          </div>
+
+          <!-- Control de allanamiento interactivo -->
+          <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-900">Porcentaje de Rebaja por Justicia Premial (Art. 351 C.P.P.):</span>
+              <span id="label-rebaja-porcentaje" class="font-mono font-bold text-wine">40% Rebaja</span>
+            </div>
+            <input id="slider-rebaja-pactada" oninput="AllanamientoManager.actualizarSlider()" type="range" min="0" max="50" value="40" class="w-full">
+            <div class="flex items-center gap-3 pt-1">
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input id="check-art199" onchange="AllanamientoManager.verificarProhibiciones()" type="checkbox" class="rounded text-wine">
+                <span class="text-[11px] text-slate-700">Prohibición legal del Art. 199 Ley 1098/2006 (Víctima menor de edad - Cero rebaja)</span>
+              </label>
+            </div>
+            <div id="alerta-prohibicion-bloqueo" class="hidden p-2 rounded bg-wine-light text-wine-dark text-[11px] font-semibold border border-wine/20">
+              ⚠️ Prohibición legal activa: Descuento 0% por mandato imperativo de protección a la infancia.
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de Navegación del Procedimiento -->
+        <div class="pt-2 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <button onclick="AppNav.switchTab('hechos')" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            <span>Volver a Hechos y Análisis</span>
+          </button>
+
+          <button onclick="AppNav.switchTab('calculadora')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer">
+            <span>Avanzar a la Dosificación de la Pena (Paso 3)</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
         </div>
 
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1" id="catalogo-filtros-chips">
-          <button onclick="CatalogoManager.filtrarBienJuridico('todos')" class="btn-filtro-bien px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-wine text-white shadow-sm" data-bien="todos">Todos (22)</button>
-          <button onclick="CatalogoManager.filtrarBienJuridico('vida')" class="btn-filtro-bien px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200" data-bien="vida">Vida e Integridad</button>
-          <button onclick="CatalogoManager.filtrarBienJuridico('patrimonio')" class="btn-filtro-bien px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200" data-bien="patrimonio">Patrimonio</button>
-          <button onclick="CatalogoManager.filtrarBienJuridico('sexual')" class="btn-filtro-bien px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200" data-bien="sexual">Libertad Sexual</button>
-          <button onclick="CatalogoManager.filtrarBienJuridico('salud')" class="btn-filtro-bien px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200" data-bien="salud">Salud Pública</button>
-          <button onclick="CatalogoManager.filtrarBienJuridico('administracion')" class="btn-filtro-bien px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-700 hover:bg-slate-200" data-bien="administracion">Administración Pública</button>
-        </div>
       </div>
 
-      <!-- Bento Grid Catálogo -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <!-- Ficha Técnica Izquierda -->
-        <div class="lg:col-span-7 bg-white rounded-2xl p-5 border-2 border-wine/30 shadow-sm flex flex-col justify-between gap-4">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span id="catalogo-detalle-bien" class="text-xs font-mono font-bold text-wine">Vida e Integridad Personal</span>
-              <span id="catalogo-detalle-articulo-badge" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-dark text-white">Art. 103 C.P.</span>
-            </div>
-            <div>
-              <h3 id="catalogo-detalle-nombre" class="font-headline font-bold text-xl text-slate-900">Homicidio Simple</h3>
-              <p id="catalogo-detalle-norma" class="font-headline italic text-xs text-slate-600 mt-2 p-3 bg-slate-50 rounded-xl border border-slate-200 leading-relaxed">
-                "El que matare a otro, incurrirá en prisión de doscientos ocho (208) a cuatrocientos cincuenta (450) meses."
-              </p>
-            </div>
-
-            <!-- Métricas -->
-            <div class="grid grid-cols-3 gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
-              <div>
-                <span class="block text-[10px] font-mono uppercase text-slate-500">Mínimo</span>
-                <span id="catalogo-detalle-min" class="font-mono font-bold text-lg text-slate-900">208 m</span>
-                <span id="catalogo-detalle-min-anos" class="block text-[10px] font-mono text-slate-500">17a 4m</span>
-              </div>
-              <div class="border-x border-slate-200">
-                <span class="block text-[10px] font-mono uppercase text-slate-500">Máximo</span>
-                <span id="catalogo-detalle-max" class="font-mono font-bold text-lg text-slate-900">450 m</span>
-                <span id="catalogo-detalle-max-anos" class="block text-[10px] font-mono text-slate-500">37a 6m</span>
-              </div>
-              <div>
-                <span class="block text-[10px] font-mono uppercase text-wine font-bold">Ámbito Punitivo</span>
-                <span id="catalogo-detalle-ambito" class="font-mono font-bold text-lg text-wine">242 m</span>
-                <span id="catalogo-detalle-cuarto-valor" class="block text-[10px] font-mono text-wine">Cuarto: 60.5m</span>
-              </div>
-            </div>
-
-            <div id="catalogo-detalle-especificos" class="text-xs text-slate-600 space-y-1 p-3 bg-slate-50 rounded-xl border border-slate-200">
-              <!-- Cargado dinámicamente -->
-            </div>
-          </div>
-
-          <button onclick="CatalogoManager.cargarEnCalculadora()" class="w-full py-3 px-4 rounded-xl bg-wine hover:bg-wine-hover text-white font-semibold text-xs flex items-center justify-center gap-2 shadow transition-all">
-            <span class="material-symbols-outlined text-sm">calculate</span>
-            <span>Seleccionar este Delito para Dosimetría Penal</span>
-          </button>
-        </div>
-
-        <!-- Lista Derecha -->
-        <div class="lg:col-span-5 flex flex-col gap-2">
-          <div class="flex items-center justify-between text-xs font-bold text-slate-700 px-1">
-            <span>Delitos Disponibles</span>
-            <span id="catalogo-conteo-visibles" class="font-mono text-slate-500">Mostrando 22</span>
-          </div>
-          <div id="catalogo-lista-delitos" class="flex flex-col gap-2 max-h-[500px] overflow-y-auto pr-1">
-            <!-- Renderizado dinámicamente -->
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- ========================================================== -->
-    <!-- FUNCIÓN 3: CALCULADORA DE CUARTOS Y EXPLICACIÓN PASO A PASO -->
+    <!-- PASO 3: DOSIFICACIÓN DE LA PENA Y SISTEMA DE CUARTOS        -->
     <!-- ========================================================== -->
     <section id="panel-calculadora" class="hidden flex-col gap-5">
+      
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 pb-2 border-b border-slate-200">
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider bg-wine-light text-wine px-2 py-0.5 rounded border border-wine/20">
-            Función 3 • Sistema de Cuartos
+            Paso 3 de 4 • Sistema de Cuartos
           </span>
-          <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Cálculo de Dosificación y Sistema de Cuartos</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Desglose matemático y normativo estricto conforme a los Artículos 60 y 61 del Código Penal.</p>
+          <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Procedimiento Completo de Dosificación Penal (Art. 61 C.P.)</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Cálculo transparente, circunstancias de menor y mayor punibilidad, cuartos y justificación matemática.</p>
         </div>
-        <button onclick="AppNav.switchTab('delitos')" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm flex items-center gap-1">
-          <span class="material-symbols-outlined text-sm">menu_book</span>
-          <span>Cambiar Delito</span>
-        </button>
+        <span class="text-xs font-mono font-semibold px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700">
+          Ley 599 de 2000
+        </span>
       </div>
 
       <!-- Resumen de Extremos y Modificadores -->
@@ -434,28 +435,52 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
 
           <div class="grid grid-cols-3 gap-2 text-center p-2.5 bg-slate-50 rounded-xl border border-slate-200 min-w-[280px]">
             <div>
-              <span class="block text-[10px] font-mono uppercase text-slate-500">Mínimo</span>
+              <span class="block text-[10px] font-mono uppercase text-slate-500">Mínimo Abstracto</span>
               <span id="calc-pena-min-meses" class="font-mono font-bold text-base text-slate-900">208 m</span>
               <span id="calc-pena-min-anos" class="block text-[10px] font-mono text-slate-500">17a 4m</span>
             </div>
             <div class="border-x border-slate-200">
-              <span class="block text-[10px] font-mono uppercase text-slate-500">Máximo</span>
+              <span class="block text-[10px] font-mono uppercase text-slate-500">Máximo Abstracto</span>
               <span id="calc-pena-max-meses" class="font-mono font-bold text-base text-slate-900">450 m</span>
               <span id="calc-pena-max-anos" class="block text-[10px] font-mono text-slate-500">37a 6m</span>
             </div>
             <div>
-              <span class="block text-[10px] font-mono uppercase text-wine font-bold">Ámbito</span>
+              <span class="block text-[10px] font-mono uppercase text-wine font-bold">Ámbito Punitivo</span>
               <span id="calc-ambito-meses" class="font-mono font-bold text-base text-wine">242 m</span>
               <span id="calc-cuarto-amplitud" class="block text-[10px] font-mono text-wine">Cuarto: 60.5m</span>
             </div>
           </div>
         </div>
 
-        <!-- Dispositivos Amplificadores (Art. 60) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <!-- Delito y Circunstancias de la Calificación -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Delito Base Seleccionado:</label>
+            <select id="caso-delito-base" onchange="CalificacionManager.actualizarExtremos()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none">
+              <option value="103" selected>Art. 103 — Homicidio Simple</option>
+              <option value="104">Art. 104 — Homicidio Agravado</option>
+              <option value="239">Art. 239 — Hurto Simple</option>
+              <option value="240">Art. 240 — Hurto Calificado</option>
+              <option value="244">Art. 244 — Extorsión</option>
+              <option value="365">Art. 365 — Porte de Armas</option>
+            </select>
+            <span id="caso-extremos-legales" class="block font-mono text-[11px] text-wine font-bold mt-1">Pena Base: 208 a 450 Meses</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Agravante Específico del Tipo:</label>
+            <select id="caso-agravante-especifico" onchange="CalificacionManager.actualizarExtremos()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none">
+              <option value="ninguno">Ninguno (Límites abstractos básicos)</option>
+              <option value="104_7" selected>Art. 104 Num. 7 (Sevicia / Indefensión)</option>
+            </select>
+            <span id="caso-extremos-definitivos" class="block font-mono text-[11px] text-wine-dark font-bold mt-1">400 a 600 Meses</span>
+          </div>
+        </div>
+
+        <!-- Dispositivos Amplificadores (Art. 60 C.P.) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2 border-t border-slate-100">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Participación (Art. 29/30):</label>
-            <select id="calc-select-intervencion" onchange="CalculadoraManager.actualizarModificadores()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none">
+            <select id="calc-select-intervencion" onchange="CalculadoraManager.actualizarModificadores()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none">
               <option value="autor_directo">Autor directo (100% de la pena)</option>
               <option value="complice">Cómplice (Rebaja de 1/6 a 1/2)</option>
               <option value="interviniente">Interviniente (Rebaja 1/4)</option>
@@ -463,7 +488,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Ejecución (Art. 27):</label>
-            <select id="calc-select-ejecucion" onchange="CalculadoraManager.actualizarModificadores()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none">
+            <select id="calc-select-ejecucion" onchange="CalculadoraManager.actualizarModificadores()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none">
               <option value="consumado">Consumado (Límites plenos)</option>
               <option value="tentativa_acabada">Tentativa acabada (Rebaja 1/3 a 1/2)</option>
               <option value="tentativa_inacabada">Tentativa inacabada (Rebaja 1/2 a 2/3)</option>
@@ -471,10 +496,10 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Circunstancias Especiales:</label>
-            <select id="calc-select-especiales" onchange="CalculadoraManager.actualizarModificadores()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-wine focus:outline-none">
+            <select id="calc-select-especiales" onchange="CalculadoraManager.actualizarModificadores()" class="w-full bg-slate-50 p-2 rounded-lg border border-slate-200 focus:border-wine focus:outline-none">
               <option value="ninguno">Ninguna causal especial</option>
-              <option value="ira_intenso_dolor">Ira e Intenso Dolor (Art. 57)</option>
-              <option value="marginalidad">Marginalidad / Pobreza (Art. 56)</option>
+              <option value="ira_intenso_dolor">Ira e Intenso Dolor (Art. 57 C.P.)</option>
+              <option value="marginalidad">Marginalidad / Pobreza (Art. 56 C.P.)</option>
             </select>
           </div>
         </div>
@@ -482,6 +507,39 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs font-mono">
           <span class="text-slate-600">Límites computables tras factores modificadores (Art. 60 C.P.):</span>
           <span id="calc-limites-modificados-display" class="font-bold text-slate-900">208 a 450 meses</span>
+        </div>
+
+        <!-- Circunstancias Atenuantes (Art. 55) y Agravantes (Art. 58) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-2 border-t border-slate-100">
+          <div class="space-y-1.5">
+            <span class="font-bold text-slate-800 flex items-center justify-between">
+              <span>Circunstancias de Menor Punibilidad (Art. 55):</span>
+              <span id="badge-count-atenuantes" class="text-[10px] font-mono text-emerald-800 font-bold">1 seleccionada</span>
+            </span>
+            <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" checked onchange="CuartosPredictor.evaluar()" class="check-atenuante mt-0.5 rounded text-wine">
+              <span>Num. 1: Carencia de antecedentes penales ejecutoriados.</span>
+            </label>
+            <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" onchange="CuartosPredictor.evaluar()" class="check-atenuante mt-0.5 rounded text-wine">
+              <span>Num. 7: Indemnización o reparación voluntaria del daño.</span>
+            </label>
+          </div>
+
+          <div class="space-y-1.5">
+            <span class="font-bold text-slate-800 flex items-center justify-between">
+              <span>Circunstancias de Mayor Punibilidad (Art. 58):</span>
+              <span id="badge-count-agravantes" class="text-[10px] font-mono text-wine font-bold">1 seleccionada</span>
+            </span>
+            <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" checked onchange="CuartosPredictor.evaluar()" class="check-agravante mt-0.5 rounded text-wine">
+              <span>Num. 10: Obrar en coparticipación criminal.</span>
+            </label>
+            <label class="flex items-start gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" onchange="CuartosPredictor.evaluar()" class="check-agravante mt-0.5 rounded text-wine">
+              <span>Num. 1: Ejecutar la conducta sobre persona en indefensión.</span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -491,7 +549,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
           <div>
             <h3 class="font-headline font-bold text-base text-slate-900 flex items-center gap-1.5">
               <span class="material-symbols-outlined text-wine text-lg">view_timeline</span>
-              Segmentación en Cuatro Cuartos (Art. 61 C.P.)
+              Segmentación Obligatoria en Cuatro Cuartos (Art. 61 C.P.)
             </h3>
             <p id="calc-subtitulo-cuartos" class="text-xs text-slate-500">Ámbito de 242m / 4 = 60.5m por cuarto</p>
           </div>
@@ -587,7 +645,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
                 <span id="resumen-pena-previa" class="font-mono font-bold text-white">329.0 meses</span>
               </div>
               <div class="flex justify-between">
-                <span>Rebaja por allanamiento:</span>
+                <span>Rebaja de justicia premial:</span>
                 <span id="resumen-descuento-meses" class="font-mono text-emerald-400 font-bold">-131.6 meses (-40%)</span>
               </div>
             </div>
@@ -598,13 +656,13 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
 
           <button onclick="AppNav.switchTab('justificacion')" class="w-full py-2.5 px-3 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
             <span class="material-symbols-outlined text-sm">gavel</span>
-            <span>Ver Justificación Jurídica Formal →</span>
+            <span>Ver Auto de Sentencia Fundamentada →</span>
           </button>
         </div>
 
       </div>
 
-      <!-- SECCIÓN PEDAGÓGICA PASO A PASO (Requisito 6) -->
+      <!-- SECCIÓN DIDÁCTICA PASO A PASO (De dónde sale cada dato y norma) -->
       <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
         <div class="flex items-center justify-between pb-2 border-b border-slate-100">
           <div class="flex items-center gap-2">
@@ -624,27 +682,28 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
     </section>
 
     <!-- ========================================================== -->
-    <!-- FUNCIÓN 4: JUSTIFICACIÓN JURÍDICA PROFUNDA Y AUTO JUDICIAL -->
+    <!-- PASO 4: SENTENCIA Y DECISIÓN JUDICIAL FUNDAMENTADA         -->
     <!-- ========================================================== -->
     <section id="panel-justificacion" class="hidden flex-col gap-5">
+      
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 pb-2 border-b border-slate-200">
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider bg-wine-light text-wine px-2 py-0.5 rounded border border-wine/20">
-            Función 4 • Auto Judicial de Dosimetría
+            Paso 4 de 4 • Providencia Judicial
           </span>
-          <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Justificación Jurídica y Dictamen Formal</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Motivación probatoria, dogmática y aritmética de la individualización penal (Art. 447 C.P.P.).</p>
+          <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Auto Interlocutorio de Individualización Penal (Art. 447 C.P.P.)</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Motivación probatoria, dogmática y matemática de la individualización penal.</p>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="JustificacionManager.copiarDictamen()" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1 shadow-sm">
+          <button onclick="JustificacionManager.copiarDictamen()" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1 shadow-sm cursor-pointer">
             <span class="material-symbols-outlined text-sm">content_copy</span>
             <span>Copiar Auto</span>
           </button>
-          <button onclick="JustificacionManager.descargarTxt()" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1 shadow-sm">
+          <button onclick="JustificacionManager.descargarTxt()" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1 shadow-sm cursor-pointer">
             <span class="material-symbols-outlined text-sm">download</span>
             <span>Descargar .txt</span>
           </button>
-          <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-dark text-white text-xs font-semibold hover:bg-slate-800 flex items-center gap-1 shadow-sm">
+          <button onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-dark text-white text-xs font-semibold hover:bg-slate-800 flex items-center gap-1 shadow-sm cursor-pointer">
             <span class="material-symbols-outlined text-sm">print</span>
             <span>Imprimir</span>
           </button>
@@ -758,7 +817,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
           <h4 id="memoria-sentencia-resumen" class="font-headline font-bold text-xl text-white mt-0.5">CONDENA DEFINITIVA: 197.4 MESES</h4>
           <p id="memoria-sentencia-human" class="text-xs text-slate-300">Equivalente a 16 años y 5 meses de prisión efectiva.</p>
         </div>
-        <button onclick="JustificacionManager.copiarDictamen()" class="px-4 py-2.5 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow shrink-0">
+        <button onclick="JustificacionManager.copiarDictamen()" class="px-4 py-2.5 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow shrink-0 cursor-pointer">
           <span class="material-symbols-outlined text-sm">content_copy</span>
           <span>Copiar Auto Judicial</span>
         </button>
@@ -766,16 +825,16 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
     </section>
 
     <!-- ========================================================== -->
-    <!-- ESPACIO GEMINI IA (7 HERRAMIENTAS) & BANCO COMUNITARIO     -->
+    <!-- ESPACIO GEMINI IA (7 HERRAMIENTAS) & CASOS PRÁCTICOS       -->
     <!-- ========================================================== -->
     <section id="panel-ayuda" class="hidden flex-col gap-5">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 pb-2 border-b border-slate-200">
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider bg-wine-light text-wine px-2 py-0.5 rounded border border-wine/20">
-            Laboratorio Jurídico y Asistente IA
+            Laboratorio Pedagógico & Asistente IA
           </span>
           <h2 class="font-headline font-bold text-2xl text-slate-900 mt-1">Herramientas Especializadas con Gemini IA</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Redacta el caso, explica la pena, aclara dudas, evalúa alternativas, simula escenarios y practica con retroalimentación.</p>
+          <p class="text-xs text-slate-500 mt-0.5">Redacte hechos, explique penas, aclare dudas, evalúe alternativas y resuelva casos prácticos de entrenamiento.</p>
         </div>
         
         <div class="flex items-center gap-2 flex-wrap">
@@ -822,7 +881,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
       <div id="tool-panel-redactor" class="panel-herramienta-gemini hidden bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
         <div class="pb-2 border-b border-slate-100">
           <h3 class="font-headline font-bold text-base text-slate-900">1. Redactor Asistido: Hechos Jurídicamente Relevantes (Art. 337 C.P.P.)</h3>
-          <p class="text-xs text-slate-500">Escriba los hechos del caso en borrador o en lenguaje común antes de aplicar el análisis jurídico. La IA los estructurará con técnica procesal penal.</p>
+          <p class="text-xs text-slate-500">Escriba los hechos en borrador; la IA los estructurará con técnica procesal penal en circunstancias de tiempo, modo, lugar y adecuación típica.</p>
         </div>
         <div>
           <textarea id="input-redactor-borrador" rows="3" placeholder="Ejemplo: Dos personas asaltaron una tienda armadas, una amenazó al dueño y disparó a la pared, se llevaron 5 millones y huyeron en moto..." class="w-full text-xs p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-wine"></textarea>
@@ -833,7 +892,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
             </button>
             <button id="btn-transferir-hechos" onclick="AyudaIA_Manager.transferirHechosAlCaso()" class="hidden px-4 py-2 rounded-xl bg-dark hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5 shadow transition-all cursor-pointer">
               <span class="material-symbols-outlined text-sm text-emerald-400">move_to_inbox</span>
-              <span>Transferir Directamente a Función 1 (Hechos)</span>
+              <span>Transferir a Paso 1 (Hechos)</span>
             </button>
           </div>
         </div>
@@ -845,7 +904,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
         <div class="flex items-center justify-between pb-2 border-b border-slate-100">
           <div>
             <h3 class="font-headline font-bold text-base text-slate-900">2. Explicador Pedagógico: ¿Por qué corresponde determinada pena?</h3>
-            <p class="text-xs text-slate-500">Analiza el caso cargado y desglosa en lenguaje claro y dogmático el porqué de cada extremo, cuarto y descuento premial.</p>
+            <p class="text-xs text-slate-500">Analiza el caso cargado y desglosa en lenguaje claro el sustento judicial y matemático de la condena.</p>
           </div>
           <button onclick="AyudaIA_Manager.ejecutarExplicador()" class="px-4 py-2 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-semibold flex items-center gap-1.5 shadow transition-all cursor-pointer">
             <span class="material-symbols-outlined text-sm">psychology</span>
@@ -864,7 +923,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
           <p class="text-xs text-slate-500">¿Hay algún término, artículo o fórmula que no comprendas? Plantea tu inquietud para recibir una explicación clara con normas y jurisprudencia.</p>
         </div>
         <div class="flex flex-col sm:flex-row gap-2">
-          <input id="input-aclarador-duda" type="text" placeholder="Ej. ¿Cuál es la diferencia entre cómplice e interviniente en la dosimetría?" class="flex-1 text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-wine" />
+          <input id="input-aclarador-duda" type="text" placeholder="Ej. ¿Cuál es la diferencia exacta entre cómplice e interviniente en la dosimetría?" class="flex-1 text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-wine" />
           <button onclick="AyudaIA_Manager.ejecutarAclarador()" class="px-4 py-2.5 rounded-xl bg-wine hover:bg-wine-hover text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow transition-all cursor-pointer">
             <span class="material-symbols-outlined text-sm">help</span>
             <span>Aclarar Duda</span>
@@ -897,19 +956,19 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
           <p class="text-xs text-slate-500">Evalúa el impacto inmediato en los cuartos y en la pena si cambian determinadas circunstancias fácticas:</p>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-          <button onclick="AyudaIA_Manager.simularEscenario('indemnizacion')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all">
+          <button onclick="AyudaIA_Manager.simularEscenario('indemnizacion')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all cursor-pointer">
             <span class="font-bold block text-wine">¿Si indemniza el daño?</span>
             <span class="text-[10px] text-slate-500">Atenuante Art. 55 Num. 7</span>
           </button>
-          <button onclick="AyudaIA_Manager.simularEscenario('menor')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all">
+          <button onclick="AyudaIA_Manager.simularEscenario('menor')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all cursor-pointer">
             <span class="font-bold block text-wine">¿Si la víctima es menor?</span>
             <span class="text-[10px] text-slate-500">Prohibición Art. 199</span>
           </button>
-          <button onclick="AyudaIA_Manager.simularEscenario('tentativa')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all">
+          <button onclick="AyudaIA_Manager.simularEscenario('tentativa')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all cursor-pointer">
             <span class="font-bold block text-wine">¿Si queda en tentativa?</span>
             <span class="text-[10px] text-slate-500">Modificador Art. 27</span>
           </button>
-          <button onclick="AyudaIA_Manager.simularEscenario('ira')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all">
+          <button onclick="AyudaIA_Manager.simularEscenario('ira')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-wine-light hover:border-wine/40 text-slate-800 text-left transition-all cursor-pointer">
             <span class="font-bold block text-wine">¿Si actuó con ira?</span>
             <span class="text-[10px] text-slate-500">Atenuación Art. 57</span>
           </button>
@@ -1072,9 +1131,9 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
       <span class="material-symbols-outlined text-xl">history_edu</span>
       <span class="text-[10px] font-bold">1. Hechos</span>
     </button>
-    <button onclick="AppNav.switchTab('delitos')" class="flex flex-col items-center gap-0.5 text-slate-500 p-1">
-      <span class="material-symbols-outlined text-xl">menu_book</span>
-      <span class="text-[10px] font-medium">2. Delitos</span>
+    <button onclick="AppNav.switchTab('procedimiento')" class="flex flex-col items-center gap-0.5 text-slate-500 p-1">
+      <span class="material-symbols-outlined text-xl">timeline</span>
+      <span class="text-[10px] font-medium">2. Proceso</span>
     </button>
     <button onclick="AppNav.switchTab('calculadora')" class="flex flex-col items-center gap-0.5 text-slate-500 p-1">
       <span class="material-symbols-outlined text-xl">calculate</span>
@@ -1082,7 +1141,7 @@ El agresor propinó más de doce heridas reiteradas y profundas en tórax y extr
     </button>
     <button onclick="AppNav.switchTab('justificacion')" class="flex flex-col items-center gap-0.5 text-slate-500 p-1">
       <span class="material-symbols-outlined text-xl">gavel</span>
-      <span class="text-[10px] font-medium">4. Dictamen</span>
+      <span class="text-[10px] font-medium">4. Sentencia</span>
     </button>
     <button onclick="AppNav.switchTab('ayuda')" class="flex flex-col items-center gap-0.5 text-slate-500 p-1">
       <span class="material-symbols-outlined text-xl">smart_toy</span>

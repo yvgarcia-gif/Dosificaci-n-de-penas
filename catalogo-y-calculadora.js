@@ -1207,10 +1207,14 @@ const AyudaIA_Manager = {
     if (label) {
       if (key) {
         label.textContent = "✓ Gemini Conectada";
-        label.parentElement.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs font-mono font-semibold text-emerald-800 transition-all cursor-pointer";
+        if (label.parentElement) {
+          label.parentElement.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs font-mono font-semibold text-emerald-800 transition-all cursor-pointer";
+        }
       } else {
         label.textContent = "Configurar Gemini API";
-        label.parentElement.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs font-mono font-semibold text-slate-700 transition-all cursor-pointer";
+        if (label.parentElement) {
+          label.parentElement.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs font-mono font-semibold text-slate-700 transition-all cursor-pointer";
+        }
       }
     }
   },
