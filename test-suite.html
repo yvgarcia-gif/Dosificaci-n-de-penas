@@ -7,7 +7,7 @@
 <body>
   <div id="test-results"></div>
 
-  <!-- Include App DOM Elements needed for testing -->
+  <!-- Elements for Testing App DOM -->
   <div style="display:none">
     <div id="catalogo-lista-delitos"></div>
     <div id="badge-total-delitos"></div>
@@ -63,6 +63,8 @@
     <div id="calc-pena-final-human"></div>
     <div id="alerta-calc-prohibicion"></div>
     <div id="calc-rebaja-tag"></div>
+    <div id="calc-explicacion-paso-a-paso"></div>
+    <div id="calc-limites-modificados-display"></div>
 
     <div id="memoria-radicado"></div>
     <div id="memoria-fecha-emision"></div>
@@ -73,42 +75,45 @@
     <table><tbody id="memoria-tabla-cuartos"></tbody></table>
     <div id="memoria-motivacion-cuarto-texto"></div>
     <div id="memoria-criterios-art59"></div>
-    <div id="box-subrogado-art63"></div>
     <div id="subrogado-art63-status"></div>
-    <div id="box-subrogado-art38b"></div>
     <div id="subrogado-art38b-status"></div>
     <div id="memoria-sentencia-resumen"></div>
     <div id="memoria-sentencia-human"></div>
 
-    <!-- Elements for Gemini 6 Tools & Banco Dudas -->
+    <!-- Elements for Gemini 7 Tools & Banco Dudas -->
     <div id="label-api-key-status"></div>
     <div id="modal-gemini-key" class="hidden"></div>
     <input id="input-gemini-api-key" type="password" />
     <div id="icon-ver-api-key"></div>
-    <div id="tool-panel-explicador" class="panel-herramienta-gemini"></div>
     <div id="tool-panel-redactor" class="panel-herramienta-gemini hidden"></div>
+    <div id="tool-panel-explicador" class="panel-herramienta-gemini"></div>
     <div id="tool-panel-aclarador" class="panel-herramienta-gemini hidden"></div>
     <div id="tool-panel-alternativas" class="panel-herramienta-gemini hidden"></div>
     <div id="tool-panel-escenarios" class="panel-herramienta-gemini hidden"></div>
-    <div id="tool-panel-casos" class="panel-herramienta-gemini hidden"></div>
+    <div id="tool-panel-consecuencias" class="panel-herramienta-gemini hidden"></div>
+    <div id="tool-panel-entrenamiento" class="panel-herramienta-gemini hidden"></div>
+    <div id="tool-panel-comunidad" class="panel-herramienta-gemini hidden"></div>
     <div class="btn-tab-gemini" data-tool="explicador"></div>
     <div class="btn-tab-gemini" data-tool="redactor"></div>
+    <div class="btn-tab-gemini" data-tool="consecuencias"></div>
     <textarea id="input-redactor-borrador">Pedro disparó a Juan en una riña</textarea>
     <div id="output-redactor-resultado"></div>
     <div id="output-explicador-resultado"></div>
     <div id="output-aclarador-resultado"></div>
     <div id="output-alternativas-resultado"></div>
     <div id="output-escenarios-resultado"></div>
-    <div id="output-casos-resultado"></div>
+    <div id="output-consecuencias-resultado"></div>
+    <div id="output-caso-entrenamiento"></div>
+    <div id="form-respuesta-entrenamiento" class="hidden"></div>
+    <textarea id="input-respuesta-estudiante">Cuarto mínimo por carencia de antecedentes.</textarea>
+    <div id="output-feedback-entrenamiento"></div>
     <div id="btn-transferir-hechos" class="hidden"></div>
-    <div id="caso-narrativa"></div>
+    <textarea id="caso-narrativa"></textarea>
+    <div id="caso-conteo-texto"></div>
+    <div id="badge-quarter-indicator"></div>
 
     <div id="banco-dudas-lista"></div>
     <div id="badge-conteo-dudas-tab"></div>
-    <div id="badge-total-dudas"></div>
-    <div id="input-nueva-duda-texto"></div>
-    <div id="input-nueva-duda-meta"></div>
-    <div id="input-nueva-duda-modulo"></div>
     <div id="toast-notif"></div>
     <div id="toast-text"></div>
     <div id="toast-icon"></div>
@@ -133,7 +138,7 @@
       assert("formatearMesesAHumano 208m = 17 años y 4 meses", formatearMesesAHumano(208) === '17 años y 4 meses');
       assert("formatearMesesAHumano 450m = 37 años y 6 meses", formatearMesesAHumano(450) === '37 años y 6 meses');
 
-      // Test 2: Catálogo de Delitos (20 tipos penales colombianos)
+      // Test 2: Catálogo de Delitos (22 tipos penales colombianos registrados)
       assert("Catálogo tiene al menos 20 delitos registrados", DelitosCatalogo.length >= 20);
       const homicidio = DelitosCatalogo.find(d => d.id === '103');
       assert("Art. 103 tiene min 208 y max 450", homicidio.minMeses === 208 && homicidio.maxMeses === 450);
@@ -179,25 +184,35 @@
       CalculadoraManager.actualizarQuantum(215);
       assert("Con prohibición Art. 199, pena final es 215 meses (0% rebaja)", CalculadoraManager.penaFinalMeses === 215);
 
-      // Test 7: JustificacionManager
+      // Test 7: Explicación Paso a Paso de la Dosificación (Requisito 6)
+      CalculadoraManager.renderizarExplicacionPasoAPaso();
+      const htmlPasoAPaso = document.getElementById('calc-explicacion-paso-a-paso').innerHTML;
+      assert("Explicación contiene Paso 1 con norma abstracta", htmlPasoAPaso.includes('Límites Legales Abstractos'));
+      assert("Explicación contiene Paso 3 con fórmula de Ámbito Punitivo", htmlPasoAPaso.includes('Ámbito Punitivo = Límite Máximo - Límite Mínimo'));
+      assert("Explicación contiene Paso 4 con división en 4 cuartos", htmlPasoAPaso.includes('Valor de Cada Cuarto = Ámbito Punitivo / 4'));
+      assert("Explicación contiene Paso 5 con subsunción vinculante", htmlPasoAPaso.includes('Subsunción y Elección Vinculante'));
+
+      // Test 8: JustificacionManager (Función 4)
       JustificacionManager.generarMemoria();
       const txtDictamen = JustificacionManager.generarTextoCompleto();
       assert("Dictamen contiene radicado y normas C.P.", txtDictamen.includes('Artículos 59, 60 y 61') && txtDictamen.includes('REPÚBLICA DE COLOMBIA'));
 
-      // Test 8: Banco de Dudas Comunitario
+      // Test 9: Banco de Dudas Comunitario
       BancoDudasManager.init();
       assert("Banco de dudas tiene preguntas iniciales", BancoDudasManager.dudas.length >= 3);
       const antesRespuestas = BancoDudasManager.dudas[0].respuestas.length;
-      BancoDudasManager.dudas[0].respuestas.push({ autor: "Compañero", texto: "Respuesta de prueba", fecha: "2026-11-07" });
+      BancoDudasManager.dudas[0].respuestas.push({ autor: "Compañero", texto: "Respuesta de prueba", fecha: "2026-11-08" });
       assert("Permite agregar respuesta colaborativa de estudiante", BancoDudasManager.dudas[0].respuestas.length === antesRespuestas + 1);
 
-      // Test 9: AyudaIA Manager (Herramientas Gemini y Fallbacks Pedagógicos)
+      // Test 10: AyudaIA Manager (7 Herramientas Gemini y Fallbacks Pedagógicos)
       AyudaIA_Manager.init();
       assert("Herramienta explicador inicializada", AyudaIA_Manager.herramientaActiva === 'explicador');
-      const fallbackExplicador = AyudaIA_Manager.generarFallback('explicador', 'test');
+      const fallbackExplicador = AyudaIA_Manager.generarFallback('explicador');
       assert("Fallback explicador contiene fundamentación de Art. 61", fallbackExplicador.includes('Art. 61'));
-      const fallbackEscenario = AyudaIA_Manager.generarFallback('escenarios', 'test');
+      const fallbackEscenario = AyudaIA_Manager.generarFallback('escenarios');
       assert("Fallback escenarios contiene hipótesis modificadoras", fallbackEscenario.includes('ESCENARIO'));
+      const fallbackConsecuencias = AyudaIA_Manager.generarFallback('3 posibles caminos procesales');
+      assert("Fallback consecuencias contiene los 3 caminos procesales", fallbackConsecuencias.includes('JUICIO ORAL') && fallbackConsecuencias.includes('ALLANAMIENTO'));
 
     } catch (e) {
       results.push(`[ERROR EXCEPTION] ${e.message} at ${e.stack}`);
